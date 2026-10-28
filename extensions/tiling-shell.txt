@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/7065/tiling-shell/
+https://github.com/domferr/tilingshell
+
+dconf dump /org/gnome/shell/extensions/tilingshell/ > tiling-shell.dconf

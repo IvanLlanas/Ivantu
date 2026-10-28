@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/5156/desktop-clock/
+https://gitlab.com/AndrewZaech/azclock
+
+dconf dump /org/gnome/shell/extensions/azclock/ > azclock-settings.dconf

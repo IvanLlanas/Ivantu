@@ -1,0 +1,16 @@
+[/]
+cursor-blink-mode='system'
+cursor-shape='block'
+default-profile-uuid='eaac8e4e95a45ba0ede574da695104cf'
+font-name='Monospace 13'
+interface-style='dark'
+profile-uuids=['eaac8e4e95a45ba0ede574da695104cf']
+use-system-font=false
+
+[Profiles/eaac8e4e95a45ba0ede574da695104cf]
+bold-is-bright=true
+cell-height-scale=1.0
+label='Ivantu'
+opacity=0.85
+palette='ptyxis-ivan'
+use-custom-command=false

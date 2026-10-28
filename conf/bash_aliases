@@ -1,0 +1,1698 @@
+#!/bin/bash
+# ----------------------------------------------------------------------
+# Ivan Llanas Aliases System
+# ----------------------------------------------------------------------
+# Internal constants start with '_'.
+# Internal functions start with '___'.
+# ----------------------------------------------------------------------
+# 2 do:
+# $ sudo hdparm -Tt /dev/sda
+
+_ilas_name='Ivan Llanas Aliases System'
+_ilas_version='2.12'
+_ilas_build=168
+
+# Environment vars -----------------------------------------------------
+# export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
+                    # with eza! Does not let the prompt type accents!!!
+export LS_COLORS=""
+
+# Backup IFS to restore it whenever is it changed. Internal Field Separator, used to separate strings into words or substrings.
+_IFS0=$IFS
+
+shopt -s globstar
+shopt -s autocd
+shopt -s cdspell
+
+# Required to find global scripts and theme resources.
+export IVANTU_DIR="$HOME/Projects/Ivantu"
+export IVANTU_SCRIPTS_DIR="$IVANTU_DIR/scripts"
+
+# conio.sh is available in IVANTU_SCRIPTS_DIR, but this directory may not exist so conio.sh is included here:
+# [conio.sh]------------8<------------8<------------8<------------8<------------8<------------8<------------8<------------
+
+# conio.sh - Console Input/Output routines
+
+# [LICENSE]-----------------------------------------------------------------------
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2025 Ivan Llanas
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# function ___trim (text)
+# function ___get_current_time ()
+# function ___datetime_to_string (date, [format])
+
+# function ___echo_info (text)
+# function ___print_info (command, [text])
+# function ___print_info_bg (command, [text])
+# function ___print_warning (command, [text])
+# function ___print_warning_bg (command, [text])
+# function ___print_error (command, [text])
+# function ___print_error_bg (command, [text])
+# function ___print_disabled (command, [text])
+# function ___print_disabled_bg (command, [text])
+# function ___print_url (url, [text], [color])
+# function ___print_centered_fw (msg, filler_char, color_background, color_normal_text, color_bold1_text, color_bold2_text, color_bold3_text)
+# function ___print_fw (msg, filler_char, color_background, color_normal_text, color_bold1_text, color_bold2_text, color_bold3_text)
+# function ___cmd_descr ()
+# function ___cmd_usage ()
+
+# --------------------------------------------------------------------------------
+
+# ANSI colors ----------------------------------------------------------
+
+_ansi_off='\e[0m'
+_ansi_bold='\e[1m'
+
+_ansi_default='\e[39m'
+_ansi_bg_default='\e[49m'
+
+_ansi_black='\e[30m'
+_ansi_red='\e[31m'
+_ansi_green='\e[32m'
+_ansi_yellow='\e[33m'
+_ansi_blue='\e[34m'
+_ansi_magenta='\e[35m'
+_ansi_cyan='\e[36m'
+_ansi_white='\e[37m'
+
+_ansi_lblack='\e[90m'
+_ansi_lred='\e[91m'
+_ansi_lgreen='\e[92m'
+_ansi_lyellow='\e[93m'
+_ansi_lblue='\e[94m'
+_ansi_lmagenta='\e[95m'
+_ansi_lcyan='\e[96m'
+_ansi_lwhite='\e[97m'
+
+_ansi_bg_black='\e[40m'
+_ansi_bg_red='\e[41m'
+_ansi_bg_green='\e[42m'
+_ansi_bg_yellow='\e[43m'
+_ansi_bg_blue='\e[44m'
+_ansi_bg_magenta='\e[45m'
+_ansi_bg_cyan='\e[46m'
+_ansi_bg_white='\e[47m'
+
+_ansi_bg_lblack='\e[100m'
+_ansi_bg_lred='\e[101m'
+_ansi_bg_lgreen='\e[102m'
+_ansi_bg_lyellow='\e[103m'
+_ansi_bg_lblue='\e[104m'
+_ansi_bg_lmagenta='\e[105m'
+_ansi_bg_lcyan='\e[106m'
+_ansi_bg_lwhite='\e[107m'
+
+# Emphasis -------------------------------------------------------------
+_em0='<0>'
+_em1='<1>'
+_em2='<2>'
+_em3='<3>'
+
+# Brackets -------------------------------------------------------------
+# Canviar per brak_a1 brak_b1
+_quote1='<'
+_quote2='>'
+_quotel1='['
+_quotel2=']'
+
+# _print_info colors ---------------------------------------------------
+_info_c0=$_ansi_lwhite
+_info_c1=$_ansi_lyellow
+_info_c2=$_ansi_lcyan
+_info_c3=$_ansi_lgreen
+_info_bg=$_ansi_bg_default
+
+# _print_info_bg colors ------------------------------------------------
+_infobg_c0=$_ansi_lwhite
+_infobg_c1=$_ansi_lcyan
+_infobg_c2=$_ansi_lyellow
+_infobg_c3=$_ansi_lgreen
+_infobg_bg=$_ansi_bg_blue
+
+# _print_warning colors -----------------------------------------------
+_warning_c0=$_ansi_lyellow
+_warning_c1=$_ansi_lwhite
+_warning_c2=$_ansi_lcyan
+_warning_c3=$_ansi_lgreen
+_warning_bg=$_ansi_bg_default
+
+# _print_warning_bg colors --------------------------------------------
+_warningbg_c0=$_ansi_black
+_warningbg_c1=$_ansi_red
+_warningbg_c2=$_ansi_blue
+_warningbg_c3=$_ansi_green
+_warningbg_bg=$_ansi_bg_lyellow
+
+# _print_error colors --------------------------------------------------
+_error_c0=$_ansi_lred
+_error_c1=$_ansi_lyellow
+_error_c2=$_ansi_lcyan
+_error_c3=$_ansi_lgreen
+_error_bg=$_ansi_bg_default
+
+# _print_error_bg colors -----------------------------------------------
+_errorbg_c0=$_ansi_lwhite
+_errorbg_c1=$_ansi_lyellow
+_errorbg_c2=$_ansi_lcyan
+_errorbg_c3=$_ansi_lgreen
+_errorbg_bg=$_ansi_bg_red
+
+# _print_disabled colors -----------------------------------------------
+_disabled_c0=$_ansi_lblack
+_disabled_c1=$_ansi_yellow
+_disabled_c2=$_ansi_white
+_disabled_c3=$_ansi_white
+_disabled_bg=$_ansi_bg_default
+
+# _print_disabled_bg colors --------------------------------------------
+_disabledbg_c0=$_ansi_lwhite
+_disabledbg_c1=$_ansi_lyellow
+_disabledbg_c2=$_ansi_lcyan
+_disabledbg_c3=$_ansi_lgreen
+_disabledbg_bg=$_ansi_bg_green
+
+# _print_info_bg colors ------------------------------------------------
+_date_format_filename='%Y-%m-%d'
+_datetime_format_filename=$_date_format_filename'__%H-%M-%S'
+_date_format_screen='%Y/%m/%d'
+_datetime_format_screen="$_date_format_screen %H:%M:%S"
+_datetime_format_default="$_datetime_format_screen"
+
+# String functions -----------------------------------------------------
+
+# function ___trim (text)
+# Removes leading and trailing spaces from string.
+function ___trim ()
+{
+   local s=$1
+
+   # Turn on the extglob shell option
+   shopt -s extglob
+   ## Trim leading whitespaces
+   s="${s##*( )}"
+   ## Trim trailing whitespaces
+   s="${s%%*( )}"
+   # Turn off the extglob shell option
+   shopt -u extglob
+   # Print final result
+   echo $s
+}
+
+# function ___get_current_time ()
+# Returns the current time in a number of seconds (since Jan-1 1970 00:00:00 UTC).
+function ___get_current_time ()
+{
+   echo $(date +%s)
+}
+
+# function ___datetime_to_string (date, [format])
+# Formats a given date time with a given datetime format string.
+function ___datetime_to_string ()
+{
+   local dt="$1"
+   local fmt="$2"
+
+   if [ "$fmt" = "" ]; then
+      fmt="$_datetime_format_default"
+   fi
+   echo $(date -d@$dt "+$fmt")
+#  echo $(date -d@$dt '+%Y/%m/%d %H:%M:%S')
+}
+
+# function ___echo_info (text)
+# Prints a message in info format.
+function ___echo_info ()
+{
+   local text=$1
+
+   text=${text//$_em3/$_info_c3}
+   text=${text//$_em2/$_info_c2}
+   text=${text//$_em1/$_info_c1}
+   text=${text//$_em0/$_info_c0}
+
+   echo -e "$_info_c0$_info_bg$text$_ansi_off"
+}
+
+# function ___print_info (command, [text])
+# function ___print_info_bg (command, [text])
+# Prints an information message.
+function ___print_info ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_info_c3}
+   command=${command//$_em2/$_info_c2}
+   command=${command//$_em1/$_info_c1}
+   command=${command//$_em0/$_info_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_info_c0$_info_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_info_c3}
+      text=${text//$_em2/$_info_c2}
+      text=${text//$_em1/$_info_c1}
+      text=${text//$_em0/$_info_c0}
+
+      echo -e "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
+   fi
+}
+
+function ___print_info_bg ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_infobg_c3}
+   command=${command//$_em2/$_infobg_c2}
+   command=${command//$_em1/$_infobg_c1}
+   command=${command//$_em0/$_infobg_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_infobg_c3}
+      text=${text//$_em2/$_infobg_c2}
+      text=${text//$_em1/$_infobg_c1}
+      text=${text//$_em0/$_infobg_c0}
+
+      echo -e "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
+   fi
+}
+
+# function ___print_warning (command, [text])
+# function ___print_warning_bg (command, [text])
+# Prints a warning message.
+function ___print_warning ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_warning_c3}
+   command=${command//$_em2/$_warning_c2}
+   command=${command//$_em1/$_warning_c1}
+   command=${command//$_em0/$_warning_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_warning_c0$_warning_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_warning_c3}
+      text=${text//$_em2/$_warning_c2}
+      text=${text//$_em1/$_warning_c1}
+      text=${text//$_em0/$_warning_c0}
+
+      echo -e "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
+   fi
+}
+
+function ___print_warning_bg ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_warningbg_c3}
+   command=${command//$_em2/$_warningbg_c2}
+   command=${command//$_em1/$_warningbg_c1}
+   command=${command//$_em0/$_warningbg_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_warningbg_c3}
+      text=${text//$_em2/$_warningbg_c2}
+      text=${text//$_em1/$_warningbg_c1}
+      text=${text//$_em0/$_warningbg_c0}
+
+      echo -e "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
+   fi
+}
+
+# function ___print_error (command, [text])
+# function ___print_error_bg (command, [text])
+# Prints an error message.
+function ___print_error ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_error_c3}
+   command=${command//$_em2/$_error_c2}
+   command=${command//$_em1/$_error_c1}
+   command=${command//$_em0/$_error_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_error_c0$_error_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_error_c3}
+      text=${text//$_em2/$_error_c2}
+      text=${text//$_em1/$_error_c1}
+      text=${text//$_em0/$_error_c0}
+
+      echo -e "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
+   fi
+}
+
+function ___print_error_bg ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_errorbg_c3}
+   command=${command//$_em2/$_errorbg_c2}
+   command=${command//$_em1/$_errorbg_c1}
+   command=${command//$_em0/$_errorbg_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_errorbg_c3}
+      text=${text//$_em2/$_errorbg_c2}
+      text=${text//$_em1/$_errorbg_c1}
+      text=${text//$_em0/$_errorbg_c0}
+
+      echo -e "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
+   fi
+}
+
+# function ___print_disabled (command, [text])
+# function ___print_disabled_bg (command, [text])
+# Prints a disabled (or less important) message.
+function ___print_disabled ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_disabled_c3}
+   command=${command//$_em2/$_disabled_c2}
+   command=${command//$_em1/$_disabled_c1}
+   command=${command//$_em0/$_disabled_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_disabled_c0$_disabled_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_disabled_c3}
+      text=${text//$_em2/$_disabled_c2}
+      text=${text//$_em1/$_disabled_c1}
+      text=${text//$_em0/$_disabled_c0}
+
+      echo -e "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
+   fi
+}
+
+function ___print_disabled_bg ()
+{
+   local command=$1
+   local text=$2
+
+   command=${command//$_em3/$_disabledbg_c3}
+   command=${command//$_em2/$_disabledbg_c2}
+   command=${command//$_em1/$_disabledbg_c1}
+   command=${command//$_em0/$_disabledbg_c0}
+
+   if [ "$text" = "" ]; then
+      echo -e "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
+   else
+      text=${text//$_em3/$_disabledbg_c3}
+      text=${text//$_em2/$_disabledbg_c2}
+      text=${text//$_em1/$_disabledbg_c1}
+      text=${text//$_em0/$_disabledbg_c0}
+
+      echo -e "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
+   fi
+}
+
+# function ___print_url (url, [text], [color])
+# Prints an URL.
+function ___print_url ()
+{
+   local url text color1 color2
+   url="$1"
+   text="$2"
+   color1="$3"
+   color2="$_ansi_off"
+
+   if [ "$text" == "" ]; then
+      text="$url"
+   fi
+
+   if [ "$color1" == "" ]; then
+      printf "\e]8;;$url\e\\$text\e]8;;\e\\"
+   else
+      echo -en $color1
+      printf "\e]8;;$url\e\\$text\e]8;;\e\\"
+      echo -en $color2
+   fi
+}
+
+# function _update_screen_columns ()
+# Forces $COLUMNS update. It seems to work but I don't know why.
+function _update_screen_columns ()
+{
+   local x=$COLUMNS
+   sleep 0 # This sleep makes $COLUMNS get its proper value. Why? Dunno.
+}
+
+# function ___print_centered_fw (msg, filler_char, color_background, color_normal_text, color_bold1_text, color_bold2_text, color_bold3_text)
+# Prints a centered screen full width message.
+function ___print_centered_fw ()
+{
+   _update_screen_columns
+   local msg=$1
+   local char_filler=$2
+   local c_bg=$3
+   local c_0=$4
+   local c_1=$5
+   local c_2=$6
+   local c_3=$7
+
+   local none=""
+   msg=${msg//$_em3/$none}
+   msg=${msg//$_em2/$none}
+   msg=${msg//$_em1/$none}
+   msg=${msg//$_em0/$none}
+
+   # Calculate the filler size needed to fill the whole terminal width.
+   local lmsg=${#msg}
+   local count=$(($COLUMNS - $lmsg))
+   if [ $count -lt 1 ]
+      then
+      count=0
+   fi
+   local count2=$(($count / 2))
+   local filler2=$(head -c $count2 < /dev/zero | tr '\0' "$char_filler" )
+
+   # Check if we must add an additional char_filler because $count is an odd number.
+   local filler3=""
+   local count3=$(($count2 * 2))
+   if [ $count3 -ne $count ]; then
+      filler3=$char_filler
+   fi
+
+   # Change bold pattern with ansi colors.
+   msg=$1
+   msg=${msg//$_em3/$c_3}
+   msg=${msg//$_em2/$c_2}
+   msg=${msg//$_em1/$c_1}
+   msg=${msg//$_em0/$c_0}
+
+   echo -e "$c_bg$c_0$filler2$msg$filler2$filler3$_ansi_off"
+}
+
+# function ___print_fw (msg, filler_char, color_background, color_normal_text, color_bold1_text, color_bold2_text, color_bold3_text)
+# Prints a screen full width message.
+function ___print_fw ()
+{
+   _update_screen_columns
+   local msg=$1
+   local char_filler=$2
+   local c_bg=$3
+   local c_0=$4
+   local c_1=$5
+   local c_2=$6
+   local c_3=$7
+
+   local none=""
+   msg=${msg//$_em3/$none}
+   msg=${msg//$_em2/$none}
+   msg=${msg//$_em1/$none}
+   msg=${msg//$_em0/$none}
+
+   # Calculate the filler size needed to fill the whole terminal width.
+   local lmsg=${#msg}
+   local count=$(($COLUMNS - $lmsg))
+   if [ $count -lt 1 ]
+      then
+      count=0
+   fi
+   local filler=$(head -c $count < /dev/zero | tr '\0' "$char_filler" )
+
+   # Change bold pattern with ansi colors.
+   msg=$1
+   msg=${msg//$_em3/$c_3}
+   msg=${msg//$_em2/$c_2}
+   msg=${msg//$_em1/$c_1}
+   msg=${msg//$_em0/$c_0}
+
+   echo -e "$c_bg$c_0$msg$filler$_ansi_off"
+}
+
+function ___cmd_descr ()
+{
+   echo -e " "$_ansi_bold$1$_ansi_off" - "$2$_ansi_off
+}
+
+function ___cmd_usage ()
+{
+   echo -e " Usage: "$_ansi_black$_ansi_bg_white $1 $_ansi_off
+}
+
+# [conio.sh]------------8<------------8<------------8<------------8<------------8<------------8<------------8<------------
+
+# Command categories and their colors
+_AL_CATEGORIES=("shell" "compress" "system" "file" "app" "network")
+declare -A _AL_CATEGORY_COLORS='(
+[${_AL_CATEGORIES[0]}]="$_ansi_lwhite"
+[${_AL_CATEGORIES[1]}]="$_ansi_lcyan"
+[${_AL_CATEGORIES[2]}]="$_ansi_lred"
+[${_AL_CATEGORIES[3]}]="$_ansi_lyellow"
+[${_AL_CATEGORIES[4]}]="$_ansi_lgreen"
+[${_AL_CATEGORIES[5]}]="$_ansi_lmagenta"
+)'
+
+_CATEGORY_SHELL=${_AL_CATEGORIES[0]}
+_CATEGORY_COMPRESS=${_AL_CATEGORIES[1]}
+_CATEGORY_SYSTEM=${_AL_CATEGORIES[2]}
+_CATEGORY_FILE=${_AL_CATEGORIES[3]}
+_CATEGORY_APP=${_AL_CATEGORIES[4]}
+_CATEGORY_NETWORK=${_AL_CATEGORIES[5]}
+
+# ----------------------------------------------------------------------
+___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) loading... ]"
+# ----------------------------------------------------------------------
+
+# Disabled by now
+# Is bline installed?
+# if [ -n "$(which bline)" ]; then
+#    _BLINE=true
+#    _find_trash_color="light:red"
+#    _find_home_color="light:cyan"
+#    ___print_info "Using <1>bline<0>."
+# else
+    _BLINE=false
+#    ___print_disabled "<1>bline<0> not found."
+# fi
+
+# Is rar installed?
+if [ -n "$(which rar)" ]; then
+   __RAR=true
+   ___print_info "Using <1>rar<0>."
+else
+   __RAR=false
+   ___print_disabled "<1>rar<0> not found."
+fi
+
+# Common aliases
+alias eal="q ~/.bash_aliases"
+   eal_description="Edit aliases."
+   eal_category="$_CATEGORY_SHELL"
+alias ral="unalias -a && source ~/.bash_aliases"
+   ral_description="Re-read aliases."
+   ral_category="$_CATEGORY_SHELL"
+alias ..="cd .."
+   ___description="Move to parent directory."
+   ___category="$_CATEGORY_SHELL"
+alias ...="cd ../.."
+   ____description="Move two directories above."
+   ____category="$_CATEGORY_SHELL"
+alias ....="cd ../../.."
+   _____description="Move three directories above."
+   _____category="$_CATEGORY_SHELL"
+alias .....="cd ../../../.."
+   ______description="Move four directories above."
+   ______category="$_CATEGORY_SHELL"
+alias ......="cd ../../../../.."
+   _______description="Move five directories above."
+   _______category="$_CATEGORY_SHELL"
+alias x="exit"
+   x_description="Exit shell."
+   x_category="$_CATEGORY_SHELL"
+alias c="clear"
+   c_description="Clear console."
+   c_category="$_CATEGORY_SHELL"
+alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
+   clearhistory_description="Delete the shell history from memory and disk."
+   clearhistory_category="$_CATEGORY_SHELL"
+
+if [ -n "$(which eza)" ]; then
+   alias d="eza --group-directories-first --header --time-style=\"+%Y.%m.%d %H:%M\" --long --icons --bytes"
+      d_description="Directory listing, full information."
+      d_category="$_CATEGORY_SHELL"
+   alias dsz="d --total-size"
+      dsz_description="Directory listing, full information, full sizes (directories)."
+      dsz_category="$_CATEGORY_SHELL"
+   alias dasz="da --total-size"
+      dasz_description="Directory listing, all files, full information, full sizes (directories)."
+      dasz_category="$_CATEGORY_SHELL"
+   alias dg="d --git"
+      dg_description="Directory listing, full information, git status."
+      dg_category="$_CATEGORY_SHELL"
+   ___print_info "Using <1>eza<0> as <1>ls<0>."
+else
+   alias d="ls --group-directories-first -l"
+      d_description="Directory listing, full information."
+      d_category="$_CATEGORY_SHELL"
+   ___print_disabled "<1>eza<0> not found."
+fi
+alias da="d --all"
+   da_description="Directory listing, full information, all files."
+   da_category="$_CATEGORY_SHELL"
+alias dx="d *.exe *.EXE *.bat *.BAT 2>/dev/null"
+   dx_description="Directory listing of Windows executables."
+   dx_category="$_CATEGORY_SHELL"
+alias dz="d *.zip *.rar *.7z *.tgz *.tar 2>/dev/null"
+   dx_description="Directory listing of archives."
+   dx_category="$_CATEGORY_SHELL"
+
+alias l="less"
+   l_description="Less."
+   l_category="$_CATEGORY_SHELL"
+alias start="xdg-open"
+   start_description="Launch file with the default application."
+   start_category="$_CATEGORY_SHELL"
+alias fm="start ."
+   fm_description="Start a file manager in the current directory."
+   fm_category="$_CATEGORY_SHELL"
+alias bk="rm *.bak"
+   bk_description="Delete bak files."
+   bk_category="$_CATEGORY_SHELL"
+
+alias md=mkdir
+   md_description="Create a directory."
+   md_category="$_CATEGORY_FILE"
+alias rd=rmdir
+   rd_description="Delete an empty directory."
+   rd_category="$_CATEGORY_FILE"
+alias mk="_mk"
+   mk_description="Create a directory an enter."
+   mk_category="$_CATEGORY_FILE"
+function _mk ()
+{
+   mkdir "$1"
+   cd "$1"
+}
+alias fn="realpath \$1"
+   fn_description="Print the full path of a given file/directory."
+   fn_category="$_CATEGORY_FILE"
+
+if $_RAR ; then
+   alias ra="rar a -r -s -m5 -md1g"
+      ra_description="Compress using rar with maximum compression settings."
+      ra_category="$_CATEGORY_COMPRESS"
+   alias rav2="rar a -r -s -m5 -md1g -v2000000000b"
+      rav2_description="Compress using rar in 2GB volumes with maximum compression settings."
+      rav2_category="$_CATEGORY_COMPRESS"
+   alias rav4="rar a -r -s -m5 -md1g -v4000000000b"
+      rav4_description="Compress using rar in 4GB volumes with maximum compression settings."
+      rav4_category="$_CATEGORY_COMPRESS"
+   alias rl="rar l"
+      rl_description="List rar archive contents."
+      rl_category="$_CATEGORY_COMPRESS"
+   alias rx="rar x"
+      rx_description="Extract archive contents."
+      rx_category="$_CATEGORY_COMPRESS"
+fi
+alias 7za="7z a -t7z -mx=9"
+   _7za_description="Compress using 7z with maximum compression settings."
+   _7za_category="$_CATEGORY_COMPRESS"
+
+alias supdate="sudo apt update && apt list --upgradable"
+   supdate_description="Check packages to update."
+   supdate_category="$_CATEGORY_SYSTEM"
+alias supgrade="sudo apt upgrade -y"
+   supgrade_description="Update the current packages."
+   supgrade_category="$_CATEGORY_SYSTEM"
+alias sysupdate="supdate && supgrade"
+   sysupdate_description="Update everything. No questions."
+   sysupdate_category="$_CATEGORY_SYSTEM"
+alias appupdate="flatpak update"
+   appupdate_description="Update flatpak applications."
+   appupdate_category="$_CATEGORY_SYSTEM"
+alias fstab="sudo nano /etc/fstab"
+   fstab_description="Edit /etc/fstab using nano."
+   fstab_category="$_CATEGORY_SYSTEM"
+alias lsshutdowns='journalctl --grep="System is powering down" --reverse | grep powering | head -15'
+   lsshutdowns_description="List previous shutdown times."
+   lsshutdowns_category="$_CATEGORY_SYSTEM"
+
+if $_BLINE ; then
+   alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort | bline -m $HOME $_find_home_color"
+else
+   alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
+fi
+   mnt_description="Show device mounts."
+   mnt_category="$_CATEGORY_SYSTEM"
+
+alias mnts="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/var/ | sort"
+   mnts_description="Show snap mounts."
+   mnts_category="$_CATEGORY_SYSTEM"
+
+alias logout="gnome-session-quit --no-prompt"
+   logout_description="Logout desktop session (no confirmation!)."
+   logout_category="$_CATEGORY_SYSTEM"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+# and in 10sec an alert will popup into Gnome alerts (calendar button).
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+   alert_description="Add an alert to Gnome alerts (calendar button)."
+   alert_category="$_CATEGORY_SHELL"
+
+# Saved from original .bashrc
+alias grep="grep --color=auto"
+   grep_description="grep using colors."
+   grep_category="$_CATEGORY_FILE"
+alias egrep="egrep --color=auto"
+   egrep_description="egrep using colors."
+   egrep_category="$_CATEGORY_FILE"
+alias fgrep="fgrep --color=auto"
+   fgrep_description="fgrep using colors."
+   fgrep_category="$_CATEGORY_FILE"
+
+# Apps ----------------------------------------------------------
+if [ -n "$(which cmatrix)" ]; then
+   alias matrix="gnome-terminal --window-with-profile=Matrix --full-screen -- cmatrix -b"
+      matrix_description="Start full Matrix screensaver."
+      matrix_category="$_CATEGORY_SHELL"
+   # kmatrix - Mind the single quote!
+   alias kmatrix='kill $(pidof cmatrix)'
+      kmatrix_description="Kill Matrix screensaver (if Q does not quit)."
+      kmatrix_category="$_CATEGORY_SHELL"
+   ___print_info "<1>cmatrix<0> aliases added."
+else
+   ___print_disabled "<1>cmatrix<0> not found."
+fi
+
+if [ -n "$(which xclip-cutfile)" ]; then
+   alias xc=xclip-copyfile
+      xc_description="Copy file(s) to the clipboard (only to console!)."
+      xc_category="$_CATEGORY_SHELL"
+   alias xx=xclip-cutfile
+      xx_description="Cut file(s) to the clipboard (only to console!)."
+      xx_category="$_CATEGORY_SHELL"
+   alias xv=xclip-pastefile
+      xv_description="Paste file(s) from the clipboard (only from console!)."
+      xv_category="$_CATEGORY_SHELL"
+___print_info "<1>xclip<0> aliases added."
+else
+   ___print_disabled "<1>xclip<0> not found."
+fi
+
+if test -f "$HOME/Games/doom/ports/gzdoom/current/gzdoom"; then
+   _gzdoom_dir="$HOME/Games/doom/ports/gzdoom/current"
+   alias doom="$_gzdoom_dir/gzdoom -config $_gzdoom_dir/gzdoom.ini -file"
+      doom_description="Launch GZDoom with \"portable\" settings file."
+      doom_category="$_CATEGORY_APP"
+   alias doomz="doom xs.pk3 bfriend1.pk3 levelinfo.pk3"
+      doomz_description="Launch GZDoom with \"portable\" settings file and XS wad(s)."
+      doomz_category="$_CATEGORY_APP"
+   ___print_info "<1>GZDoom<0> aliases added."
+else
+   ___print_disabled "<1>GZDoom<0> not found."
+fi
+
+if test -f "$HOME/wowsss/wowsss/wowsss.sh"; then
+   alias wow="$HOME/wowsss/start.sh"
+      wow_description="Launch WoWSSS."
+      wow_category="$_CATEGORY_APP"
+   ___print_info "<1>WoWSSS<0> aliases added."
+else
+   ___print_disabled "<1>WoWSSS<0> not found."
+fi
+
+if test -f "/bin/xclip-cutfile"; then
+   if test -f "$HOME/.config/ivan/git-token.txt"; then
+      alias cgtk="xclip -sel clip $HOME/.config/ivan/git-token.txt && echo Token copied to the clipboard."
+         cgtk_description="Copies the github security token to the clipboard."
+         cgtk_category="$_CATEGORY_APP"
+      ___print_info "<1>Git token<0> aliases added."
+   else
+      ___print_disabled "<1>Git token<0> file not found."
+   fi
+else
+   ___print_disabled "<1>Git token<0>: <1>xclip<0> not found."
+fi
+
+# Debian --------------------------------------------------------
+function ___debian_aliases ()
+{
+   local os_is_ubuntu=0
+   local os_is_debian=0
+   local osname;
+
+   # Let's check which distro is in use.
+   if type lsb_release >/dev/null 2>&1; then
+      local osname=$(lsb_release -si)
+      case $osname in
+        *"Ubuntu"*) os_is_ubuntu=1;;
+        *"Debian"*) os_is_debian=1;;
+        *"mint"*)   os_is_ubuntu=1;;
+        *) ___print_error "___debian_aliases" "Unknown linux version [<1>$osname<0>].";;
+      esac
+   fi
+   if [ $os_is_debian -gt 0 ]; then
+      alias poweroff="sudo systemctl poweroff"
+         poweroff_description="Poweroff system (like Ubuntu)."
+         poweroff_category="$_CATEGORY_SYSTEM"
+      alias reboot="sudo systemctl reboot"
+         reboot_description="Reboot system (like Ubuntu)."
+         reboot_category="$_CATEGORY_SYSTEM"
+      ___print_info "<1>Debian power<0> aliases added."
+   fi
+}
+___debian_aliases
+
+# CC ------------------------------------------------------------
+# gnome-session-inhibit --list
+alias powerofff="sudo systemctl poweroff -i"
+   powerofff_description="Force poweroff ignoring inhibitors via systemctl."
+   powerofff_category="$_CATEGORY_SYSTEM"
+alias poweroffi="___poweroffi"
+   poweroffi_description="Try to poweroff every 2 seconds."
+   poweroffi_category="$_CATEGORY_SYSTEM"
+
+function ___poweroffi ()
+{
+   while true ; do
+      poweroff
+      sleep 2
+   done
+}
+
+_save_all_script="$IVANTU_SCRIPTS_DIR/cmd-$HOSTNAME-save-all.sh"
+if test -f "$_save_all_script"; then
+   alias saveall="$_save_all_script"
+      saveall_description="Make a backup of all meaningful configurations."
+      saveall_category="$_CATEGORY_SHELL"
+   ___print_info "<1>Backup script<0> found."
+else
+   ___print_disabled "<1>Backup script<0> not found $_quote1$_save_all_script$_quote2."
+fi
+
+# INAS ----------------------------------------------------------
+if test -f "/etc/samba/smb.conf"; then
+   alias smbed="sudo nano /etc/samba/smb.conf"
+      smbed_description="Edit samba configuration file."
+      smbed_category="$_CATEGORY_APP"
+   alias smbcheck="sudo systemctl status smbd"
+      smbcheck_description="Show samba service status."
+      smbcheck_category="$_CATEGORY_APP"
+   alias smbrestart="sudo service smbd restart"
+      smbrestart_description="Restart samba service."
+      smbrestart_category="$_CATEGORY_APP"
+   ___print_info "<1>Samba<0> aliases added."
+else
+   ___print_disabled "<1>Samba<0> not found."
+fi
+
+# ---------------------------------------------------------------
+alias bat="upower -i $(upower -e | grep battery)"
+   bat_description="Show battery status."
+   bat_category="$_CATEGORY_SYSTEM"
+
+fr_description="Show memory and disk usage."
+fr_category="$_CATEGORY_SYSTEM"
+if test -d "/shared/videoteca"; then
+      alias fr="echo && free -h && echo && df -h / /shared/videoteca /shared/filter && echo"
+      ___print_info "<1>INAS-fr<0> alias added."
+else
+   if [ $HOSTNAME = "cc" ]; then
+      alias fr="echo && free -h && echo && df -h / /mnt/vol-4tb /mnt/vol-10tb && echo"
+      ___print_info "<1>CC-fr<0> alias added."
+   else
+      alias fr="echo && free -h && echo && df -h / && echo"
+      ___print_info "<1>Base-fr<0> alias added."
+   fi
+fi
+
+if test -f "/bin/peres"; then # sudo apt install readpe
+# peres Trilobite64.exe -v 2> /dev/null | awk '{print $3}' | sort -k2
+   alias exe-ver="___peres"
+      exe_ver_description="Get Windows executable versions."
+      exe_ver_category="$_CATEGORY_FILE"
+                                                function ___peres ()
+                                                {
+                                                   local file="$1"
+                                                   if test -f "$file"; then
+                                                      peres -v "$1" 2> /dev/null | sort -k2
+                                                   else
+                                                      ___print_error "exe-ver" "File $_quote1<1>$file<0>$_quote2 not found."
+                                                   fi
+                                                }
+   ___print_info "<1>peres<0> aliases added."
+else
+   ___print_disabled "<1>peres<0> not found."
+fi
+
+
+# CC ------------------------------------------------------------
+function ___cc_aliases ()
+{
+   if [ $HOSTNAME = "cc" ]; then
+      local fname="$HOME/Dropbox/Documents/Pwds/pwds.html"
+
+      alias rmgog="rm unins* support* webcache* && chmn"
+         rmgog_description="Remove useless GOG files."
+         rmgog_category="$_CATEGORY_FILE"
+
+      if test -f "$fname"; then
+         alias pwds="start $fname"
+            pwds_description="Show passwords file."
+            pwds_category="$_CATEGORY_FILE"
+         alias epwds="q $fname"
+            epwds_description="Edit passwords file."
+            epwds_category="$_CATEGORY_FILE"
+      fi
+
+      local fname="$IVANTU_SCRIPTS_DIR/cmd-inas-mount.sh"
+
+      if test -f "$fname"; then
+         alias inas="$fname"
+            inas_description="Un/mount INAS volumes."
+            inas_category="$_CATEGORY_NETWORK"
+         ___print_info "<1>INAS<0> mount alias added."
+      fi
+
+      fname="$IVANTU_SCRIPTS_DIR/cmd-timetask.sh"
+
+      if test -f "$fname"; then
+         alias timetask="$fname"
+            timetask_description="Time a task."
+            timetask_category="$_CATEGORY_SHELL"
+         ___print_info "<1>timetask<0> alias added."
+      fi
+
+      fname="$IVANTU_SCRIPTS_DIR/cmd-apt-safe.sh"
+      if test -f "$fname"; then
+         alias sapt="$fname"
+            sapt_description="Safe apt."
+            sapt_category="$_CATEGORY_SYSTEM"
+         ___print_info "<1>sapt<0> alias added."
+      fi
+
+      fname="$IVANTU_SCRIPTS_DIR/cmd-game-save.sh"
+      if test -f "$fname"; then
+         alias gsave="$fname"
+            gsave_description="Backup selected game savegames."
+            gsave_category="$_CATEGORY_APP"
+         ___print_info "<1>gsave<0> alias added."
+      fi
+
+      fname="$IVANTU_SCRIPTS_DIR/cmd-game-restore.sh"
+      if test -f "$fname"; then
+         alias grestore="$fname"
+            grestore_description="Select and restore savegame."
+            grestore_category="$_CATEGORY_APP"
+         ___print_info "<1>grestore<0> alias added."
+      fi
+
+      alias meld="flatpak run org.gnome.meld"
+         grestore_description="(flatpak) Meld - Visual diff tool."
+         grestore_category="$_CATEGORY_APP"
+   fi
+}
+___cc_aliases
+
+# Network ------------------------------------------------------
+alias extconn="netstat -ano | grep ESTABLISHED | grep -v \":443 \" | grep -v \":80 \" | grep -v \"127.0.0.1:\""
+   extconn_description="List active external connections."
+   extconn_category="$_CATEGORY_NETWORK"
+alias iplookup="___iplookup"
+   iplookup_description="Open a web browser showing information of the given IP address."
+   iplookup_category="$_CATEGORY_NETWORK"
+function ___iplookup ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "iplookup" "$iplookup_description"
+      ___cmd_usage "iplookup ip"
+   else
+      start https://whatismyipaddress.com/ip/$1
+   fi
+}
+
+
+# Mistakes ------------------------------------------------------
+alias car=cat
+   car_description="cat (correction)."
+   car_category="$_CATEGORY_SHELL"
+alias cay=cat
+   cay_description=$car_description
+   cay_category="$_CATEGORY_SHELL"
+
+# ---------------------------------------------------------------
+# Big aliases ---------------------------------------------------
+# ---------------------------------------------------------------
+
+# Editors -------------------------------------------------------
+function ___editors_aliases ()
+{
+   local editors_name=(  "kate-apt"      "kate-fp"                                                             "geany"          "tilde"          "nano"          )
+   local editors_file=(  "/bin/kate"     "/var/lib/flatpak/app/org.kde.kate/current/active/files/bin/kate-bin" "/bin/geany"     "/bin/tilde"     "/bin/nano"     )
+   local editors_alias=( "___kate"       "___kate_fp"                                                          "geany"          "tilde"          "nano"          )
+   local editors_pref=(  "Preferred"     "Preferred"                                                           "Alternative"    "Console"        "Console"       )
+
+   local i n num num2 q_index variable
+
+   i=0
+   n=${#editors_name[@]}
+   q_index=1
+
+   local s="Q-Editors: "
+   for (( i=0 ; i<$n ; i++ ));
+   do
+      if test -f "${editors_file[$i]}"; then
+         if [ $q_index -eq 1 ]; then
+            num=""
+         else
+            num=$q_index
+            s="$s, "
+         fi
+         s="$s$_em2"${editors_name[$i]}$_em0"($_em3""q$num$_em0)"
+
+         alias "q$num"="${editors_alias[$i]}"
+         variable=q$num"_description"
+         let num2=q_index-1
+         eval ${variable}=${editors_pref[$num2]}"\ text\ editor\ \("${editors_name[$i]}"\)."
+         variable=q$num"_category"
+         eval ${variable}="$_CATEGORY_SHELL"
+
+         let q_index++
+      fi
+   done
+   ___print_info "$s."
+}
+___editors_aliases
+
+function ___kate()
+{
+   local pid=$(pidof kate)
+   if [ "$pid" == "" ]; then
+      kate
+      sleep 1.0
+   fi
+   kate "$@" > /dev/null &
+}
+function ___kate_fp()
+{
+   local pid=$(pidof kate)
+   if [ "$pid" == "" ]; then
+      flatpak run org.kde.kate
+      sleep 1.0
+   fi
+   flatpak run org.kde.kate "$@" > /dev/null &
+}
+alias sq="sudo nano"
+   sq_description="sudo nano."
+   sq_category="$_CATEGORY_SHELL"
+
+alias fh="___fh"
+   fh_description="Find in history."
+   fh_category="$_CATEGORY_SHELL"
+function ___fh ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "fh" "$fh_description"
+      ___cmd_usage "fh text"
+   else
+      history|grep $1
+   fi
+}
+
+alias fp="___fp"
+   fp_description="Find pid of a given process name."
+   fp_category="$_CATEGORY_SYSTEM"
+function ___fp ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "fp" "$fp_description"
+      ___cmd_usage "fp name/fragment"
+   else
+      pgrep -ia $1
+   fi
+}
+
+alias ver=___os_version
+   ver_description="Show OS version information."
+   ver_category="$_CATEGORY_SYSTEM"
+
+      function ___elapsed_date_to_string ()
+      {
+         local seconds y m d result empty
+         seconds=$1
+         empty=1
+         result=
+
+         # Years ----
+         y=$(($seconds / 31536000))
+         seconds=$(($seconds - $((y * 31536000))))
+         if [ $y -gt 0 ]; then
+            result="$y years"
+            empty=0
+         fi
+         # Months ----
+         m=$(($seconds / 2592000))
+         seconds=$(($seconds - $((m * 2592000))))
+         if [ $m -gt 0 ]; then
+            if [ $empty -eq 0 ]; then
+               result="$result, "
+            fi
+            result="$result$m months"
+            empty=0
+         fi
+         # Days ----
+         d=$(($seconds / 86400))
+         if [ $d -gt 0 ]; then
+            if [ $empty -eq 0 ]; then
+               result="$result, "
+            fi
+            result="$result$d days"
+            empty=0
+         fi
+         echo "$result"
+      # -u avoid converting this time to local timezone.
+      # echo $(date -u -d@$1 +%H:%M:%S)
+      }
+
+      function ___elapsed_time_to_string ()
+      {
+         local seconds y m d result empty
+         seconds=$1
+         empty=1
+         result=
+
+         # Days ----
+         d=$(($seconds / 86400))
+         seconds=$(($seconds - $((d * 86400))))
+         if [ $d -gt 0 ]; then
+            result="$result$d days"
+            empty=0
+         fi
+
+         # Hours ----
+         h=$(($seconds / 3600))
+         seconds=$(($seconds - $((h * 3600))))
+         if [ $h -gt 0 ]; then
+            if [ $empty -eq 0 ]; then
+               result="$result, "
+            fi
+            result="$result$h hours"
+            empty=0
+         fi
+         # Minutes ----
+         m=$(($seconds / 60))
+         if [ $m -gt 0 ]; then
+            if [ $empty -eq 0 ]; then
+               result="$result, "
+            fi
+            result="$result$m minutes"
+            empty=0
+         fi
+         echo "$result"
+      # -u avoid converting this time to local timezone.
+      # echo $(date -u -d@$1 +%H:%M:%S)
+      }
+
+function ___os_version ()
+{
+   if type lsb_release >/dev/null 2>&1; then
+      # Get OS info from lsb_release
+      local os_name os_version os_codename gdm_name seconds1 seconds2
+      os_name=$(lsb_release -si)
+      os_version=$(lsb_release -sr)
+      os_codename=$(lsb_release -sc)
+      gdm_name=$XDG_CURRENT_DESKTOP
+      ___print_info_bg $_ansi_white"System"
+      ___print_info "  <1>$os_name <2>$os_version<0> <3>$(uname -m)<0> ($os_codename) [<2>$(uname):$OSTYPE<0>] Kernel: <2>$(uname -r)<0>"
+      seconds1=$(stat / --format=%W)
+      seconds2=$(___get_current_time)
+
+      # First Ubuntu Birth: 2025-08-01 01:43:26.000000000 +0200
+      # date --date='2025-08-01 01:43:26' +"%s"  --->  1754005406
+      local seconds0=1754005406
+
+      ___print_info "  Installed on <2>$(___datetime_to_string $(stat / --format=%W))<0> [<3>$(___elapsed_date_to_string $(($seconds2 - $seconds1)))<0>] [Day 0: <1>$(___elapsed_date_to_string $(($seconds2 - $seconds0)))<0>]"
+
+      ___print_info_bg $_ansi_white"Session"
+      os_ip=$(hostname -I 2>&1)
+      ___print_info "  <1>$USER<0>[<2>$UID<0>]@<1>$HOSTNAME<0> - <3>$os_ip<0>"
+      ___print_info "  <1>$XDG_SESSION_TYPE<0> (<2>$XDG_SESSION_DESKTOP<0>) session on <3>$gdm_name<0>"
+      seconds1=$(awk '{print int($1)}' /proc/uptime)
+      seconds2=$(___elapsed_time_to_string $seconds1)
+      ___print_info "  Uptime: <2>$seconds2<0>"
+
+      if [[ $gdm_name == *"GNOME"* ]]; then
+         gnome-shell --version | sed 's/^/   /'
+      fi
+      if [[ $gdm_name == *"KDE"* ]]; then
+         plasmashell  --version | sed 's/^/ /'
+         kf5-config --version | sed 's/^/ /'
+      fi
+   else
+      ___print_info "Unknown OS version."
+   fi
+
+   local shellfn shellver terminal terminalfn
+
+   ___print_info_bg $_ansi_white"Shell"
+# cat /proc/$$/comm -> bash
+   shellfn=$(basename "$SHELL")
+   terminal=$(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$))
+   terminalfn=$(basename "$terminal")
+   case "$shellfn" in
+      "bash") shellver="$BASH_VERSION ";;
+           *) shellver="";;
+   esac
+   ___print_info "  <1>$shellfn<0> <2>$shellver<0>(<3>$SHELL<0>) on <1>$terminalfn<0> (<2>$TERM<0>)"
+
+   ___print_info_bg $_ansi_white"Aliases"
+   ___print_info "  <1>$_ilas_name<0> <2>$_ilas_version<0> (<3>$_ilas_build<0>)"
+   echo ""
+}
+
+alias ft=___ft
+   ft_description="Find text inside files (ignore case, recursive and line numbers)."
+   ft_category="$_CATEGORY_FILE"
+function ___ft ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "ft" "$ft_description"
+      ___cmd_usage "ft text [path=.]"
+   else
+      local text=$1
+      local path=$2
+      if [ $# -lt 2 ]; then
+         path="."
+      fi
+      path=$(realpath "$path")
+      if $_BLINE ; then
+         grep -rni "$text" "$path" | bline -m .Trash-1000 $_find_trash_color | bline -m $HOME $_find_home_color
+      else
+         grep -rni "$text" "$path"
+      fi
+   fi
+}
+
+alias ff=___ff
+   ff_description="Find files."
+   ff_category="$_CATEGORY_FILE"
+function ___ff ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "ff" "$ff_description"
+      ___cmd_usage "ff name-pattern [path=.]"
+   else
+      local pattern=$1
+      local path=$2
+      if [ $# -lt 2 ]; then
+         path="."
+      fi
+      path=$(realpath "$path")
+      if $_BLINE ; then
+         find "$path" -name "${pattern}" 2>/dev/null | bline -m .Trash-1000 $_find_trash_color | bline -m $HOME $_find_home_color
+      else
+         find "$path" -name "${pattern}" 2>/dev/null
+      fi
+   fi
+}
+
+alias pdu=___pdu
+   pdu_description="Progressive disk usage."
+   pdu_category="$_CATEGORY_SYSTEM"
+function ___pdu ()
+{
+   local size0 size1 size mode update magn
+
+   update=$3
+   if [ "$update" == "" ]; then
+      update=2
+   fi
+
+   local path=$1
+   if [ "$path" == "" ]; then
+      ___cmd_descr "pdu" "$pdu_description"
+      ___cmd_usage "pdu path [-m/-b] [seconds update]"
+      return
+   fi
+   path=$(realpath "$path")
+
+   mode=$2
+   magn='b'
+   if [ "$mode" == "" ]; then
+      mode="-m"
+      magn='MB'
+   fi
+
+   ___print_info "Progressive disk usage in \"<1>$path<0>\" (<2>$update<0> seconds update):"
+   # du "$path" -s "$mode"
+   read size0 _ < <(du "$path" "-s" "$mode" 2> /dev/null)
+
+   while true ; do
+      read size1 _ < <(du "$path" "-s" "$mode" 2> /dev/null)
+      let size=size1-size0
+      printf "\r   %s:  %'d + %'.3d" $magn $size $size0
+      sleep $update
+   done
+}
+
+alias count=___count_files
+   count_description="Count the amount of files and directories recursively in a given path."
+   count_category="$_CATEGORY_FILE"
+function ___count_files ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "count" "$count_description"
+      ___cmd_usage "count path=."
+   else
+      local path=$1
+      local d=
+      local f=
+      if [ $# -lt 2 ]; then
+         path="."
+      fi
+      d=$(find $path -type d 2>/dev/null | wc -l)
+      f=$(find $path -type f 2>/dev/null | wc -l)
+      # numfmt --grouping $n
+      printf " %'.3d files and %'.3d directories in \"%s\".\n" $f $d $(realpath $path)
+   fi
+}
+
+alias chm=___chm
+   chm_description="Change file permissions recursively."
+   chm_category="$_CATEGORY_FILE"
+alias chmn="chm 644"
+   chmn_description="Change file permissions to 664 recursively."
+   chmn_category="$_CATEGORY_FILE"
+function ___chm ()
+{
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "chm" "$chm_description"
+      ___cmd_usage "chm value [path=.]"
+   else
+      local value=$1
+      local path=$2
+      if [ $# -lt 2 ]; then
+         path="."
+      fi
+      find "$path" -type f -exec chmod $value -- {} +
+   fi
+}
+
+alias go=___go_dir
+   go_description="cd shortcuts by ID."
+   go_category="$_CATEGORY_SHELL"
+___go_dirs=("gz    :~/doom/ports/gzdoom/current" \
+            "wad   :~/doom/wads" \
+            "docs  :~/Dropbox/Documents" \
+            "save  :~/Dropbox/Apps/Games/00-savegames/Active" \
+            "web   :~/Dropbox/Web" \
+            "vm    :~/VM" \
+            "dw    :~/Downloads" \
+            "shared:~/VM/_shared" \
+            "wow   :~/Projects/wowssses" \
+            "sh    :~/Projects/Ivantu/scripts" \
+            "itu   :~/Projects/Ivantu" \
+            "ivan  :~/.config/ivan" \
+            "eza   :~/.config/eza" \
+            "geany :~/.config/geany" \
+            "xnview:~/.config/xnviewmp" \
+            "conky :~/.config/conky" \
+            "val   :~/snap/steam/common/.config/unity3d/IronGate" \
+            "steamapps : ~/snap/steam/common/.local/share/Steam/steamapps/common" \
+           )
+function ___go_dir ()
+{
+   local id0 n i s id dir c1 c2
+
+   id0=$1
+   n=${#___go_dirs[@]}
+   c1="\e[1m"
+   c2="\e[0m"
+
+   if [ $# -lt 1 ]; then
+      ___cmd_descr "go" "$go_description"
+      ___cmd_usage "go dir-id"
+      for (( i=0 ; i<$n ; i++ ));
+      do
+         s=${___go_dirs[$i]}
+         IFS=":"
+            set $s
+            id=$(___trim $1)
+            dir=$2
+         IFS=$_IFS0
+
+         printf "       go "
+         echo -e -n $c1
+         printf %-10s $id
+         echo -e -n $c2
+         printf "= cd %s\n" $dir
+#        printf "       go %-10s= cd %s\n" $id $dir
+      done
+   else
+      for (( i=0 ; i<$n ; i++ ));
+      do
+         s=${___go_dirs[$i]}
+         IFS=":"
+            set $s
+            id=$(___trim $1)
+            dir=$2
+         IFS=$_IFS0
+         if [ "$id" = "$id0" ]; then
+            cd "${dir/\~/$HOME}"
+            return
+         fi
+      done
+      ___print_error "go" "dir-id $_quote1<1>$id0<0>$_quote2 not found."
+   fi
+}
+
+function ___complete_go ()
+{
+   local i n opts cur opts
+
+   COMPREPLY=()
+   cur="${COMP_WORDS[COMP_CWORD]}"
+
+   opts=""
+
+  n=${#___go_dirs[@]}
+   for (( i=0 ; i<$n ; i++ ));
+   do
+      s=${___go_dirs[$i]}
+      IFS=":"
+         set $s
+         id=$(___trim $1)
+      IFS=$_IFS0
+      opts="$opts $id"
+   done
+
+   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+   return 0
+}
+complete -F ___complete_go go
+
+alias desktop_link=_desktop_link
+   desktop_link_description="Create an absolute symbolic link in the desktop to the specified file."
+   desktop_link_category="$_CATEGORY_FILE"
+function _desktop_link ()
+{
+   if [ $# -lt 2 ]; then
+      ___cmd_descr "desktop_link" "$desktop_link_description"
+      ___cmd_usage "desktop_link full-source-file-name destination-link-only-name"
+   else
+      local source=$1
+      local dest=$2
+      ln -s "$(realpath "$source")" "$HOME/Desktop/$dest"
+   fi
+}
+
+alias all=_list_aliases
+   all_description="Show a list of aliases".
+   all_category="$_CATEGORY_SHELL"
+function _list_aliases ()
+{
+   local aliases str show_descr the_category i cmd cr ncmd
+
+   ncmd=$COLUMNS
+   let ncmd=ncmd-3
+   let ncmd=ncmd/16
+
+   aliases=$(compgen -a)
+   show_descr=0
+   i=1
+   cr=0
+
+   the_category=""
+   if [[ $1 != "" ]]; then
+
+      cmd=$1
+      for str in ${_AL_CATEGORIES[@]}; do
+         if [ "$str" = "$cmd" ]; then
+            the_category="$str"
+         fi
+      done
+
+      if [ "$the_category" = "" ]; then
+         if [ "$cmd" != "?" ]; then
+            str=${BASH_ALIASES[$cmd]}
+            if [ "$str" = "" ]; then
+               ___print_error "all" "Unknown alias $_quote1<1>$cmd<0>$_quote2."
+            else
+               ___print_alias 1 0 $cmd
+               return
+            fi
+         fi
+      fi
+      show_descr=1
+   fi
+
+   if [ $show_descr -eq 0 ]; then
+      printf "   "
+   fi
+
+   while IFS= read -r cmd ; do
+
+      ___print_alias $show_descr 1 $cmd $the_category
+
+      cr=0
+      if [ $show_descr = 0 ]; then
+         let i=i+1
+         if [ $i -gt $ncmd ]; then
+            printf "\n   "
+            i=1
+            cr=1
+         fi
+       fi
+
+   done <<< "$aliases"
+
+   if [ $show_descr -eq 0 ] && [ $cr -eq 0 ]; then
+      echo
+   fi
+   echo
+}
+
+function ___print_alias ()
+{
+   local show_descr do_indent cmd only_categ base value suf varname description category c1 c2
+
+   show_descr=$1
+   do_indent=$2
+   cmd=$3
+   only_categ=$4
+
+   value=${BASH_ALIASES[$cmd]}
+   if [[ $value == *"sudo "* ]]; then
+      suf="*"
+      c1="$_ansi_lyellow"
+      c2="$_ansi_off"
+   else
+      suf=""
+      c1=
+      c2=
+   fi
+
+   if [ $show_descr -gt 0 ]; then
+
+      # varname root (cmd)
+      base=${cmd//\./_}
+      base=${base//\-/_}
+
+      varname=$base"_category"
+      if [[ -v $varname ]]; then
+         category=${!varname}
+      else
+         varname="_"$varname
+         if [[ -v $varname ]]; then
+            category=${!varname}
+         else
+            category="?"
+         fi
+      fi
+
+      if [ "$only_categ" != "" ]; then
+         if [ "$only_categ" != "$category" ]; then
+            return
+         fi
+      fi
+
+      printf "   "
+      echo -e -n $c1
+      if [ $do_indent -gt 0 ]; then
+         printf %-16s $cmd$suf
+      else
+         printf %s $cmd$suf
+      fi
+      echo -e -n $c2
+
+
+      varname=$base"_description"
+      if [[ -v $varname ]]; then
+         description=${!varname}
+      else
+         varname="_"$varname
+         if [[ -v $varname ]]; then
+            description=${!varname}
+         else
+            description="?"
+         fi
+      fi
+
+      c1=${_AL_CATEGORY_COLORS[$category]}
+      echo -e " - [$c1$category$_ansi_off] $description"
+   else
+      echo -e -n $c1
+      printf %-16s $cmd$suf
+      echo -e -n $c2
+   fi
+}
+
+function ___complete_all ()
+{
+   local cur opts
+
+   # get all the aliases names
+   opts=$(compgen -a)
+   opts="? "${opts//$'\r'}
+
+   COMPREPLY=()
+   cur="${COMP_WORDS[COMP_CWORD]}"
+   #prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+   return 0
+}
+
+# Autocompletion in aliases!
+# Google: ubuntu add autocompletion in aliases
+# https://askubuntu.com/questions/652776/how-to-get-tab-to-work-with-arguments-of-aliases-to-autocomplete-as-can-be-don
+# https://unix.stackexchange.com/questions/4219/how-do-i-get-bash-completion-for-command-aliases
+
+# `all` <tab> <tab> would show autocomplete above wordlist
+complete -F ___complete_all all
+# [Verification needed] If you want simplest wordlist, use below instead:
+# complete -W "help verbose version" all
+
+# ----------------------------------------------------------------------
+___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) loaded. ]"
+# ----------------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# Change color of command console output.
+# $ command | pretty
+# pretty ()
+# {
+#     while read -r line; do
+#         printf "\033[38;5;%dm%s\033[0m\n" $(($RANDOM%255)) "$line";
+#     done
+# }
+# ----------------------------------------------------------------------
+

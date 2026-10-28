@@ -1,0 +1,197 @@
+# https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md
+#b4f9f8
+  
+colourful: true
+
+filekinds:
+  normal: 
+     foreground: "#c0c0f0"
+  directory:
+     foreground: "#40a0f0"
+  symlink:
+     foreground: "#E677FF"
+  block_device: 
+     foreground: "#ffff80"
+  char_device:
+     foreground: "#00ff00"
+     is_bold: false
+  socket:
+     foreground: "#00c0a0"     
+  pipe:
+     foreground: "#00b0d0"
+  executable:
+     foreground: "#ffffff"
+     is_bold:    true
+
+  mount_point: 
+     foreground: "#60B7FF"
+     is_underline: true
+  special: { foreground: "#ff00ff" }
+
+perms:
+  user_read:
+     foreground: "#00ff00"
+  user_write:
+     foreground: "#ff8080"
+  user_execute_file:
+     foreground: "#ffffff"
+     is_underline: false
+  user_execute_other:
+     foreground: "#ffffff"
+  group_read:
+     foreground: "#00ff00"
+  group_write:
+     foreground: "#ff8080"
+  group_execute:
+     foreground: "#ffffff"
+  other_read:
+     foreground: "#00ff00"
+  other_write:
+     foreground: "#ff8080"
+  other_execute:
+     foreground: "#ffffff"
+  special_other: 
+     foreground: "#000000"
+     background: "#ffff00"
+  attribute:
+     foreground: "#0000ff"
+     background: "#00ffff"
+  special_user_file: { foreground: "#ff00ff" }
+
+size:
+  major:
+     foreground: "#00ffff"
+  minor:
+     foreground: "#00f0f0"
+  number_byte:
+     foreground: "#c0c0c0"
+  number_kilo:
+     foreground: "#ffffff"
+  number_mega:
+     foreground: "#ffff00"
+  number_giga:
+     foreground: "#ff8080"
+  number_huge:
+     foreground: "#ff0000"
+  unit_byte:
+     foreground: "#a0a0a0"
+  unit_kilo:
+     foreground: "#c0c0c0"
+  unit_mega:
+     foreground: "#c0c000"
+  unit_giga:
+     foreground: "#c06000"
+  unit_huge:
+     foreground: "#c00000"
+
+users:
+  user_you:
+     foreground: "#c0c0f0"
+  user_root:
+     foreground: "#ffff00"
+  user_other:
+     foreground: "#ff8000"
+  group_yours:
+     foreground: "#c0c0c0"
+  group_root:
+     foreground: "#ffff00"
+  group_other:
+     foreground: "#ff8000"
+
+links:
+  normal: { foreground: "#ff00ff" }
+  multi_link_file: { foreground: "#ff00ff" }
+
+git:
+  new:
+     foreground: "#9ece6a"
+  modified:
+     foreground: "#bb9af7"
+  deleted:
+     foreground: "#db4b4b"
+  renamed:
+     foreground: "#2ac3de"
+  typechange:
+     foreground: "#2ac3de"
+  ignored:
+     foreground: "#545c7e"
+  conflicted:
+     foreground: "#ff9e64"
+
+git_repo:
+  branch_main:
+     foreground: "#737aa2"
+  branch_other:
+     foreground: "#b4f9f8"
+  git_clean:
+     foreground: "#292e42"
+  git_dirty:
+     foreground: "#bb9af7"
+
+security_context:
+  colon: { foreground: "#545c7e" }
+  user: { foreground: "#737aa2" }
+  role: { foreground: "#2ac3de" }
+  typ: { foreground: "#3d59a1" }
+  range: { foreground: "#9d7cd8" }
+
+file_type:
+  compiled: 
+     foreground: "#808080"
+     is_bold:    false
+  document:  
+     foreground: "#00ffff"
+     is_bold:    false
+  source: 
+     foreground: "#00c0c0"
+     is_bold:    false
+  build: 
+     foreground: "#00ffff"
+     is_bold:    false
+  image:
+     foreground: "#e0a000"
+     is_bold:    false
+  video: 
+     foreground: "#f0e000"
+     is_bold:    true
+  music: 
+     foreground: "#00e000"
+     is_bold:    false
+  lossless: 
+     foreground: "#40ff40"
+     is_bold:    false
+  temp: 
+     foreground: "#808080"
+     background: "#200000"
+     is_bold:    false
+  compressed:
+     foreground: "#1878d8"
+     is_bold:    true
+  crypto:
+     foreground: "#c060ff"
+     is_bold:    false
+
+punctuation:
+   foreground: "#808080"
+date: 
+   foreground: "#e0af68"
+inode:
+   foreground: "#c0c0f0"
+blocks: { foreground: "#ff00ff" }
+header: 
+   foreground: "#c0c0f0"
+octal: { foreground: "#ff9e64" }
+flags: { foreground: "#9d7cd8" }
+
+symlink_path:
+   foreground: "#c0c0c0"
+control_char: { foreground: "#ffffff" }
+broken_symlink: 
+   foreground: "#f0e000"
+   is_underline: false
+   
+broken_path_overlay:
+   foreground: "#f0e000"
+   background: "#800000"
+   is_underline: false
+   

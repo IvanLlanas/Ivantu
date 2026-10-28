@@ -1,0 +1,34 @@
+
+System Configuration
+   keyboard                setup_keyboard_options
+   power                   setup_power_settings
+   startup files           setup_startup_configuration_files
+   bline                   setup_module_bline
+
+GUI-System Configuration
+   GRUB                    setup_grub_menu
+   boot-logos              setup_boot_logos
+   login screen            setup_login_screen_wallpaper
+   gse-gdm                 setup_module_gse_gdm_extension
+
+GUI-Desktop Configuration
+   desktop appearance      setup_desktop_appearance
+   wallpaper               setup_desktop_wallpaper
+   user icon               setup_user_icon
+   Extensions              setup_gnome_extensions
+   desktop files           create_desktop_files
+
+Icons Replacement
+   Icons                   setup_vista_icons
+   *.desktop icons         update_desktop_files
+   custom folder icons     update_folder_icons
+
+Applications Configuration
+   Gnome terminal          setup_terminal_profiles
+   Ptyxis theme            setup_ptyxis
+   eza                     setup_eza
+   Conky                   setup_conky
+
+Icon Updates
+   *.desktop icons         update_desktop_files
+   custom folder icons     update_folder_icons

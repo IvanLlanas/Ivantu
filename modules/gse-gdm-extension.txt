@@ -1,0 +1,16 @@
+https://github.com/pratap-panabaka/gse-gdm-extension
+
+git clone https://github.com/pratap-panabaka/gse-gdm-extension/
+cd gse-gdm-extension
+sudo ./install.sh
+
+sudo ./uninstall.sh
+
+
+[Alternative] -------------------------------------------------
+Also in flatpak.
+
+sudo add-apt-repository ppa:ubuntuhandbook1/gdm-settings
+sudo apt update
+sudo apt install gdm-settings libglib2.0-dev-bin
+gdm-settings &

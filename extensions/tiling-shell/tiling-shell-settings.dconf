@@ -1,0 +1,15 @@
+[/]
+edge-tiling-mode='default'
+enable-blur-selected-tilepreview=false
+enable-blur-snap-assistant=false
+enable-snap-assist=true
+enable-span-multiple-tiles=true
+enable-window-border=false
+last-version-name-installed='17.3'
+layouts-json='[{"id":"8002090","tiles":[{"x":0.49980023971234516,"y":0,"width":0.5001997602876644,"height":1,"groups":[1]},{"x":0,"y":0,"width":0.49980023971234516,"height":1,"groups":[1]}]},{"id":"8977217","tiles":[{"x":0,"y":0.5018518518518519,"width":1,"height":0.49814814814814773,"groups":[1]},{"x":0,"y":0,"width":1,"height":0.5018518518518519,"groups":[1]}]},{"id":"Layout 3","tiles":[{"x":0,"y":0,"width":0.33,"height":1,"groups":[1]},{"x":0.33,"y":0,"width":0.67,"height":1,"groups":[1]}]},{"id":"Layout 4","tiles":[{"x":0,"y":0,"width":0.67,"height":1,"groups":[1]},{"x":0.67,"y":0,"width":0.33,"height":1,"groups":[1]}]},{"id":"Layout 2","tiles":[{"x":0,"y":0,"width":0.3260087894526568,"height":1,"groups":[1]},{"x":0.3260087894526568,"y":0,"width":0.3479824210946864,"height":1,"groups":[2,1]},{"x":0.6739912105473432,"y":0,"width":0.32600878945265677,"height":1,"groups":[2]}]},{"id":"Layout 1","tiles":[{"x":0,"y":0,"width":0.5001997602876548,"height":0.5,"groups":[2,3]},{"x":0.5001997602876548,"y":0,"width":0.4998002397123619,"height":0.5,"groups":[4,2]},{"x":0,"y":0.5,"width":0.5001997602876548,"height":0.49999999999999994,"groups":[3,2]},{"x":0.5001997602876548,"y":0.5,"width":0.4998002397123619,"height":0.49999999999999994,"groups":[4,2]}]}]'
+overridden-settings='{"org.gnome.mutter.keybindings":{"toggle-tiled-right":"@as []","toggle-tiled-left":"@as []"},"org.gnome.desktop.wm.keybindings":{"maximize":"@as []","unmaximize":"@as []"},"org.gnome.mutter":{"edge-tiling":"false"}}'
+selected-layouts=[['Layout 1', 'Layout 1', 'Layout 1']]
+show-indicator=true
+tile-preview-animation-time=uint32 96
+window-border-width=uint32 2
+window-use-custom-border-color=false
