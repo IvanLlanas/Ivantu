@@ -368,6 +368,7 @@ function do_updates ()
    var_current_category="Updates"
 #  choose_theme
    setup_startup_configuration_files
+   install_ivantu_icons
    update_desktop_files
    update_folder_icons
 }
