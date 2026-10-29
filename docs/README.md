@@ -28,13 +28,13 @@ Andrew Zaech's [azclock](https://gitlab.com/AndrewZaech/azclock) [extension](htt
 
 aunetx's [blur-my-shell](https://github.com/aunetx/blur-my-shell) [extension](https://extensions.gnome.org/extension/3193/blur-my-shell/).
 
+Tudmotu's [clipboard-indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) [extension](https://extensions.gnome.org/extension/779/clipboard-indicator/).
+
+Domenico Ferraro's [tilingshell](https://github.com/domferr/tilingshell) [extension](https://extensions.gnome.org/extension/7065/tiling-shell/).
+
+MojArch's [wiggly](https://github.com/Arch-Lover/wiggly) [extension](https://extensions.gnome.org/extension/8969/wiggly/).
+
 Shakiba bline application ([link 1](https://github.com/k-five/bline)) ([link2](https://github.com/shakibamoshiri/bline)).
-
-Tudmotu's [clipboard-indicator] ([link1](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator)) ([link2](https://extensions.gnome.org/extension/779/clipboard-indicator/))
-
-Domenico Ferraro's [tilingshell] ([link1](https://github.com/domferr/tilingshell)) ([link2](https://extensions.gnome.org/extension/7065/tiling-shell/))
-
-MojArch's [wiggly] ([link1](https://extensions.gnome.org/extension/8969/wiggly/)) ([link2](https://github.com/Arch-Lover/wiggly))
 
 ## DISCLAIMER, WARNING and all that
 Use it at your own risk. In fact, if you are not me don't use it. Have fun.
