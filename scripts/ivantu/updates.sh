@@ -87,7 +87,7 @@ function update_desktop_files ()
 }
 
 
-function create_desktop_file
+function create_desktop_file ()
 {
    local filename="$1"
    local name="$2"
@@ -121,13 +121,31 @@ function create_desktop_files ()
 
       local desktop_dir=$(xdg-user-dir DESKTOP)
       local filename=
+      local icon=
 
       filename="$desktop_dir/$HOSTNAME.desktop"
       if [ -f $filename ]; then
          ___print_info "File <1>$filename<0> already exists. "$skipping_
       else
          ___print_info "Creating <1>$filename<0>..."
-         create_desktop_file "$filename" "$HOSTNAME" "xdg-open /" "This computer" "$_icons_dir/cosmos-1.png"
+         # hostnamectl chassis:
+         # • desktop: Standard desktop computers.
+         # • laptop: Portable notebook computers.
+         # • convertible: 2-in-1 convertible devices that switch between laptop and tablet.
+         # • server: Rackmount, tower, or dedicated server hardware.
+         # • tablet: Touch-first tablet devices.
+         # • handset: Smartphones or handheld communication devices.
+         # • watch: Wearable smartwatches.
+         # • embedded: Embedded systems or single-board computers.
+         # • vm: Virtual machines that lack a physical chassis.
+         # • container: OS-level containers (such as Docker or LXC).
+         icon=$(hostnamectl chassis)
+         if [ $icon = "laptop" ]; then
+            icon="$_icons_dir/thinkpad-p1-gen5-1.png"
+         else
+            icon="$_icons_dir/cosmos-1.png"
+         fi
+         create_desktop_file "$filename" "$HOSTNAME" "xdg-open /" "This computer" "$icon"
       fi
 
    else
