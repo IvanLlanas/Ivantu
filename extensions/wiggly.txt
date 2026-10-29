@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/8969/wiggly/
+https://github.com/Arch-Lover/wiggly
+
+dconf dump /org/gnome/shell/extensions/wiggly/ > wiggly-settings.dconf

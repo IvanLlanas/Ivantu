@@ -475,6 +475,18 @@ function setup_gnome_extensions ()
          installed_new=1
       fi
 
+# wiggly@mojarch
+# https://extensions.gnome.org/extension/8969/wiggly/
+# https://github.com/Arch-Lover/wiggly
+# export: dconf dump /org/gnome/shell/extensions/wiggly/ > wiggly-settings.dconf
+      install_gnome_shell_extension 'wiggly@mojarch' 'wiggly' '/org/gnome/shell/extensions/wiggly/'
+      if [ $var_installed -eq 1 ]; then
+         log 0 "<1>wiggly<0> already installed."
+      fi
+      if [ $var_installed -ge 2 ]; then
+         installed_new=1
+      fi
+
 # ------------------------------------------
 
       if [ $installed_new -ge 1 ]; then

@@ -34,5 +34,7 @@ Tudmotu's [clipboard-indicator] ([link1](https://github.com/Tudmotu/gnome-shell-
 
 Domenico Ferraro's [tilingshell] ([link1](https://github.com/domferr/tilingshell)) ([link2](https://extensions.gnome.org/extension/7065/tiling-shell/))
 
+MojArch's [wiggly] ([link1](https://extensions.gnome.org/extension/8969/wiggly/)) ([link2](https://github.com/Arch-Lover/wiggly))
+
 ## DISCLAIMER, WARNING and all that
 Use it at your own risk. In fact, if you are not me don't use it. Have fun.
