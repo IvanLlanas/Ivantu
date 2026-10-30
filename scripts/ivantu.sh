@@ -152,6 +152,10 @@ skipping_="Skipping..."
 
 # Global variables -------------------------------------------------------------
 
+var_monitor_count=0
+var_monitor_scaling=0
+var_monitor_scaling_pct=0
+
 var_cfg_always_yes=0
 var_cfg_verbose=1
 var_cfg_module=0
@@ -203,6 +207,7 @@ function show_warning_message ()
    ___print_centered_fw "" "-" $_ansi_bg_yellow $_ansi_black $_ansi_red
    CR
    check_required_packages
+   detect_monitors_data
 
    confirm 0 "Do you want to continue"
    if [ $var_confirmed -gt 0 ]; then

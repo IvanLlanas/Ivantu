@@ -15,6 +15,7 @@
 # function check_and_install_optional_package (package_name, name, default=1)
 # function choose_theme (force)
 # function select_available_filename (check_dirs, dir, sufix)
+# function detect_monitors_data ()
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -401,4 +402,53 @@ function select_available_filename ()
 #     return
 #  fi
    var_selected_filename=$filename
+}
+
+# ------------------------------------------------------------------------------
+# function detect_monitors_data ()
+# Assigns values to var_monitor_count, var_monitor_scaling,
+# var_monitor_scaling_pct and var_main_monitor.
+# ------------------------------------------------------------------------------
+function detect_monitors_data ()
+{
+# xrandr --query | grep -c " connected" -> Monitors connectats
+# xrandr --query | grep " connected" | grep -c "+" -> Monitors mostrant imatge
+# var_monitor_count=$(xrandr --query | grep -c " connected")
+# gsettings get org.gnome.desktop.interface scaling-factor
+# gsettings get org.gnome.desktop.interface text-scaling-factor
+
+   local DISPLAY_INFO=$(busctl --user --json=short call \
+                        org.gnome.Mutter.DisplayConfig \
+                        /org/gnome/Mutter/DisplayConfig \
+                        org.gnome.Mutter.DisplayConfig \
+                        GetCurrentState) || exit 1
+
+    # Active logical monitors
+    var_monitor_count=$(jq '.data[2] | length' <<< "$DISPLAY_INFO")
+
+    var_monitor_scaling=$(jq -r '
+        .data[2][]
+        | select(.[4] == true)
+        | .[2]
+    ' <<< "$DISPLAY_INFO")
+
+    var_monitor_scaling_pct=$(jq -r '
+        .data[2][]
+        | select(.[4] == true)
+        | (.[2] * 100 | round)
+    ' <<< "$DISPLAY_INFO")
+
+    # Main monitor connector
+    var_main_monitor=$(jq -r '
+        .data[2][]
+        | select(.[4] == true)
+        | .[5][0][0]
+    ' <<< "$DISPLAY_INFO")
+
+    log 2 "Active monitors: <1>$var_monitor_count<0>"
+    log 2 "Main monitor: <1>$var_main_monitor<0>"
+    log 2 "Scaling: <1>$var_monitor_scaling<0>"
+    log 2 "Scaling percent: <1>$var_monitor_scaling_pct<0>"
+    log 2 ""
+#   log 1 "Scaling percent: $(awk "BEGIN {printf \"%.0f\", $ESCALA_PRINCIPAL * 100}")%"
 }

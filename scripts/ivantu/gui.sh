@@ -331,6 +331,7 @@ function install_gnome_shell_extension ()
    local id="$1"
    local fileid="$2"
    local gnomekey="$3"
+   local forceconfig="$4"
    local ext_dir="$_extensions_dir/$fileid"
    local filename="$ext_dir/$fileid"
    local dir="$HOME/.local/share/gnome-shell/extensions/$id"
@@ -357,6 +358,11 @@ function install_gnome_shell_extension ()
          var_logout=1
          if [ $gnomekey ] && [ $gnomekey != "" ]; then
             local filename2="$filename-settings.dconf"
+            if [ $forceconfig != "" ]; then
+               filename2="$ext_dir/$forceconfig"
+            else
+               filename2="$filename-settings.dconf"
+            fi
             log 2 "Importing settings for \"$fileid\" from $filename2..."
             dconf load "$gnomekey" < "$filename2"
          else
@@ -431,7 +437,19 @@ function setup_gnome_extensions ()
 # https://extensions.gnome.org/extension/5156/desktop-clock/
 # https://gitlab.com/AndrewZaech/azclock
 # export: dconf dump /org/gnome/shell/extensions/azclock/ > azclock-settings.dconf
-      install_gnome_shell_extension 'azclock@azclock.gitlab.com' 'azclock' '/org/gnome/shell/extensions/azclock/'
+      local configfile=
+      if [ $var_monitor_count -le 2 ]; then
+         if [ $var_monitor_scaling_pct -gt 120 ]; then
+            log 2 "Using monitor configuration 1x125."
+            configfile="azclock-settings-1920-125.dconf"
+         else
+            log 2 "Using monitor configuration 1x00."
+            configfile="azclock-settings-1920-100.dconf"
+         fi
+      else
+         log 2 "Using monitor configuration 3x00."
+      fi
+      install_gnome_shell_extension 'azclock@azclock.gitlab.com' 'azclock' '/org/gnome/shell/extensions/azclock/' "$configfile"
       if [ $var_installed -eq 1 ]; then
          log 0 "<1>azclock<0> already installed."
       fi

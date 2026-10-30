@@ -2,7 +2,29 @@
 create-initial-widget=false
 prefs-visible-page=''
 update-notifier-project-version=21
-widgets=[{'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <true>}>}, {'7c52f99d-d2bf-482b-8248-023c08a9b0d3': <{'enabled': <true>}>}, {'701036fd-b930-47ed-8641-166e574215a0': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}]
+widgets=[{'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}, {'7c52f99d-d2bf-482b-8248-023c08a9b0d3': <{'enabled': <true>}>}, {'701036fd-b930-47ed-8641-166e574215a0': <{'enabled': <true>}>}, {'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <false>}>}]
+
+[widget-data/1862b229-86ab-4a07-b86f-0f74e3e7dbc2]
+background-color='rgba(0,0,0,0.51)'
+border-color='rgb(255,255,255)'
+border-radius=16
+border-width=1
+convert-old-location-done=true
+elements=[{'b87051dc-e11d-440b-8b9a-68484877cb6e': <{'enabled': <true>}>}]
+location-data='{"monitorIndex":2,"relativeX":0.91,"relativeY":-0.012999999999999972}'
+name='Right Screen Date'
+spacing=0
+vertical=false
+
+[widget-data/1862b229-86ab-4a07-b86f-0f74e3e7dbc2/element-data/b87051dc-e11d-440b-8b9a-68484877cb6e]
+border-color='rgb(255,255,255)'
+border-width=1
+date-format=' <span color="#c0d0ef" font_size="32pt">%A\n%d <span color="#8495af">%m</span> <span color="#405870">%y</span></span>'
+font-family-override=(true, 'LCARS')
+font-size=8
+font-weight=200
+foreground-color='rgb(224,224,255)'
+name='Day and Date Label'
 
 [widget-data/1b3ec542-d63d-4211-8160-b2074fce4732]
 background-color='rgba(0,0,0,0.51)'
@@ -30,7 +52,7 @@ border-radius=16
 border-width=0
 convert-old-location-done=true
 elements=[{'fe9f6ae4-5e23-40a5-aeed-8dc1c0df720a': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.805,"relativeY":0.506}'
+location-data='{"monitorIndex":2,"relativeX":0.805,"relativeY":0.466}'
 name='Weather Widget'
 padding=(25, 25, 25, 25)
 show-background=true
@@ -62,6 +84,25 @@ show-border=true
 spacing=0
 vertical=false
 
+[widget-data/3109302f-daec-44b1-b0a1-b853f78de5a9]
+background-color='rgba(0,0,0,0.51)'
+border-color='rgb(255,255,255)'
+border-radius=16
+border-width=1
+convert-old-location-done=true
+elements=[{'d1604329-a53b-45f8-b250-d8037daed08e': <{'enabled': <true>}>}]
+location-data='{"monitorIndex":2,"relativeX":0.83,"relativeY":-0.01900000000000006}'
+name='Right Screen Time'
+spacing=0
+vertical=false
+
+[widget-data/3109302f-daec-44b1-b0a1-b853f78de5a9/element-data/d1604329-a53b-45f8-b250-d8037daed08e]
+date-format=' <span color="#d0e0ff" font_size="80pt">%H</span><span font_size="24pt"> </span><span font_size="48pt" color="#8495af">%M</span> '
+font-family-override=(true, 'LCARS')
+font-size=8
+foreground-color='rgb(224,224,255)'
+name='Time Label'
+
 [widget-data/61cee63d-b76e-4ffe-80fa-69b5a763be72]
 background-color='rgba(0,0,0,0.51)'
 border-color='rgb(255,255,255)'
@@ -91,7 +132,7 @@ border-color='rgb(143,240,164)'
 border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.86,"relativeY":-0.003999999999999995}'
+location-data='{"monitorIndex":2,"relativeX":0.857,"relativeY":-0.003999999999999995}'
 name='Clock (monitor 0-U)'
 padding=(0, 0, 0, 0)
 spacing=0
@@ -167,7 +208,7 @@ name='Day and Date Label'
 anchor-point='Top_Left'
 convert-old-location-done=true
 elements=[{'92747373-1aef-4252-a1cf-8c6a85a4f04d': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.84,"relativeY":0.855}'
+location-data='{"monitorIndex":2,"relativeX":0.83,"relativeY":0.845}'
 name='Disk Usage'
 
 [widget-data/c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38/element-data/92747373-1aef-4252-a1cf-8c6a85a4f04d]
@@ -206,7 +247,7 @@ border-color='rgb(143,240,164)'
 border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":1,"relativeX":0.857,"relativeY":-0.005}'
+location-data='{"monitorIndex":1,"relativeX":0.857,"relativeY":0.095}'
 name='Clock (monitor 1)'
 padding=(0, 0, 0, 0)
 show-background=false
