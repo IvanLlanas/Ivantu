@@ -239,7 +239,7 @@ function check_required_packages ()
    warning_required_package eza 0
    warning_required_package conky-all 0
    warning_required_package gnome-shell-extension-manager 0
-   warning_required_package 7zip 1 "This package IS required for some of the installations. You should install it first."
+   warning_required_package 7zip 1 "This package IS required for some of the installations. You must install it first."
    CR
 }
 
@@ -359,6 +359,14 @@ function do_icons_configuration ()
    var_current_category="Icons"
 #  choose_theme
    install_ivantu_icons
+
+   local iconset=$(gsettings get org.gnome.desktop.interface icon-theme)
+   iconset="${iconset%\'}"
+   iconset="${iconset#\'}"
+   if [ $iconset = "Ivantu" ]; then
+      update_desktop_files
+      update_folder_icons
+   fi
 }
 
 # ------------------------------------------------------------------------------
@@ -369,8 +377,14 @@ function do_updates ()
 #  choose_theme
    setup_startup_configuration_files
    install_ivantu_icons
-   update_desktop_files
-   update_folder_icons
+
+   local iconset=$(gsettings get org.gnome.desktop.interface icon-theme)
+   iconset="${iconset%\'}"
+   iconset="${iconset#\'}"
+   if [ $iconset = "Ivantu" ]; then
+      update_desktop_files
+      update_folder_icons
+   fi
 }
 
 # ------------------------------------------------------------------------------

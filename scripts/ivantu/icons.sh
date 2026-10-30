@@ -26,8 +26,7 @@ function install_ivantu_icons ()
 
    confirm 0 "Do you want to continue"
    if [ $var_confirmed -gt 0 ]; then
-      _install_ivantu_iconset "$current_theme"
-      update_folder_icons
+      _install_ivantu_iconset
    else
       ___print_info $skipping_
    fi
@@ -52,6 +51,8 @@ function _install_ivantu_iconset ()
 # ------------------------------------------------------------------------------
 function update_folder_icons ()
 {
+   print_title "$var_current_category" "Update <1>folders icons<0>"
+
    confirm 0 "Assign custom <1>folders<0> icons"
    if [ $var_confirmed -gt 0 ]; then
       _assign_ivantu_icons

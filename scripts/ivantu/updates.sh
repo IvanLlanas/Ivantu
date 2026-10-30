@@ -141,9 +141,14 @@ function create_desktop_files ()
          # • container: OS-level containers (such as Docker or LXC).
          icon=$(hostnamectl chassis)
          if [ $icon = "laptop" ]; then
-            icon="$_icons_dir/thinkpad-p1-gen5-1.png"
+            icon="$_icons_dir/computers/thinkpad-p1-gen5-1.png"
+            log 2 "Computer is <1>laptop<0>..."
+         elif [ $icon = "vm" ]; then
+            icon="$_icons_dir/computers/vm-1.png"
+            log 2 "Computer is <1>vm<0>..."
          else
-            icon="$_icons_dir/cosmos-1.png"
+            icon="$_icons_dir/computers/cosmos-1.png"
+            log 2 "Computer is <1>desktop<0>(\?)..."
          fi
          create_desktop_file "$filename" "$HOSTNAME" "xdg-open /" "This computer" "$icon"
       fi
