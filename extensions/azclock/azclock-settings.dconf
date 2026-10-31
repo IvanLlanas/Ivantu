@@ -2,7 +2,7 @@
 create-initial-widget=false
 prefs-visible-page=''
 update-notifier-project-version=21
-widgets=[{'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <true>}>}, {'7c52f99d-d2bf-482b-8248-023c08a9b0d3': <{'enabled': <true>}>}, {'701036fd-b930-47ed-8641-166e574215a0': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}]
+widgets=[{'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}, {'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <true>}>}, {'7c52f99d-d2bf-482b-8248-023c08a9b0d3': <{'enabled': <true>}>}, {'701036fd-b930-47ed-8641-166e574215a0': <{'enabled': <true>}>}]
 
 [widget-data/2912ff53-7b3e-41fa-ac11-a3bc3eda4827]
 background-color='rgba(0, 0, 0, .6)'
@@ -103,7 +103,7 @@ location-data='{"monitorIndex":2,"relativeX":0.84,"relativeY":0.665}'
 name='Disk Usage'
 
 [widget-data/c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38/element-data/92747373-1aef-4252-a1cf-8c6a85a4f04d]
-command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  /\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-4tb | awk 'NR==2 {print \"  Vol-4TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-10tb | awk 'NR==2 {print \"  Vol-10TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
+command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-4tb | awk 'NR==2 {print \"  Vol-4TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-10tb | awk 'NR==2 {print \"  Vol-10TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
 element-type='Command_Label'
 font-family-override=(true, 'Ubuntu Mono')
 font-size=20

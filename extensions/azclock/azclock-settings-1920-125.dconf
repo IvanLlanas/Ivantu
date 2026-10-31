@@ -212,7 +212,7 @@ location-data='{"monitorIndex":2,"relativeX":0.8,"relativeY":0.815}'
 name='Disk Usage'
 
 [widget-data/c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38/element-data/92747373-1aef-4252-a1cf-8c6a85a4f04d]
-command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  /\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
+command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
 element-type='Command_Label'
 font-family-override=(true, 'Ubuntu Mono')
 font-size=20

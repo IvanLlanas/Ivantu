@@ -438,7 +438,10 @@ function setup_gnome_extensions ()
 # https://gitlab.com/AndrewZaech/azclock
 # export: dconf dump /org/gnome/shell/extensions/azclock/ > azclock-settings.dconf
       local configfile=
-      if [ $var_monitor_count -le 2 ]; then
+      if [ "$HOSTNAME" = "inas" ]; then
+         log 2 "Using monitor configuration INAS."
+         configfile="azclock-settings-inas.dconf"
+      elif [ $var_monitor_count -le 2 ]; then
          if [ $var_monitor_scaling_pct -gt 120 ]; then
             log 2 "Using monitor configuration 1x125."
             configfile="azclock-settings-1920-125.dconf"
