@@ -91,15 +91,17 @@ function _assign_ivantu_icons ()
    set_icon /usr                                            folders/folder-user-1.png
    set_icon /var                                            folders/folder-logs-1.png
 
+   set_icon /mnt/vol-4tb                                    ../devices/ssd-m2-acer-1.png
+   set_icon /mnt/vol-10tb                                   ../devices/wd100ezaz-11tdba0-10tb-1.png
+
    set_icon $(realpath -s "$_ivantu_dir")                   folders/folder-ivantu-1.png
-   set_icon $(realpath -s "$_ivantu_dir/../Ivantu.base")    folders/folder-ivantu-2.png
+   set_icon $(realpath -s "$_ivantu_dir/../_Ivantu.base")   folders/folder-ivantu-2.png
    set_icon $HOME/Projects/wowsss                           folders/games/folder-wow-1.png
    set_icon $HOME/Projects/WoWSSS                           folders/games/folder-wow-1.png
 
    set_icon $HOME/Games                                     folders/folder-games-1.png
    set_icon $HOME/GamesStore                                folders/folder-games-box-1.png
    set_icon $HOME/Media                                     folders/folder-videos-2.png
-   set_icon $HOME/Scripts                                   folders/folder-sources-1.png
    set_icon $HOME/Projects                                  folders/folder-projects-1.png
    set_icon $HOME/snap                                      folders/folder-ubuntu-red-1.png
    set_icon $HOME/Dropbox                                   folders/folder-dropbox-2.png
@@ -121,7 +123,6 @@ function _assign_ivantu_icons ()
    set_icon "$HOME/Games/Cyberpunk 2077 2.31a"              folders/games/folder-cyberpunk-1.png
    set_icon $HOME/Games/DREDGE-2879                         folders/games/folder-dredge-1.png
    set_icon "$HOME/Games/Diablo II Resurrected"             folders/games/folder-diablo-1.png
-   set_icon "$HOME/Games/MAMEplus GUI"                      folders/games/folder-retro-1.png
    set_icon "$HOME/Games/Minecraft 1.14.4"                  folders/games/folder-minecraft-1.png
    set_icon "$HOME/Games/PVZ Replanted"                     folders/games/folder-pvz-1.png
    set_icon "$HOME/Games/Unreal Gold"                       folders/games/folder-unreal-gold-1.png
@@ -163,27 +164,19 @@ function _assign_ivantu_icons ()
    set_icon "$HOME/Dropbox/Apps/Utils/Mac OS"               folders/folder-macos-1.png
    set_icon $HOME/Dropbox/Apps/Utils/MS-DOS                 folders/folder-msdos-1.png
    set_icon $HOME/Dropbox/Apps/Utils/Windows                folders/folder-windows-1.png
-   set_icon $HOME/Dropbox/Apps/Utils/Internet               folders/folder-web-1.png
+   set_icon $HOME/Dropbox/Apps/Utils/Linux/Disk             folders/folder-storage-1.png
+   set_icon $HOME/Dropbox/Apps/Utils/Linux/Internet         folders/folder-web-1.png
    set_icon $HOME/Dropbox/Apps/Utils/Linux/Media            folders/folder-videos-2.png
    set_icon $HOME/Dropbox/Apps/Utils/Linux/Scripts          folders/folder-sources-1.png
    set_icon $HOME/Dropbox/Apps/VMware/Linux                 folders/folder-linux-1.png
    set_icon $HOME/Dropbox/Apps/VMware/Windows               folders/folder-windows-1.png
-   set_icon $HOME/Dropbox/Dropbox/Apps/Utils/Android        folders/folder-android-1.png
-   set_icon $HOME/Dropbox/Dropbox/Apps/Utils/Mac\ OS        folders/folder-macos-1.png
-   set_icon $HOME/Dropbox/Dropbox/Apps/Utils/MS-DOS         folders/folder-msdos-1.png
+   set_icon $HOME/Dropbox/Apps/Utils/Android                folders/folder-android-1.png
+   set_icon $HOME/Dropbox/Apps/Utils/Mac\ OS                folders/folder-macos-1.png
+   set_icon $HOME/Dropbox/Apps/Utils/MS-DOS                 folders/folder-msdos-1.png
    set_icon $HOME/Dropbox/Source/Personal                   folders/folder-ivan-1.png
    set_icon $HOME/Dropbox/Source/MS-DOS                     folders/folder-msdos-1.png
 
-
    set_icon $HOME/VM/_shared                                folders/folder-windows-2.png
-   set_icon $HOME/VM/MSDOS                                  vm/vm-msdos-1.png
-   set_icon $HOME/VM/VM_DEBIAN-13                           vm/vm-debian-2.png
-   set_icon $HOME/VM/VM_DELPHI11                            vm/vm-delphi-1.png
-   set_icon $HOME/VM/VM_OFFICE4                             vm/vm-office-1.png
-   set_icon $HOME/VM/VM_UBUNTU-25                           vm/wm-ubuntu-6.png
-   set_icon $HOME/VM/VM_UBUNTU-26                           vm/wm-ubuntu-6.png
-   set_icon $HOME/VM/VM_WINDOWS-11                          vm/vm-windows-11-1.png
-   set_icon $HOME/VM/VM_WINDOWS_APPS                        vm/vm-photoshop-1.png
 }
 
 # ------------------------------------------------------------------------------
