@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 # ----------------------------------------------------------------------------
-# Ivantu ---------------------------------------------------------------------
+# Ivantu - .bashrc r3 --------------------------------------------------------
 # ----------------------------------------------------------------------------
 
 # Customize the terminal prompt:
@@ -135,8 +135,38 @@ fi
 # Expanding PATH:
 export PATH="$PATH:/opt/bin"
 
-# Deleting annoying directories:
+# Delete annoying directories:
 rmdir Documents Music Public Templates Videos &> /dev/null
+
+# Calculate elapsed time of every command ---
+function timer_start ()
+{
+    # functions like keypress_f3 starts the timer before executing the real command.
+    [[ ${READLINE_LINE+x} && ${READLINE_POINT+x} ]] && return
+    timer=${timer:-$EPOCHREALTIME}
+# We could use $SECONDS instead of $EPOCHREALTIME, but I want milliseconds.
+}
+
+function timer_stop ()
+{
+  # %.6f for more precission
+  timer_show=$(awk -v start="$timer" -v end="$EPOCHREALTIME" 'BEGIN { printf "%.3f", end-start }')
+#  timer_show=$(($SECONDS - $timer))
+  unset timer
+}
+
+trap 'timer_start' DEBUG
+if [[ -n "$SSH_TTY" ]] && declare -F __systemd_osc_context_precmdline >/dev/null; then
+   PROMPT_COMMAND=(
+        __systemd_osc_context_precmdline
+        timer_stop
+    )
+   PS1='\[\033[38;2;0;0;0m\]\[\033[48;2;192;192;192m\][${timer_show}s]'"$PS1"
+else
+   PROMPT_COMMAND=timer_stop
+   PS1='[${timer_show}s] '"$PS1"
+fi
+# ---
 
 # Launch "welcoming" fastfetch:
 fastfetch

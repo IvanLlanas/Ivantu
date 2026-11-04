@@ -9,8 +9,8 @@
 # $ sudo hdparm -Tt /dev/sda
 
 _ilas_name='Ivan Llanas Aliases System'
-_ilas_version='2.12'
-_ilas_build=168
+_ilas_version='2.13'
+_ilas_build=170
 
 # Environment vars -----------------------------------------------------
 # export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
@@ -18,7 +18,7 @@ _ilas_build=168
 export LS_COLORS=""
 
 # Backup IFS to restore it whenever is it changed. Internal Field Separator, used to separate strings into words or substrings.
-_IFS0=$IFS
+#   _IFS0=$IFS
 
 shopt -s globstar
 shopt -s autocd
@@ -80,47 +80,47 @@ export IVANTU_SCRIPTS_DIR="$IVANTU_DIR/scripts"
 
 # ANSI colors ----------------------------------------------------------
 
-_ansi_off='\e[0m'
-_ansi_bold='\e[1m'
+_ansi_off=$'\e[0m'
+_ansi_bold=$'\e[1m'
 
-_ansi_default='\e[39m'
-_ansi_bg_default='\e[49m'
+_ansi_default=$'\e[39m'
+_ansi_bg_default=$'\e[49m'
 
-_ansi_black='\e[30m'
-_ansi_red='\e[31m'
-_ansi_green='\e[32m'
-_ansi_yellow='\e[33m'
-_ansi_blue='\e[34m'
-_ansi_magenta='\e[35m'
-_ansi_cyan='\e[36m'
-_ansi_white='\e[37m'
+_ansi_black=$'\e[30m'
+_ansi_red=$'\e[31m'
+_ansi_green=$'\e[32m'
+_ansi_yellow=$'\e[33m'
+_ansi_blue=$'\e[34m'
+_ansi_magenta=$'\e[35m'
+_ansi_cyan=$'\e[36m'
+_ansi_white=$'\e[37m'
 
-_ansi_lblack='\e[90m'
-_ansi_lred='\e[91m'
-_ansi_lgreen='\e[92m'
-_ansi_lyellow='\e[93m'
-_ansi_lblue='\e[94m'
-_ansi_lmagenta='\e[95m'
-_ansi_lcyan='\e[96m'
-_ansi_lwhite='\e[97m'
+_ansi_lblack=$'\e[90m'
+_ansi_lred=$'\e[91m'
+_ansi_lgreen=$'\e[92m'
+_ansi_lyellow=$'\e[93m'
+_ansi_lblue=$'\e[94m'
+_ansi_lmagenta=$'\e[95m'
+_ansi_lcyan=$'\e[96m'
+_ansi_lwhite=$'\e[97m'
 
-_ansi_bg_black='\e[40m'
-_ansi_bg_red='\e[41m'
-_ansi_bg_green='\e[42m'
-_ansi_bg_yellow='\e[43m'
-_ansi_bg_blue='\e[44m'
-_ansi_bg_magenta='\e[45m'
-_ansi_bg_cyan='\e[46m'
-_ansi_bg_white='\e[47m'
+_ansi_bg_black=$'\e[40m'
+_ansi_bg_red=$'\e[41m'
+_ansi_bg_green=$'\e[42m'
+_ansi_bg_yellow=$'\e[43m'
+_ansi_bg_blue=$'\e[44m'
+_ansi_bg_magenta=$'\e[45m'
+_ansi_bg_cyan=$'\e[46m'
+_ansi_bg_white=$'\e[47m'
 
-_ansi_bg_lblack='\e[100m'
-_ansi_bg_lred='\e[101m'
-_ansi_bg_lgreen='\e[102m'
-_ansi_bg_lyellow='\e[103m'
-_ansi_bg_lblue='\e[104m'
-_ansi_bg_lmagenta='\e[105m'
-_ansi_bg_lcyan='\e[106m'
-_ansi_bg_lwhite='\e[107m'
+_ansi_bg_lblack=$'\e[100m'
+_ansi_bg_lred=$'\e[101m'
+_ansi_bg_lgreen=$'\e[102m'
+_ansi_bg_lyellow=$'\e[103m'
+_ansi_bg_lblue=$'\e[104m'
+_ansi_bg_lmagenta=$'\e[105m'
+_ansi_bg_lcyan=$'\e[106m'
+_ansi_bg_lwhite=$'\e[107m'
 
 # Emphasis -------------------------------------------------------------
 _em0='<0>'
@@ -201,28 +201,45 @@ _datetime_format_default="$_datetime_format_screen"
 # String functions -----------------------------------------------------
 
 # function ___trim (text)
-# Removes leading and trailing spaces from string.
+# Removes leading and trailing spaces (and blanks) from string.
 function ___trim ()
 {
-   local s=$1
+    # Changes in bash option will remain only locally.
+    local -
+    local s="$1"
 
-   # Turn on the extglob shell option
-   shopt -s extglob
-   ## Trim leading whitespaces
-   s="${s##*( )}"
-   ## Trim trailing whitespaces
-   s="${s%%*( )}"
-   # Turn off the extglob shell option
-   shopt -u extglob
-   # Print final result
-   echo $s
+    # Preserve the previous shell options
+    shopt -s extglob
+
+    # Trim leading whitespaces
+    s="${s##+([[:space:]])}"
+
+    # Trim trailing whitespaces
+    s="${s%%+([[:space:]])}"
+
+    # Print final result
+    printf '%s\n' "$s"
+
+   # local s=$1
+   #
+   # # Turn on the extglob shell option
+   # shopt -s extglob
+   # ## Trim leading whitespaces
+   # s="${s##*( )}"
+   # ## Trim trailing whitespaces
+   # s="${s%%*( )}"
+   # # Turn off the extglob shell option
+   # shopt -u extglob
+   # # Print final result
+   # echo "$s"
 }
 
 # function ___get_current_time ()
 # Returns the current time in a number of seconds (since Jan-1 1970 00:00:00 UTC).
 function ___get_current_time ()
 {
-   echo $(date +%s)
+#   echo $(date +%s)
+   date +%s
 }
 
 # function ___datetime_to_string (date, [format])
@@ -235,22 +252,24 @@ function ___datetime_to_string ()
    if [ "$fmt" = "" ]; then
       fmt="$_datetime_format_default"
    fi
-   echo $(date -d@$dt "+$fmt")
+   # echo $(date -d@$dt "+$fmt")
+   date -d "@$dt" "+$fmt"
 #  echo $(date -d@$dt '+%Y/%m/%d %H:%M:%S')
 }
 
 # function ___echo_info (text)
-# Prints a message in info format.
+# Prints a message in info format. No leading/trailing space.
 function ___echo_info ()
 {
-   local text=$1
+   local text="$1"
 
    text=${text//$_em3/$_info_c3}
    text=${text//$_em2/$_info_c2}
    text=${text//$_em1/$_info_c1}
    text=${text//$_em0/$_info_c0}
 
-   echo -e "$_info_c0$_info_bg$text$_ansi_off"
+   # echo -e "$_info_c0$_info_bg$text$_ansi_off"
+   printf '%s\n' "$_info_c0$_info_bg$text$_ansi_off"
 }
 
 # function ___print_info (command, [text])
@@ -258,8 +277,8 @@ function ___echo_info ()
 # Prints an information message.
 function ___print_info ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_info_c3}
    command=${command//$_em2/$_info_c2}
@@ -267,21 +286,23 @@ function ___print_info ()
    command=${command//$_em0/$_info_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_info_c0$_info_bg $command $_ansi_off"
+      # echo -e "$_info_c0$_info_bg $command $_ansi_off"
+      printf '%s\n' "$_info_c0$_info_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_info_c3}
       text=${text//$_em2/$_info_c2}
       text=${text//$_em1/$_info_c1}
       text=${text//$_em0/$_info_c0}
 
-      echo -e "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
+      # echo -e "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
+      printf '%s\n' "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
    fi
 }
 
 function ___print_info_bg ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_infobg_c3}
    command=${command//$_em2/$_infobg_c2}
@@ -289,14 +310,16 @@ function ___print_info_bg ()
    command=${command//$_em0/$_infobg_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
+      # echo -e "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
+      printf '%s\n' "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_infobg_c3}
       text=${text//$_em2/$_infobg_c2}
       text=${text//$_em1/$_infobg_c1}
       text=${text//$_em0/$_infobg_c0}
 
-      echo -e "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
+      # echo -e "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
+      printf '%s\n' "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
    fi
 }
 
@@ -305,8 +328,8 @@ function ___print_info_bg ()
 # Prints a warning message.
 function ___print_warning ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_warning_c3}
    command=${command//$_em2/$_warning_c2}
@@ -314,21 +337,23 @@ function ___print_warning ()
    command=${command//$_em0/$_warning_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_warning_c0$_warning_bg $command $_ansi_off"
+      # echo -e "$_warning_c0$_warning_bg $command $_ansi_off"
+      printf '%s\n' "$_warning_c0$_warning_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_warning_c3}
       text=${text//$_em2/$_warning_c2}
       text=${text//$_em1/$_warning_c1}
       text=${text//$_em0/$_warning_c0}
 
-      echo -e "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
+      # echo -e "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
+      printf '%s\n' "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
    fi
 }
 
 function ___print_warning_bg ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_warningbg_c3}
    command=${command//$_em2/$_warningbg_c2}
@@ -336,14 +361,16 @@ function ___print_warning_bg ()
    command=${command//$_em0/$_warningbg_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
+      # echo -e "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
+      printf '%s\n' "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_warningbg_c3}
       text=${text//$_em2/$_warningbg_c2}
       text=${text//$_em1/$_warningbg_c1}
       text=${text//$_em0/$_warningbg_c0}
 
-      echo -e "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
+      #echo -e "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
+      printf '%s\n' "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
    fi
 }
 
@@ -352,8 +379,8 @@ function ___print_warning_bg ()
 # Prints an error message.
 function ___print_error ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_error_c3}
    command=${command//$_em2/$_error_c2}
@@ -361,21 +388,23 @@ function ___print_error ()
    command=${command//$_em0/$_error_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_error_c0$_error_bg $command $_ansi_off"
+      # echo -e "$_error_c0$_error_bg $command $_ansi_off"
+      printf '%s\n' "$_error_c0$_error_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_error_c3}
       text=${text//$_em2/$_error_c2}
       text=${text//$_em1/$_error_c1}
       text=${text//$_em0/$_error_c0}
 
-      echo -e "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
+      # echo -e "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
+      printf '%s\n' "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
    fi
 }
 
 function ___print_error_bg ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_errorbg_c3}
    command=${command//$_em2/$_errorbg_c2}
@@ -383,14 +412,16 @@ function ___print_error_bg ()
    command=${command//$_em0/$_errorbg_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
+      # echo -e "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
+      printf '%s\n' "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_errorbg_c3}
       text=${text//$_em2/$_errorbg_c2}
       text=${text//$_em1/$_errorbg_c1}
       text=${text//$_em0/$_errorbg_c0}
 
-      echo -e "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
+      # echo -e "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
+      printf '%s\n' "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
    fi
 }
 
@@ -399,8 +430,8 @@ function ___print_error_bg ()
 # Prints a disabled (or less important) message.
 function ___print_disabled ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_disabled_c3}
    command=${command//$_em2/$_disabled_c2}
@@ -408,21 +439,23 @@ function ___print_disabled ()
    command=${command//$_em0/$_disabled_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_disabled_c0$_disabled_bg $command $_ansi_off"
+      # echo -e "$_disabled_c0$_disabled_bg $command $_ansi_off"
+      printf '%s\n' "$_disabled_c0$_disabled_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_disabled_c3}
       text=${text//$_em2/$_disabled_c2}
       text=${text//$_em1/$_disabled_c1}
       text=${text//$_em0/$_disabled_c0}
 
-      echo -e "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
+      # echo -e "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
+      printf '%s\n' "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
    fi
 }
 
 function ___print_disabled_bg ()
 {
-   local command=$1
-   local text=$2
+   local command="$1"
+   local text="$2"
 
    command=${command//$_em3/$_disabledbg_c3}
    command=${command//$_em2/$_disabledbg_c2}
@@ -430,14 +463,16 @@ function ___print_disabled_bg ()
    command=${command//$_em0/$_disabledbg_c0}
 
    if [ "$text" = "" ]; then
-      echo -e "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
+      # echo -e "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
+      printf '%s\n' "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_disabledbg_c3}
       text=${text//$_em2/$_disabledbg_c2}
       text=${text//$_em1/$_disabledbg_c1}
       text=${text//$_em0/$_disabledbg_c0}
 
-      echo -e "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
+      # echo -e "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
+      printf '%s\n' "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
    fi
 }
 
@@ -456,11 +491,13 @@ function ___print_url ()
    fi
 
    if [ "$color1" == "" ]; then
-      printf "\e]8;;$url\e\\$text\e]8;;\e\\"
+      # printf "\e]8;;$url\e\\$text\e]8;;\e\\"
+      printf '\e]8;;%s\e\\%s\e]8;;\e\\' "$url" "$text"
    else
-      echo -en $color1
-      printf "\e]8;;$url\e\\$text\e]8;;\e\\"
-      echo -en $color2
+      printf '%s' "$color1"
+      # printf "\e]8;;$url\e\\$text\e]8;;\e\\"
+      printf '\e]8;;%s\e\\%s\e]8;;\e\\' "$url" "$text"
+      printf '%s' "$color2"
    fi
 }
 
@@ -515,7 +552,8 @@ function ___print_centered_fw ()
    msg=${msg//$_em1/$c_1}
    msg=${msg//$_em0/$c_0}
 
-   echo -e "$c_bg$c_0$filler2$msg$filler2$filler3$_ansi_off"
+   # echo -e "$c_bg$c_0$filler2$msg$filler2$filler3$_ansi_off"
+   printf '%s\n' "$c_bg$c_0$filler2$msg$filler2$filler3$_ansi_off"
 }
 
 # function ___print_fw (msg, filler_char, color_background, color_normal_text, color_bold1_text, color_bold2_text, color_bold3_text)
@@ -553,17 +591,20 @@ function ___print_fw ()
    msg=${msg//$_em1/$c_1}
    msg=${msg//$_em0/$c_0}
 
-   echo -e "$c_bg$c_0$msg$filler$_ansi_off"
+   # echo -e "$c_bg$c_0$msg$filler$_ansi_off"
+   printf '%s\n' "$c_bg$c_0$msg$filler$_ansi_off"
 }
 
 function ___cmd_descr ()
 {
-   echo -e " "$_ansi_bold$1$_ansi_off" - "$2$_ansi_off
+   # echo -e " "$_ansi_bold$1$_ansi_off" - "$2$_ansi_off
+   printf ' %s - %s\n' "$_ansi_bold$1$_ansi_off" "$2$_ansi_off"
 }
 
 function ___cmd_usage ()
 {
-   echo -e " Usage: "$_ansi_black$_ansi_bg_white $1 $_ansi_off
+   # echo -e " Usage: "$_ansi_black$_ansi_bg_white $1 $_ansi_off
+   printf ' Usage: %s\n' "$_ansi_black$_ansi_bg_white $1 $_ansi_off"
 }
 
 # [conio.sh]------------8<------------8<------------8<------------8<------------8<------------8<------------8<------------
@@ -592,7 +633,7 @@ ___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) 
 
 # Disabled by now
 # Is bline installed?
-# if [ -n "$(which bline)" ]; then
+# if command -v bline 2>&1; then
 #    _BLINE=true
 #    _find_trash_color="light:red"
 #    _find_home_color="light:cyan"
@@ -602,12 +643,21 @@ ___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) 
 #    ___print_disabled "<1>bline<0> not found."
 # fi
 
+# Is 7z installed?
+if command -v 7z >/dev/null 2>&1; then
+   _7Z=true
+   ___print_info "Using <1>7z<0>."
+else
+   _7Z=false
+   ___print_disabled "<1>7z<0> not found."
+fi
+
 # Is rar installed?
-if [ -n "$(which rar)" ]; then
-   __RAR=true
+if command -v rar >/dev/null 2>&1; then
+   _RAR=true
    ___print_info "Using <1>rar<0>."
 else
-   __RAR=false
+   _RAR=false
    ___print_disabled "<1>rar<0> not found."
 fi
 
@@ -643,7 +693,7 @@ alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
    clearhistory_description="Delete the shell history from memory and disk."
    clearhistory_category="$_CATEGORY_SHELL"
 
-if [ -n "$(which eza)" ]; then
+if command -v eza >/dev/null 2>&1; then
    alias d="eza --group-directories-first --header --time-style=\"+%Y.%m.%d %H:%M\" --long --icons --bytes"
       d_description="Directory listing, full information."
       d_category="$_CATEGORY_SHELL"
@@ -670,8 +720,8 @@ alias dx="d *.exe *.EXE *.bat *.BAT 2>/dev/null"
    dx_description="Directory listing of Windows executables."
    dx_category="$_CATEGORY_SHELL"
 alias dz="d *.zip *.rar *.7z *.tgz *.tar 2>/dev/null"
-   dx_description="Directory listing of archives."
-   dx_category="$_CATEGORY_SHELL"
+   dz_description="Directory listing of archives."
+   dz_category="$_CATEGORY_SHELL"
 
 alias l="less"
    l_description="Less."
@@ -700,9 +750,18 @@ function _mk ()
    mkdir "$1"
    cd "$1"
 }
-alias fn="realpath \$1"
-   fn_description="Print the full path of a given file/directory."
-   fn_category="$_CATEGORY_FILE"
+
+if $_7Z ; then
+   alias fn="realpath"
+      fn_description="Print the full path of a given file/directory."
+      fn_category="$_CATEGORY_FILE"
+   alias 7a="7z a -t7z -mx=9"
+      _7a_description="Compress using 7z with maximum compression settings."
+      _7a_category="$_CATEGORY_COMPRESS"
+   alias 7x="7z x"
+      _7x_description="Extract 7z archive using 7z."
+      _7x_category="$_CATEGORY_COMPRESS"
+fi
 
 if $_RAR ; then
    alias ra="rar a -r -s -m5 -md1g"
@@ -718,12 +777,12 @@ if $_RAR ; then
       rl_description="List rar archive contents."
       rl_category="$_CATEGORY_COMPRESS"
    alias rx="rar x"
-      rx_description="Extract archive contents."
+      rx_description="Extract rar archive contents."
       rx_category="$_CATEGORY_COMPRESS"
+   alias rt="rar t"
+      rt_description="Check rar archive data integrity."
+      rt_category="$_CATEGORY_COMPRESS"
 fi
-alias 7za="7z a -t7z -mx=9"
-   _7za_description="Compress using 7z with maximum compression settings."
-   _7za_category="$_CATEGORY_COMPRESS"
 
 alias supdate="sudo apt update && apt list --upgradable"
    supdate_description="Check packages to update."
@@ -740,8 +799,14 @@ alias appupdate="flatpak update"
 alias fstab="sudo nano /etc/fstab"
    fstab_description="Edit /etc/fstab using nano."
    fstab_category="$_CATEGORY_SYSTEM"
-alias lsshutdowns='journalctl --grep="System is powering down" --reverse | grep powering | head -15'
-   lsshutdowns_description="List previous shutdown times."
+# https://juncotic.com/log-vaciando-registros-en-gnu-linux/
+# journalctl --vacuum-time=30d
+# journalctl --vacuum-size=800M
+# journalctl --list-boots -n 10 --reverse
+# journalctl --disk-usage
+# grep -v '^-- Boot'
+alias lsshutdowns='journalctl -r -g "powering" -n 10 | grep powering'
+   lsshutdowns_description="List (10) last shutdown times."
    lsshutdowns_category="$_CATEGORY_SYSTEM"
 
 if $_BLINE ; then
@@ -779,7 +844,7 @@ alias fgrep="fgrep --color=auto"
    fgrep_category="$_CATEGORY_FILE"
 
 # Apps ----------------------------------------------------------
-if [ -n "$(which cmatrix)" ]; then
+if command -v cmatrix >/dev/null 2>&1; then
    alias matrix="gnome-terminal --window-with-profile=Matrix --full-screen -- cmatrix -b"
       matrix_description="Start full Matrix screensaver."
       matrix_category="$_CATEGORY_SHELL"
@@ -792,7 +857,7 @@ else
    ___print_disabled "<1>cmatrix<0> not found."
 fi
 
-if [ -n "$(which xclip-cutfile)" ]; then
+if command -v xclip-cutfile >/dev/null 2>&1; then
    alias xc=xclip-copyfile
       xc_description="Copy file(s) to the clipboard (only to console!)."
       xc_category="$_CATEGORY_SHELL"
@@ -915,9 +980,23 @@ else
 fi
 
 # ---------------------------------------------------------------
-alias bat="upower -i $(upower -e | grep battery)"
+alias bat=___bat
+#"upower -i $(upower -e | grep battery)"
    bat_description="Show battery status."
    bat_category="$_CATEGORY_SYSTEM"
+function ___bat ()
+{
+    local battery
+
+    battery=$(upower -e | grep -m1 battery)
+
+    if [[ -n $battery ]]; then
+        upower -i "$battery"
+    else
+        echo "No battery found."
+        return 1
+    fi
+}
 
 fr_description="Show memory and disk usage."
 fr_category="$_CATEGORY_SYSTEM"
@@ -1016,8 +1095,8 @@ function ___cc_aliases ()
       fi
 
       alias meld="flatpak run org.gnome.meld"
-         grestore_description="(flatpak) Meld - Visual diff tool."
-         grestore_category="$_CATEGORY_APP"
+         meld_description="(flatpak) Meld - Visual diff tool."
+         meld_category="$_CATEGORY_APP"
    fi
 }
 ___cc_aliases
@@ -1035,7 +1114,7 @@ function ___iplookup ()
       ___cmd_descr "iplookup" "$iplookup_description"
       ___cmd_usage "iplookup ip"
    else
-      start https://whatismyipaddress.com/ip/$1
+      start "https://whatismyipaddress.com/ip/$1"
    fi
 }
 
@@ -1081,10 +1160,12 @@ function ___editors_aliases ()
          alias "q$num"="${editors_alias[$i]}"
          variable=q$num"_description"
          let num2=q_index-1
-         eval ${variable}=${editors_pref[$num2]}"\ text\ editor\ \("${editors_name[$i]}"\)."
+         # eval ${variable}=${editors_pref[$num2]}"\ text\ editor\ \("${editors_name[$i]}"\)."
+         # variable=q$num"_category"
+         # eval ${variable}="$_CATEGORY_SHELL"
+         printf -v "$variable" '%s' "${editors_pref[$num2]} text editor (${editors_name[$i]})."
          variable=q$num"_category"
-         eval ${variable}="$_CATEGORY_SHELL"
-
+         printf -v "$variable" '%s' "$_CATEGORY_SHELL"
          let q_index++
       fi
    done
@@ -1123,7 +1204,7 @@ function ___fh ()
       ___cmd_descr "fh" "$fh_description"
       ___cmd_usage "fh text"
    else
-      history|grep $1
+      history | grep -F -- "$*"
    fi
 }
 
@@ -1136,7 +1217,7 @@ function ___fp ()
       ___cmd_descr "fp" "$fp_description"
       ___cmd_usage "fp name/fragment"
    else
-      pgrep -ia $1
+      pgrep -ia -- "$*"
    fi
 }
 
@@ -1184,7 +1265,7 @@ alias ver=___os_version
 
       function ___elapsed_time_to_string ()
       {
-         local seconds y m d result empty
+         local seconds m d h result empty
          seconds=$1
          empty=1
          result=
@@ -1215,6 +1296,11 @@ alias ver=___os_version
             fi
             result="$result$m minutes"
             empty=0
+         fi
+         # seconds=$(($seconds - $((m * 60))))
+         if [ $empty -eq 1 ]; then # Show seconds only if seconds available.
+            # Seconds ----
+            result="$seconds seconds"
          fi
          echo "$result"
       # -u avoid converting this time to local timezone.
@@ -1370,16 +1456,16 @@ function ___count_files ()
 {
    if [ $# -lt 1 ]; then
       ___cmd_descr "count" "$count_description"
-      ___cmd_usage "count path=."
+      ___cmd_usage "count path"
    else
       local path=$1
       local d=
       local f=
-      if [ $# -lt 2 ]; then
-         path="."
-      fi
-      d=$(find $path -type d 2>/dev/null | wc -l)
-      f=$(find $path -type f 2>/dev/null | wc -l)
+      # if [ $# -eq 0 ]; then
+      #    path="."
+      # fi
+      d=$(find "$path" -type d 2>/dev/null | wc -l)
+      f=$(find "$path" -type f 2>/dev/null | wc -l)
       # numfmt --grouping $n
       printf " %'.3d files and %'.3d directories in \"%s\".\n" $f $d $(realpath $path)
    fi
@@ -1389,7 +1475,7 @@ alias chm=___chm
    chm_description="Change file permissions recursively."
    chm_category="$_CATEGORY_FILE"
 alias chmn="chm 644"
-   chmn_description="Change file permissions to 664 recursively."
+   chmn_description="Change file permissions to 644 recursively."
    chmn_category="$_CATEGORY_FILE"
 function ___chm ()
 {
@@ -1402,7 +1488,7 @@ function ___chm ()
       if [ $# -lt 2 ]; then
          path="."
       fi
-      find "$path" -type f -exec chmod $value -- {} +
+      find "$path" -type f -exec chmod "$value" -- {} +
    fi
 }
 
@@ -1419,14 +1505,11 @@ ___go_dirs=("gz    :~/doom/ports/gzdoom/current" \
             "shared:~/VM/_shared" \
             "wow   :~/Projects/wowssses" \
             "sh    :~/Projects/Ivantu/scripts" \
-            "itu   :~/Projects/Ivantu" \
+            "ivantu:~/Projects/Ivantu" \
             "ivan  :~/.config/ivan" \
             "eza   :~/.config/eza" \
-            "geany :~/.config/geany" \
-            "xnview:~/.config/xnviewmp" \
-            "conky :~/.config/conky" \
             "val   :~/snap/steam/common/.config/unity3d/IronGate" \
-            "steamapps : ~/snap/steam/common/.local/share/Steam/steamapps/common" \
+            "steamapps:~/snap/steam/common/.local/share/Steam/steamapps/common" \
            )
 function ___go_dir ()
 {
@@ -1434,8 +1517,8 @@ function ___go_dir ()
 
    id0=$1
    n=${#___go_dirs[@]}
-   c1="\e[1m"
-   c2="\e[0m"
+   c1=$'\e[1m'
+   c2=$'\e[0m'
 
    if [ $# -lt 1 ]; then
       ___cmd_descr "go" "$go_description"
@@ -1443,28 +1526,36 @@ function ___go_dir ()
       for (( i=0 ; i<$n ; i++ ));
       do
          s=${___go_dirs[$i]}
-         IFS=":"
-            set $s
-            id=$(___trim $1)
-            dir=$2
-         IFS=$_IFS0
+id=${s%%:*}
+dir=${s#*:}
+id=$(___trim "$id")
+dir=$(___trim "$dir")
+         # IFS=":"
+         #    set $s
+         #    id=$(___trim $1)
+         #    dir=$2
+         # IFS=$_IFS0
 
          printf "       go "
-         echo -e -n $c1
+         printf '%s' "$c1"
          printf %-10s $id
-         echo -e -n $c2
-         printf "= cd %s\n" $dir
+         printf '%s' "$c2"
+         printf "= cd %s\n" "$dir"
 #        printf "       go %-10s= cd %s\n" $id $dir
       done
    else
       for (( i=0 ; i<$n ; i++ ));
       do
          s=${___go_dirs[$i]}
-         IFS=":"
-            set $s
-            id=$(___trim $1)
-            dir=$2
-         IFS=$_IFS0
+id=${s%%:*}
+dir=${s#*:}
+id=$(___trim "$id")
+dir=$(___trim "$dir")
+         # IFS=":"
+         #    set $s
+         #    id=$(___trim $1)
+         #    dir=$2
+         # IFS=$_IFS0
          if [ "$id" = "$id0" ]; then
             cd "${dir/\~/$HOME}"
             return
@@ -1476,25 +1567,25 @@ function ___go_dir ()
 
 function ___complete_go ()
 {
-   local i n opts cur opts
+   local i n s id opts cur
 
    COMPREPLY=()
    cur="${COMP_WORDS[COMP_CWORD]}"
 
    opts=""
 
-  n=${#___go_dirs[@]}
+   n=${#___go_dirs[@]}
    for (( i=0 ; i<$n ; i++ ));
    do
       s=${___go_dirs[$i]}
-      IFS=":"
-         set $s
-         id=$(___trim $1)
-      IFS=$_IFS0
+
+      id=${s%%:*}
+      id=$(___trim "$id")
       opts="$opts $id"
    done
 
-   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+#  COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+   COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
    return 0
 }
 complete -F ___complete_go go
@@ -1515,7 +1606,7 @@ function _desktop_link ()
 }
 
 alias all=_list_aliases
-   all_description="Show a list of aliases".
+   all_description="Show a list of aliases."
    all_category="$_CATEGORY_SHELL"
 function _list_aliases ()
 {
@@ -1546,7 +1637,7 @@ function _list_aliases ()
             if [ "$str" = "" ]; then
                ___print_error "all" "Unknown alias $_quote1<1>$cmd<0>$_quote2."
             else
-               ___print_alias 1 0 $cmd
+               ___print_alias 1 0 "$cmd"
                return
             fi
          fi
@@ -1560,7 +1651,7 @@ function _list_aliases ()
 
    while IFS= read -r cmd ; do
 
-      ___print_alias $show_descr 1 $cmd $the_category
+      ___print_alias $show_descr 1 "$cmd" "$the_category"
 
       cr=0
       if [ $show_descr = 0 ]; then
@@ -1625,14 +1716,13 @@ function ___print_alias ()
       fi
 
       printf "   "
-      echo -e -n $c1
+      printf '%s' "$c1"
       if [ $do_indent -gt 0 ]; then
          printf %-16s $cmd$suf
       else
          printf %s $cmd$suf
       fi
-      echo -e -n $c2
-
+      printf '%s' "$c2"
 
       varname=$base"_description"
       if [[ -v $varname ]]; then
@@ -1647,11 +1737,12 @@ function ___print_alias ()
       fi
 
       c1=${_AL_CATEGORY_COLORS[$category]}
-      echo -e " - [$c1$category$_ansi_off] $description"
+      # echo -e " - [$c1$category$_ansi_off] $description"
+      printf '%s\n' " - [$c1$category$_ansi_off] $description"
    else
-      echo -e -n $c1
-      printf %-16s $cmd$suf
-      echo -e -n $c2
+      printf '%s' "$c1"
+      printf "%-16s" "$cmd$suf"
+      printf '%s' "$c2"
    fi
 }
 
@@ -1667,7 +1758,7 @@ function ___complete_all ()
    cur="${COMP_WORDS[COMP_CWORD]}"
    #prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+   COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
    return 0
 }
 
@@ -1682,7 +1773,7 @@ complete -F ___complete_all all
 # complete -W "help verbose version" all
 
 # ----------------------------------------------------------------------
-___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) loaded. ]"
+___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<3>$_ilas_build<0>) loaded. ]"
 # ----------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -1696,3 +1787,56 @@ ___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) 
 # }
 # ----------------------------------------------------------------------
 
+# ----------------------------------------------------------------------
+function keypress_f2 ()
+{
+   local cmd="clear && d"
+
+   if [[ -z $READLINE_LINE ]]; then
+      READLINE_LINE="$cmd"
+   else
+      READLINE_LINE+=" && $cmd"
+   fi
+   READLINE_POINT=${#READLINE_LINE}
+}
+# F2
+# We want CR after keypress_f2. To get this, Ctrl+z+f+2 = keypress_f2...
+bind -x '"\C-zf2": keypress_f2'
+# ...and now F2 = Ctrl+z+f+2 + ENTER
+bind '"\eOQ": "\C-zf2\C-m"'
+
+# ----------------------------------------------------------------------
+function keypress_f3 ()
+{
+   local previous point suffix
+
+   #previous=$(fc -ln -1 -1) || return
+   previous=$(fc -ln -0 -0) || return
+   previous=${previous#"${previous%%[!$' \t']*}"}
+
+   point=$READLINE_POINT
+   suffix=${previous:point}
+
+   READLINE_LINE="${READLINE_LINE:0:point}${suffix}${READLINE_LINE:point}"
+   READLINE_POINT=$((point + ${#suffix}))
+}
+# F3
+bind -x '"\eOR": keypress_f3'
+
+# F1  "\eOP"
+# F2  "\eOQ"
+# F3  "\eOR"
+# F4  "\eOS"
+# F5  "\e[15~"
+# F6  "\e[17~"
+# F7  "\e[18~"
+# F8  "\e[19~"
+# F9  "\e[20~"
+# F10 "\e[21~"
+# F11 "\e[23~"
+# F12 "\e[24~"
+# for i in {1..12}; do
+#     printf 'F%-2d ' "$i"
+#     tput kf"$i" | od -An -t x1
+# done
+# calc = echo %@eval[%&]
