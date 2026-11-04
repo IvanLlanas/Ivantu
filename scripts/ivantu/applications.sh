@@ -187,7 +187,8 @@ function _create_conky_autorun
    mkdir -p "$autostart_dir" | sed 's/^/  mkd: /'
    echo "[Desktop Entry]" > "$filename"
    echo "Type=Application" >> "$filename"
-   echo "Exec=/usr/bin/bash $conky_script_dir/start.sh" >> "$filename"
+   # echo "Exec=/usr/bin/bash $conky_script_dir/start.sh" >> "$filename"
+   echo "Exec=/usr/bin/bash -c \"sleep 20 && $conky_script_dir/start.sh\"" >> "$filename"
    echo "Hidden=false" >> "$filename"
    echo "NoDisplay=false" >> "$filename"
    echo "X-GNOME-Autostart-enabled=true" >> "$filename"

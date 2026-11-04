@@ -354,7 +354,7 @@ function do_applications_configuration ()
    setup_terminal_profiles
    setup_ptyxis
    setup_eza
-   # setup_conky
+   setup_conky
 }
 
 # ------------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 
 _ilas_name='Ivan Llanas Aliases System'
 _ilas_version='2.13'
-_ilas_build=170
+_ilas_build=171
 
 # Environment vars -----------------------------------------------------
 # export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
@@ -32,30 +32,6 @@ export IVANTU_SCRIPTS_DIR="$IVANTU_DIR/scripts"
 # [conio.sh]------------8<------------8<------------8<------------8<------------8<------------8<------------8<------------
 
 # conio.sh - Console Input/Output routines
-
-# [LICENSE]-----------------------------------------------------------------------
-#
-# The MIT License (MIT)
-#
-# Copyright (c) 2025 Ivan Llanas
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
 
 # function ___trim (text)
 # function ___get_current_time ()
@@ -643,24 +619,6 @@ ___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) 
 #    ___print_disabled "<1>bline<0> not found."
 # fi
 
-# Is 7z installed?
-if command -v 7z >/dev/null 2>&1; then
-   _7Z=true
-   ___print_info "Using <1>7z<0>."
-else
-   _7Z=false
-   ___print_disabled "<1>7z<0> not found."
-fi
-
-# Is rar installed?
-if command -v rar >/dev/null 2>&1; then
-   _RAR=true
-   ___print_info "Using <1>rar<0>."
-else
-   _RAR=false
-   ___print_disabled "<1>rar<0> not found."
-fi
-
 # Common aliases
 alias eal="q ~/.bash_aliases"
    eal_description="Edit aliases."
@@ -751,7 +709,10 @@ function _mk ()
    cd "$1"
 }
 
-if $_7Z ; then
+
+# Is 7z installed?
+
+if command -v 7z >/dev/null 2>&1; then
    alias fn="realpath"
       fn_description="Print the full path of a given file/directory."
       fn_category="$_CATEGORY_FILE"
@@ -761,9 +722,14 @@ if $_7Z ; then
    alias 7x="7z x"
       _7x_description="Extract 7z archive using 7z."
       _7x_category="$_CATEGORY_COMPRESS"
+
+   ___print_info "<1>7z<0> aliases added."
+else
+   ___print_disabled "<1>7z<0> not found."
 fi
 
-if $_RAR ; then
+# Is rar installed?
+if command -v rar >/dev/null 2>&1; then
    alias ra="rar a -r -s -m5 -md1g"
       ra_description="Compress using rar with maximum compression settings."
       ra_category="$_CATEGORY_COMPRESS"
@@ -782,6 +748,30 @@ if $_RAR ; then
    alias rt="rar t"
       rt_description="Check rar archive data integrity."
       rt_category="$_CATEGORY_COMPRESS"
+
+   ___print_info "<1>rar<0> aliases added."
+else
+   ___print_disabled "<1>rar<0> not found."
+fi
+
+# Is arj installed?
+if command -v arj >/dev/null 2>&1; then
+   alias aa="arj a -r -m4"
+      aa_description="Compress using arj with maximum compression settings."
+      aa_category="$_CATEGORY_COMPRESS"
+   alias al="arj l"
+      al_description="List arj archive contents."
+      al_category="$_CATEGORY_COMPRESS"
+   alias ax="arj x"
+      ax_description="Extract arj archive contents."
+      ax_category="$_CATEGORY_COMPRESS"
+   alias at="arj t"
+      at_description="Check arj archive data integrity."
+      at_category="$_CATEGORY_COMPRESS"
+
+   ___print_info "<1>arj<0> aliases added."
+else
+   ___print_disabled "<1>arj<0> not found."
 fi
 
 alias supdate="sudo apt update && apt list --upgradable"
