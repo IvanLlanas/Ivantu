@@ -8,41 +8,19 @@
 #   |_____\_/ \__,_|_| |_|\__|\__,_| 1.0
 #
 # ------------------------------------------------------------------------------
-# Ivantu
-# ------------------------------------------------------------------------------
 # This script configures some of MY preferences and configurations for an
 # Ubuntu system with a GNOME 49+ desktop.
 # Do not run this unless you are me or you are sure you want these changes.
 # ------------------------------------------------------------------------------
-# Ivanto ASCII text:
+# Ivantu ASCII text:
 # http://www.patorjk.com/software/taag/#p=display&f=Big&t=Ivantu&x=none&v=4&h=4&w=80&we=false
 # ------------------------------------------------------------------------------
 # Use shared folders between VMWare guest and host
-# Add: projects -> /home/ivan/Projects
-#.host:/projects   /home/ivan/Projects   fuse.vmhgfs-fuse   defaults,allow_other,uid=1000   0   0
+# (host) Add share: projects -> /home/ivan/Projects
+# (guest-fstab) .host:/projects   /home/ivan/Projects   fuse.vmhgfs-fuse   defaults,allow_other,uid=1000   0   0
 # ------------------------------------------------------------------------------
-# variable='value'
-# sudo sed -i 's/variable\s\{0,\}=.*/variable='\'$value\'/ $file
+# Complete installation: ./start.sh -a -t=1 -y
 # ------------------------------------------------------------------------------
-# modules
-# Patch *.desktop icons
-# Add *.desktop files
-# xdg-user-dir DESKTOP
-#           DESKTOP
-#           DOWNLOAD
-#           TEMPLATES
-#           PUBLICSHARE
-#           DOCUMENTS
-#           MUSIC
-#           PICTURES
-#           VIDEOS
-# ------------------------------------------------------------------------------
-# Complete: ./start.sh -a -t=1 -y
-# ------------------------------------------------------------------------------
-
-: << a
-multiline comment
-a
 
 # Load modules -----------------------------------------------------------------
 # Move to the script location.
@@ -160,6 +138,8 @@ var_cfg_always_yes=0
 var_cfg_verbose=1
 var_cfg_module=0
 var_cfg_all_modules=0
+# Module 6 is "Updates", no need to apply opn --all-modules.
+MODULE_COUNT=5
 var_cfg_theme=0
 var_cfg_only_update=0
 
@@ -589,7 +569,7 @@ function main ()
       if [ $var_cfg_all_modules -gt 0 ]; then
          let "current_all_modules=current_all_modules+1"
          var_answer=$current_all_modules
-         if [ $current_all_modules -ge 6 ]; then
+         if [ $current_all_modules -ge $MODULE_COUNT ]; then
             loop=0
          fi
       elif [ $var_cfg_module -gt 0 ]; then
@@ -609,13 +589,13 @@ function main ()
        "4")    do_icons_configuration;;
        "5")    do_applications_configuration;;
        "6")    do_updates;;
-       #do_icons_configuration
          *)    ___print_error "Invalid option <1>$var_answer<0>.";;
       esac
    done
    check_logout_warning
    ___print_warning_bg "<1>$cons_lit_product_name<0> finished."
    CR
+   echo $THEME_COUNT
    exit
 }
 
