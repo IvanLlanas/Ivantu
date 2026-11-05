@@ -3,7 +3,7 @@ System Configuration
    keyboard                setup_keyboard_options
    power                   setup_power_settings
    startup files           setup_startup_configuration_files
-   bline                   setup_module_bline
+// bline                   setup_module_bline
 
 GUI-System Configuration
    GRUB                    setup_grub_menu
@@ -19,16 +19,19 @@ GUI-Desktop Configuration
    desktop files           create_desktop_files
 
 Icons Replacement
-   Icons                   setup_vista_icons
+   Ivantu icons            install_ivantu_icons
    *.desktop icons         update_desktop_files
    custom folder icons     update_folder_icons
 
 Applications Configuration
+   Nautilus                setup_nautilus
    Gnome terminal          setup_terminal_profiles
    Ptyxis theme            setup_ptyxis
    eza                     setup_eza
    Conky                   setup_conky
 
-Icon Updates
+Updates
+   startup files           setup_startup_configuration_files
+   Ivantu icons            install_ivantu_icons
    *.desktop icons         update_desktop_files
    custom folder icons     update_folder_icons

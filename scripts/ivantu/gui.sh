@@ -8,7 +8,6 @@
 # function setup_desktop_wallpaper ()
 # function setup_user_icon ()
 # function setup_gnome_extensions ()
-# function setup_file_manager ()
 # function install_gnome_shell_extension (ext_id, filename)
 # ------------------------------------------------------------------------------
 
@@ -358,7 +357,7 @@ function install_gnome_shell_extension ()
          var_logout=1
          if [ $gnomekey ] && [ $gnomekey != "" ]; then
             local filename2="$filename-settings.dconf"
-            if [ $forceconfig != "" ]; then
+            if [[ $forceconfig != "" ]]; then
                filename2="$ext_dir/$forceconfig"
             else
                filename2="$filename-settings.dconf"
@@ -519,42 +518,6 @@ function setup_gnome_extensions ()
          CR
       fi
 
-   fi
-   CR
-}
-
-# ------------------------------------------------------------------------------
-# function setup_file_manager ()
-# Changes some options in Files.
-# ------------------------------------------------------------------------------
-function setup_file_manager ()
-{
-   print_title "$var_current_category" "Setup <1>Files<0>"
-
-   confirm 1 "Change <1>Files settings<0>"
-   if [ $var_confirmed -gt 0 ]; then
-
-      ___print_info "Setting Icons size..."
-      # gsettings set org.gnome.nautilus.icon-view default-zoom-level 'medium' | sed 's/^/  gs: /'
-      gsettings set org.gnome.nautilus.icon-view default-zoom-level 'large' | sed 's/^/  gs: /'
-
-      ___print_info "Adding Size row..."
-      gsettings set org.gnome.nautilus.icon-view captions "['size']" | sed 's/^/  gs: /'
-      # gsettings set org.gnome.nautilus.icon-view captions "['size', 'date_modified']"
-      # More alternative text attributes include 'type', 'owner', 'group', 'permissions', and 'mime_type'.
-
-      ___print_info "Disabling Recent files..."
-      gsettings set org.gnome.desktop.privacy remember-recent-files false | sed 's/^/  gs: /'
-
-      local filename="$HOME/.config/gtk-3.0/settings.ini"
-      if [ ! -f "$filename" ]; then
-         ___print_info "Hiding Recent files entry..."
-         echo "[Settings]" > "$filename"
-         echo "gtk-recent-files-max-age=0" >> "$filename"
-         echo "gtk-recent-files-enabled=FALSE" >> "$filename"
-      fi
-
-      # nautilus -q
    fi
    CR
 }

@@ -4,7 +4,7 @@
 # function setup_terminal_profiles ()
 # function setup_eza ()
 # function setup_ptyxis ()
-# ---
+# function setup_nautilus ()
 # function setup_conky ()
 # ------------------------------------------------------------------------------
 
@@ -137,7 +137,7 @@ function setup_conky ()
 
       local text="Install a single [<1>1<0>] monitor Conky widget or a [<1>3<0>] monitors Conky widget [<1>1<0>/<1>3<0>]?"
       if [ $var_cfg_always_yes -gt 0 ]; then
-         __print_info "$text <1>1<0>"
+         ___print_info "$text <1>1<0>"
          var_answer=1
       else
          read_answer "$text"
@@ -185,6 +185,7 @@ function _create_conky_autorun
    local filename="$autostart_dir/ivantu-conky.desktop"
 
    mkdir -p "$autostart_dir" | sed 's/^/  mkd: /'
+   log 2 "Creating <1>$filename<0>..."
    echo "[Desktop Entry]" > "$filename"
    echo "Type=Application" >> "$filename"
    # echo "Exec=/usr/bin/bash $conky_script_dir/start.sh" >> "$filename"
@@ -204,3 +205,59 @@ function _create_conky_autorun
    fi
 }
 
+# ------------------------------------------------------------------------------
+# function setup_nautilus ()
+# Changes some options in Nautilus.
+# ------------------------------------------------------------------------------
+function setup_nautilus ()
+{
+   print_title "$var_current_category" "Setup <1>Nautilus<0> (Files)"
+   local need_reset=0
+
+   confirm 1 "Change <1>Nautilus settings<0>"
+   if [ $var_confirmed -gt 0 ]; then
+      need_reset=1
+
+      ___print_info "Setting Icons size..."
+      # gsettings set org.gnome.nautilus.icon-view default-zoom-level 'medium' | sed 's/^/  gs: /'
+      gsettings set org.gnome.nautilus.icon-view default-zoom-level 'large' | sed 's/^/  gs: /'
+
+      ___print_info "Adding Size row..."
+      gsettings set org.gnome.nautilus.icon-view captions "['size']" | sed 's/^/  gs: /'
+      # gsettings set org.gnome.nautilus.icon-view captions "['size', 'date_modified']"
+      # More alternative text attributes include 'type', 'owner', 'group', 'permissions', and 'mime_type'.
+
+      ___print_info "Disabling Recent files..."
+      gsettings set org.gnome.desktop.privacy remember-recent-files false | sed 's/^/  gs: /'
+
+      local filename="$HOME/.config/gtk-3.0/settings.ini"
+      if [ ! -f "$filename" ]; then
+         ___print_info "Hiding Recent files entry..."
+         echo "[Settings]" > "$filename"
+         echo "gtk-recent-files-max-age=0" >> "$filename"
+         echo "gtk-recent-files-enabled=FALSE" >> "$filename"
+      fi
+   fi
+
+   if [ -f "$HOME/.local/share/nautilus-python/extensions/nautilus-copy-path.py" ]; then
+      log 0 "<1>nautilus-copy-path<0> already installed."
+   else
+      confirm 1 "Install <1>nautilus-copy-path<0> extension"
+      if [ $var_confirmed -gt 0 ]; then
+         need_reset=1
+         log 2 "Installing packages <1>python3-nautilus, python3-gi, make..."
+         sudo apt install -y python3-nautilus python3-gi make | sed 's/^/  apt\*: /'
+         local dir="$_modules_dir/nautilus-copy-path"
+         cd "$dir"
+         log 2 "Installing <1>nautilus-copy-path<0> extension..."
+         make install | sed 's/^/  make\*: /'
+      fi
+
+      if [ $need_reset -gt 0 ]; then
+         ___print_info "Resetting Nautilus..."
+         nautilus -q
+      fi
+   fi
+
+   CR
+}

@@ -1,0 +1,13 @@
+https://github.com/chr314/nautilus-copy-path
+
+[Install]
+sudo apt install python3-nautilus python3-gi
+git clone https://github.com/chr314/nautilus-copy-path.git
+cd nautilus-copy-path
+make install
+Restart the Nautilus (nautilus -q) if not seeing the options.
+
+[Uninstall]
+cd path/to/nautilus-copy-path
+make uninstall
+Restart the Nautilus (nautilus -q) if still seeing the options after uninstall.

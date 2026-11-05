@@ -36,5 +36,7 @@ MojArch's [wiggly](https://github.com/Arch-Lover/wiggly) [extension](https://ext
 
 Shakiba bline application ([link 1](https://github.com/k-five/bline)) ([link2](https://github.com/shakibamoshiri/bline)).
 
+Christoforos Aslanov 's [nautilus-copy-path](https://github.com/chr314/nautilus-copy-path) extension.
+
 ## DISCLAIMER, WARNING and all that
 Use it at your own risk. In fact, if you are not me don't use it. Have fun.

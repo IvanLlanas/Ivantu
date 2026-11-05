@@ -282,7 +282,7 @@ function choose_theme ()
          let "id=i+1"
          name=${THEME_NAMES[$i]}
          color=${THEME_COLORS[$i]}
-         ___echo_info "   $_o_option$id - $color$name"
+         ___print_text "   $_o_option$id - $color$name\n"
       done
 
       CR
@@ -352,7 +352,7 @@ function select_available_filename ()
             default_is_enabled=1
          fi
          if [ ! "$menu" == "" ]; then
-            menu+="\n"
+            menu+=$'\n'
          fi
          answers+="/$_o_option$id<0>"
          name=${THEME_NAMES[$i]}
@@ -363,13 +363,13 @@ function select_available_filename ()
 
    # Print the menu.
    if [ $default_is_enabled -gt 0 ]; then
-      ___echo_info "   $_o_default"0"$_ansi_off - $theme_color$theme_name"$_ansi_off
+      ___print_text "   $_o_default"0"$_ansi_off - $theme_color$theme_name"$_ansi_off
       CR
       answers="/$_o_default"0$_ansi_off$answers
    fi
    answers="$_o_skip"N"<0>"o$answers
 
-   ___echo_info "$menu"
+   ___print_text "$menu"
 
    # $answers contains all real available answers
    CR

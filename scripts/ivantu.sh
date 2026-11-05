@@ -341,7 +341,6 @@ function do_gui_desktop_configuration ()
    setup_desktop_wallpaper
    setup_user_icon
    setup_gnome_extensions
-   setup_file_manager
    create_desktop_files
 }
 
@@ -351,6 +350,7 @@ function do_applications_configuration ()
    set_application_colors
    var_current_category="Applications"
    choose_theme
+   setup_nautilus
    setup_terminal_profiles
    setup_ptyxis
    setup_eza

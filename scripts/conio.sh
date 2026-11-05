@@ -1,11 +1,11 @@
-
+# --------------------------------------------------------------------------------
 # conio.sh - Console Input/Output routines
-
+# --------------------------------------------------------------------------------
 # function ___trim (text)
 # function ___get_current_time ()
 # function ___datetime_to_string (date, [format])
 
-# function ___echo_info (text)
+# function ___print_text (text)
 # function ___print_info (command, [text])
 # function ___print_info_bg (command, [text])
 # function ___print_warning (command, [text])
@@ -21,6 +21,7 @@
 # function ___cmd_usage ()
 
 # --------------------------------------------------------------------------------
+#pragma once
 
 # ANSI colors ----------------------------------------------------------
 
@@ -79,63 +80,70 @@ _quote2='>'
 _quotel1='['
 _quotel2=']'
 
-# _print_info colors ---------------------------------------------------
+# ___print_text colors -------------------------------------------------
+_text_c0=$_ansi_lwhite
+_text_c1=$_ansi_lyellow
+_text_c2=$_ansi_lcyan
+_text_c3=$_ansi_lgreen
+_text_bg=$_ansi_bg_default
+
+# ___print_info colors -------------------------------------------------
 _info_c0=$_ansi_lwhite
 _info_c1=$_ansi_lyellow
 _info_c2=$_ansi_lcyan
 _info_c3=$_ansi_lgreen
 _info_bg=$_ansi_bg_default
 
-# _print_info_bg colors ------------------------------------------------
+# ___print_info_bg colors ----------------------------------------------
 _infobg_c0=$_ansi_lwhite
 _infobg_c1=$_ansi_lcyan
 _infobg_c2=$_ansi_lyellow
 _infobg_c3=$_ansi_lgreen
 _infobg_bg=$_ansi_bg_blue
 
-# _print_warning colors -----------------------------------------------
+# ___print_warning colors ----------------------------------------------
 _warning_c0=$_ansi_lyellow
 _warning_c1=$_ansi_lwhite
 _warning_c2=$_ansi_lcyan
 _warning_c3=$_ansi_lgreen
 _warning_bg=$_ansi_bg_default
 
-# _print_warning_bg colors --------------------------------------------
+# ___print_warning_bg colors -------------------------------------------
 _warningbg_c0=$_ansi_black
 _warningbg_c1=$_ansi_red
 _warningbg_c2=$_ansi_blue
 _warningbg_c3=$_ansi_green
 _warningbg_bg=$_ansi_bg_lyellow
 
-# _print_error colors --------------------------------------------------
+# ___print_error colors ------------------------------------------------
 _error_c0=$_ansi_lred
 _error_c1=$_ansi_lyellow
 _error_c2=$_ansi_lcyan
 _error_c3=$_ansi_lgreen
 _error_bg=$_ansi_bg_default
 
-# _print_error_bg colors -----------------------------------------------
+# ___print_error_bg colors ---------------------------------------------
 _errorbg_c0=$_ansi_lwhite
 _errorbg_c1=$_ansi_lyellow
 _errorbg_c2=$_ansi_lcyan
 _errorbg_c3=$_ansi_lgreen
 _errorbg_bg=$_ansi_bg_red
 
-# _print_disabled colors -----------------------------------------------
+# ___print_disabled colors ---------------------------------------------
 _disabled_c0=$_ansi_lblack
 _disabled_c1=$_ansi_yellow
 _disabled_c2=$_ansi_white
 _disabled_c3=$_ansi_white
 _disabled_bg=$_ansi_bg_default
 
-# _print_disabled_bg colors --------------------------------------------
+# ___print_disabled_bg colors ------------------------------------------
 _disabledbg_c0=$_ansi_lwhite
 _disabledbg_c1=$_ansi_lyellow
 _disabledbg_c2=$_ansi_lcyan
 _disabledbg_c3=$_ansi_lgreen
 _disabledbg_bg=$_ansi_bg_green
 
-# _print_info_bg colors ------------------------------------------------
+# ___print_info_bg colors ----------------------------------------------
 _date_format_filename='%Y-%m-%d'
 _datetime_format_filename=$_date_format_filename'__%H-%M-%S'
 _date_format_screen='%Y/%m/%d'
@@ -201,19 +209,17 @@ function ___datetime_to_string ()
 #  echo $(date -d@$dt '+%Y/%m/%d %H:%M:%S')
 }
 
-# function ___echo_info (text)
-# Prints a message in info format. No leading/trailing space.
-function ___echo_info ()
+# function ___print_text (text)
+# Prints a text to standard output. No CR or leading/trailing space.
+function ___print_text ()
 {
    local text="$1"
 
-   text=${text//$_em3/$_info_c3}
-   text=${text//$_em2/$_info_c2}
-   text=${text//$_em1/$_info_c1}
-   text=${text//$_em0/$_info_c0}
-
-   # echo -e "$_info_c0$_info_bg$text$_ansi_off"
-   printf '%s\n' "$_info_c0$_info_bg$text$_ansi_off"
+   text=${text//$_em3/$_text_c3}
+   text=${text//$_em2/$_text_c2}
+   text=${text//$_em1/$_text_c1}
+   text=${text//$_em0/$_text_c0}
+   printf '%s' "$_text_c0$_text_bg$text$_ansi_off"
 }
 
 # function ___print_info (command, [text])
@@ -230,15 +236,12 @@ function ___print_info ()
    command=${command//$_em0/$_info_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_info_c0$_info_bg $command $_ansi_off"
       printf '%s\n' "$_info_c0$_info_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_info_c3}
       text=${text//$_em2/$_info_c2}
       text=${text//$_em1/$_info_c1}
       text=${text//$_em0/$_info_c0}
-
-      # echo -e "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
       printf '%s\n' "$_info_c1$_info_bg $command$_info_c0: $text $_ansi_off"
    fi
 }
@@ -254,15 +257,12 @@ function ___print_info_bg ()
    command=${command//$_em0/$_infobg_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
       printf '%s\n' "$_ansi_bold$_infobg_c0$_infobg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_infobg_c3}
       text=${text//$_em2/$_infobg_c2}
       text=${text//$_em1/$_infobg_c1}
       text=${text//$_em0/$_infobg_c0}
-
-      # echo -e "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
       printf '%s\n' "$_ansi_bold$_infobg_c1$_infobg_bg $command$_infobg_c0: $text $_ansi_off"
    fi
 }
@@ -281,15 +281,12 @@ function ___print_warning ()
    command=${command//$_em0/$_warning_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_warning_c0$_warning_bg $command $_ansi_off"
       printf '%s\n' "$_warning_c0$_warning_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_warning_c3}
       text=${text//$_em2/$_warning_c2}
       text=${text//$_em1/$_warning_c1}
       text=${text//$_em0/$_warning_c0}
-
-      # echo -e "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
       printf '%s\n' "$_warning_c1$_warning_bg $command$_warning_c0: $text $_ansi_off"
    fi
 }
@@ -305,15 +302,12 @@ function ___print_warning_bg ()
    command=${command//$_em0/$_warningbg_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
       printf '%s\n' "$_warningbg_c0$_warningbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_warningbg_c3}
       text=${text//$_em2/$_warningbg_c2}
       text=${text//$_em1/$_warningbg_c1}
       text=${text//$_em0/$_warningbg_c0}
-
-      #echo -e "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
       printf '%s\n' "$_warningbg_c1$_warningbg_bg $command$_warningbg_c0: $text $_ansi_off"
    fi
 }
@@ -332,15 +326,12 @@ function ___print_error ()
    command=${command//$_em0/$_error_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_error_c0$_error_bg $command $_ansi_off"
       printf '%s\n' "$_error_c0$_error_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_error_c3}
       text=${text//$_em2/$_error_c2}
       text=${text//$_em1/$_error_c1}
       text=${text//$_em0/$_error_c0}
-
-      # echo -e "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
       printf '%s\n' "$_error_c1$_error_bg $command$_error_c0: $text $_ansi_off"
    fi
 }
@@ -356,15 +347,12 @@ function ___print_error_bg ()
    command=${command//$_em0/$_errorbg_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
       printf '%s\n' "$_errorbg_c0$_errorbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_errorbg_c3}
       text=${text//$_em2/$_errorbg_c2}
       text=${text//$_em1/$_errorbg_c1}
       text=${text//$_em0/$_errorbg_c0}
-
-      # echo -e "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
       printf '%s\n' "$_errorbg_c1$_errorbg_bg $command$_errorbg_c0: $text $_ansi_off"
    fi
 }
@@ -383,15 +371,12 @@ function ___print_disabled ()
    command=${command//$_em0/$_disabled_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_disabled_c0$_disabled_bg $command $_ansi_off"
       printf '%s\n' "$_disabled_c0$_disabled_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_disabled_c3}
       text=${text//$_em2/$_disabled_c2}
       text=${text//$_em1/$_disabled_c1}
       text=${text//$_em0/$_disabled_c0}
-
-      # echo -e "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
       printf '%s\n' "$_disabled_c1$_disabled_bg $command$_disabled_c0: $text $_ansi_off"
    fi
 }
@@ -407,15 +392,12 @@ function ___print_disabled_bg ()
    command=${command//$_em0/$_disabledbg_c0}
 
    if [ "$text" = "" ]; then
-      # echo -e "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
       printf '%s\n' "$_disabledbg_c0$_disabledbg_bg $command $_ansi_off"
    else
       text=${text//$_em3/$_disabledbg_c3}
       text=${text//$_em2/$_disabledbg_c2}
       text=${text//$_em1/$_disabledbg_c1}
       text=${text//$_em0/$_disabledbg_c0}
-
-      # echo -e "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
       printf '%s\n' "$_disabledbg_c1$_disabledbg_bg $command$_disabledbg_c0: $text $_ansi_off"
    fi
 }
@@ -435,11 +417,9 @@ function ___print_url ()
    fi
 
    if [ "$color1" == "" ]; then
-      # printf "\e]8;;$url\e\\$text\e]8;;\e\\"
       printf '\e]8;;%s\e\\%s\e]8;;\e\\' "$url" "$text"
    else
       printf '%s' "$color1"
-      # printf "\e]8;;$url\e\\$text\e]8;;\e\\"
       printf '\e]8;;%s\e\\%s\e]8;;\e\\' "$url" "$text"
       printf '%s' "$color2"
    fi
@@ -535,18 +515,15 @@ function ___print_fw ()
    msg=${msg//$_em1/$c_1}
    msg=${msg//$_em0/$c_0}
 
-   # echo -e "$c_bg$c_0$msg$filler$_ansi_off"
    printf '%s\n' "$c_bg$c_0$msg$filler$_ansi_off"
 }
 
 function ___cmd_descr ()
 {
-   # echo -e " "$_ansi_bold$1$_ansi_off" - "$2$_ansi_off
    printf ' %s - %s\n' "$_ansi_bold$1$_ansi_off" "$2$_ansi_off"
 }
 
 function ___cmd_usage ()
 {
-   # echo -e " Usage: "$_ansi_black$_ansi_bg_white $1 $_ansi_off
    printf ' Usage: %s\n' "$_ansi_black$_ansi_bg_white $1 $_ansi_off"
 }
