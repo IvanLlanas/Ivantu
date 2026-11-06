@@ -282,7 +282,7 @@ function choose_theme ()
          let "id=i+1"
          name=${THEME_NAMES[$i]}
          color=${THEME_COLORS[$i]}
-         ___print_text "   $_o_option$id - $color$name\n"
+         ___print_text "   $_o_option$id - $color$name"$_CR
       done
 
       CR
@@ -352,7 +352,7 @@ function select_available_filename ()
             default_is_enabled=1
          fi
          if [ ! "$menu" == "" ]; then
-            menu+=$'\n'
+            menu+=$_CR
          fi
          answers+="/$_o_option$id<0>"
          name=${THEME_NAMES[$i]}

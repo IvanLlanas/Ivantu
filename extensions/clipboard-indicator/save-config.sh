@@ -1,1 +1,6 @@
-dconf dump /org/gnome/shell/extensions/clipboard-indicator/ > clipboard-indicator-settings.dconf
+#!/bin/bash
+
+extension="clipboard-indicator"
+path="/org/gnome/shell/extensions/clipboard-indicator/"
+
+source "../base-save-config.sh"

@@ -120,12 +120,6 @@ function setup_terminal_profiles ()
 }
 
 # ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# --- DISABLED -----------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
 # function setup_conky ()
 # ------------------------------------------------------------------------------
 function setup_conky ()
@@ -178,6 +172,7 @@ function setup_conky ()
 # ------------------------------------------------------------------------------
 # function _create_conky_autorun (conky_script_dir)
 # ------------------------------------------------------------------------------
+$CONKY_DELAY_SECONDS=10
 function _create_conky_autorun
 {
    local conky_script_dir="$1"
@@ -189,7 +184,7 @@ function _create_conky_autorun
    echo "[Desktop Entry]" > "$filename"
    echo "Type=Application" >> "$filename"
    # echo "Exec=/usr/bin/bash $conky_script_dir/start.sh" >> "$filename"
-   echo "Exec=/usr/bin/bash -c \"sleep 20 && $conky_script_dir/start.sh\"" >> "$filename"
+   echo "Exec=/usr/bin/bash -c \"sleep $CONKY_DELAY_SECONDS && $conky_script_dir/start.sh\"" >> "$filename"
    echo "Hidden=false" >> "$filename"
    echo "NoDisplay=false" >> "$filename"
    echo "X-GNOME-Autostart-enabled=true" >> "$filename"

@@ -436,22 +436,44 @@ function setup_gnome_extensions ()
 # https://extensions.gnome.org/extension/5156/desktop-clock/
 # https://gitlab.com/AndrewZaech/azclock
 # export: dconf dump /org/gnome/shell/extensions/azclock/ > azclock-settings.dconf
-      local configfile=
-      if [ "$HOSTNAME" = "inas" ]; then
-         log 2 "Using monitor configuration INAS."
-         configfile="azclock-settings-inas.dconf"
-      elif [ $var_monitor_count -le 2 ]; then
+      local configfile="azclock-settings-"
+
+      if [ "$HOSTNAME" = "cc" ]; then
+
+         log 2 "Using monitor configuration cc."
+         configfile="$configfile"cc
+
+      elif [ "$HOSTNAME" = "inas" ]; then
+
+         configfile="$configfile"inas-
          if [ $var_monitor_scaling_pct -gt 120 ]; then
-            log 2 "Using monitor configuration 1x125."
-            configfile="azclock-settings-1920-125.dconf"
+            log 2 "Using monitor configuration inas-125."
+            configfile="$configfile"125
          else
-            log 2 "Using monitor configuration 1x00."
-            configfile="azclock-settings-1920-100.dconf"
+            log 2 "Using monitor configuration inas-100."
+            configfile="$configfile"100
          fi
-      else
-         log 2 "Using monitor configuration 3x00."
+
+      else # $var_monitor_count
+
+         configfile="$configfile"1monitor-
+         if [ $var_monitor_scaling_pct -gt 120 ]; then
+            log 2 "Using monitor configuration 1monitor-125."
+            configfile="$configfile"125
+         else
+            log 2 "Using monitor configuration 1monitor-100."
+            configfile="$configfile"100
+         fi
+
       fi
-      install_gnome_shell_extension 'azclock@azclock.gitlab.com' 'azclock' '/org/gnome/shell/extensions/azclock/' "$configfile"
+      configfile="$configfile.dconf"
+
+      if [ ! -f "$configfile" ]; then
+         ___prnt_error_bg "<1>azclock<0> configuration file <1>$configfile<0> not found."
+      else
+         log 2 ""
+         install_gnome_shell_extension 'azclock@azclock.gitlab.com' 'azclock' '/org/gnome/shell/extensions/azclock/' "$configfile"
+      fi
       if [ $var_installed -eq 1 ]; then
          log 0 "<1>azclock<0> already installed."
       fi
@@ -502,6 +524,18 @@ function setup_gnome_extensions ()
       install_gnome_shell_extension 'wiggly@mojarch' 'wiggly' '/org/gnome/shell/extensions/wiggly/'
       if [ $var_installed -eq 1 ]; then
          log 0 "<1>wiggly<0> already installed."
+      fi
+      if [ $var_installed -ge 2 ]; then
+         installed_new=1
+      fi
+
+# lockkeys@vaina.lt
+# https://extensions.gnome.org/extension/36/lock-keys/
+# https://github.com/kazysmaster/gnome-shell-extension-lockkeys
+# export: dconf dump /org/gnome/shell/extensions/lockkeys/ > lock-keys-settings.dconf
+      install_gnome_shell_extension 'lockkeys@vaina.lt' 'lock-keys' '/org/gnome/shell/extensions/lockkeys/'
+      if [ $var_installed -eq 1 ]; then
+         log 0 "<1>lock-keys<0> already installed."
       fi
       if [ $var_installed -ge 2 ]; then
          installed_new=1

@@ -42,6 +42,7 @@ source "$IVANTU_SCRIPTS_DIR/ivantu/updates.sh"
 
 # Constants --------------------------------------------------------------------
 
+_CR=$'\n'
 cons_lit_product_name="Ivantu"
 cons_lit_product_version="1.0"
 cons_lit_product_date="2026-10-28"
@@ -119,9 +120,9 @@ THEME_PREFIXES=(   $THEME_PREFIX_IVAN       $THEME_PREFIX_INAS       $THEME_PREF
 THEME_COLORS=(    "$_ansi_lblue"           "$_ansi_lgreen"          "$_ansi_lblack"          "$_ansi_white"            "$_ansi_lyellow"           "$_ansi_lcyan"            "$_ansi_lred"              "$_ansi_yellow")
 THEME_DISTRIBS=(  "Ivantu"                 "INAS"                   "Death Star"             "Dunwall Tower"           "World of Warcraft Server" "WoW - Wrath of the Lich King Server"   "WoW - Cataclysm Server"  "L'Estatut")
 THEME_PROFILES=(  "$THEME_PROFILE_IVAN"    "$THEME_PROFILE_INAS"    "$THEME_PROFILE_VADER"   "$THEME_PROFILE_CORVO"    "$THEME_PROFILE_VANILLA"   "$THEME_PROFILE_WOTLK"    "$THEME_PROFILE_CATACLYSM" "$THEME_PROFILE_ESTATUT")
-THEME_GTKTHEMES=( "Yaru-blue-dark"         "Yaru-blue-dark"         "Yaru-red-dark"          "Yaru-blue-dark"           "Yaru-dark"                "Yaru-blue-dark"          "Yaru-red-dark"           "Yaru-yellow-dark")
-THEME_ICONTHEMES=("Yaru-blue"              "Yaru-blue"              "Yaru-red"               "Yaru-blue"                "Yaru"                     "Yaru-blue"               "Yaru-red"                "Yaru-yellow-dark")
-S_ICON_NAMES=(    "Ivan Server"            "INAS Server"            "Dark Server"            "Corvo Server"             "WoW Server"               "WotLK Server"            "Cataclysm Server"        "L'Estatut Server")
+THEME_GTKTHEMES=( "Yaru-blue-dark"         "Yaru-blue-dark"         "Yaru-red-dark"          "Yaru-blue-dark"          "Yaru-dark"                "Yaru-blue-dark"          "Yaru-red-dark"           "Yaru-yellow-dark")
+THEME_ICONTHEMES=("Yaru-blue"              "Yaru-blue"              "Yaru-red"               "Yaru-blue"               "Yaru"                     "Yaru-blue"               "Yaru-red"                "Yaru-yellow-dark")
+S_ICON_NAMES=(    "Ivan Server"            "INAS Server"            "Dark Server"            "Corvo Server"            "WoW Server"               "WotLK Server"            "Cataclysm Server"        "L'Estatut Server")
 S_ICON_COMMENTS=( "Ivan Server Management" "INAS Server Management" "INAS Server Management" "Corvo Server Management" "WoW Server Management"    "WotLK Server Management" "Cataclysm Server Management" "L'Estatut Server Management")
 
 THEME_COUNT=${#THEME_NAMES[@]}
@@ -595,7 +596,6 @@ function main ()
    check_logout_warning
    ___print_warning_bg "<1>$cons_lit_product_name<0> finished."
    CR
-   echo $THEME_COUNT
    exit
 }
 

@@ -1,1 +1,6 @@
-dconf dump /org/gnome/shell/extensions/wiggly/ > wiggly-settings.dconf
+#!/bin/bash
+
+extension="wiggly"
+path="/org/gnome/shell/extensions/wiggly/"
+
+source "../base-save-config.sh"
