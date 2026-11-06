@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/779/clipboard-indicator/
+https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator
+
+dconf dump /org/gnome/shell/extensions/clipboard-indicator/ > clipboard-indicator-settings.dconf

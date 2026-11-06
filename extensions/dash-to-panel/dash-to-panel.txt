@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/1160/dash-to-panel/
+https://github.com/home-sweet-gnome/dash-to-panel
+
+dconf dump /org/gnome/shell/extensions/dash-to-panel/ > dash-to-panel-settings.dconf

@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/36/lock-keys/
+https://github.com/kazysmaster/gnome-shell-extension-lockkeys
+
+dconf dump /org/gnome/shell/extensions/lockkeys/ > lock-keys-settings.dconf

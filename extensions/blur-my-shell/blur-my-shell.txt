@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/3193/blur-my-shell/
+https://github.com/aunetx/blur-my-shell
+
+dconf dump /org/gnome/shell/extensions/blur-my-shell/ > blur-my-shell-settings.dconf
