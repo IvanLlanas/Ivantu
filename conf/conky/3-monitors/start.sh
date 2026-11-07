@@ -4,7 +4,7 @@
 cd "$(dirname "$0")"
 
 # Kill existing conky instances
-killall conky
+pkill -x conky; pkill -f '^conky($| )'
 
 # Do it!
 conky -c cc-diskio.conf &> /dev/null &

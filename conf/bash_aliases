@@ -1074,9 +1074,6 @@ function ___cc_aliases ()
          ___print_info "<1>grestore<0> alias added."
       fi
 
-      alias meld="flatpak run org.gnome.meld"
-         meld_description="(flatpak) Meld - Visual diff tool."
-         meld_category="$_CATEGORY_APP"
    fi
 }
 ___cc_aliases
