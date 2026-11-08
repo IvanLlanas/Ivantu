@@ -3,4 +3,4 @@
 extension="wiggly"
 path="/org/gnome/shell/extensions/wiggly/"
 
-source "../base-save-config.sh"
+source "../base-load-config.sh"
