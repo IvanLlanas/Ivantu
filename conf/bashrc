@@ -96,15 +96,6 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -117,8 +108,19 @@ if ! shopt -oq posix; then
 fi
 
 # ----------------------------------------------------------------------------
-# Ivantu - .bashrc r3 --------------------------------------------------------
+# Ivantu - .bashrc r4 --------------------------------------------------------
 # ----------------------------------------------------------------------------
+
+# Expanding PATH:
+export PATH="$PATH:/opt/bin"
+
+# Alias definitions must be called AFTER expanding PATH!!!
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 # Customize the terminal prompt:
 # The output of ps1 should not be counted towards the length of your prompt, so it must be wrapped in \[...\] as well.
@@ -131,9 +133,6 @@ else
    PS1='${debian_chroot:+($debian_chroot)}\[\033[38;2;0;0;0m\]\[\033[48;2;0;255;255m\] \u\[\033[48;2;192;192;192m\]@\[\033[48;2;64;212;64m\]\h\[\033[48;2;192;192;192m\]:\[\033[48;2;0;128;255m\]\w \[\033[0m\]〉'
 fi
 # Monocrhome: PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-
-# Expanding PATH:
-export PATH="$PATH:/opt/bin"
 
 # Delete annoying directories:
 rmdir Documents Music Public Templates Videos &> /dev/null

@@ -685,7 +685,7 @@ function _mk ()
 
 # Is 7z installed?
 
-if command -v 7z >/dev/null 2>&1; then
+if command -v 7z &>/dev/null ; then
    alias fn="realpath"
       fn_description="Print the full path of a given file/directory."
       fn_category="$_CATEGORY_FILE"
@@ -702,7 +702,7 @@ else
 fi
 
 # Is rar installed?
-if command -v rar >/dev/null 2>&1; then
+if command -v rar &>/dev/null ; then
    alias ra="rar a -r -s -m5 -md1g"
       ra_description="Compress using rar with maximum compression settings."
       ra_category="$_CATEGORY_COMPRESS"
@@ -728,7 +728,7 @@ else
 fi
 
 # Is arj installed?
-if command -v arj >/dev/null 2>&1; then
+if command -v arj &>/dev/null ; then
    alias aa="arj a -r -m4"
       aa_description="Compress using arj with maximum compression settings."
       aa_category="$_CATEGORY_COMPRESS"
@@ -807,7 +807,7 @@ alias fgrep="fgrep --color=auto"
    fgrep_category="$_CATEGORY_FILE"
 
 # Apps ----------------------------------------------------------
-if command -v bc >/dev/null 2>&1; then
+if command -v bc &>/dev/null ; then
    alias calc=___calc
       calc_description="Calculate value from arithmetic-expression."
       calc_category="$_CATEGORY_SHELL"
@@ -824,7 +824,7 @@ function ___calc ()
 }
 fi
 
-if command -v cmatrix >/dev/null 2>&1; then
+if command -v cmatrix &>/dev/null ; then
    alias matrix="gnome-terminal --window-with-profile=Matrix --full-screen -- cmatrix -b"
       matrix_description="Start full Matrix screensaver."
       matrix_category="$_CATEGORY_SHELL"
@@ -837,7 +837,7 @@ else
    ___print_disabled "<1>cmatrix<0> not found."
 fi
 
-if command -v xclip-cutfile >/dev/null 2>&1; then
+if command -v xclip-cutfile &>/dev/null ; then
    alias xc=xclip-copyfile
       xc_description="Copy file(s) to the clipboard (only to console!)."
       xc_category="$_CATEGORY_SHELL"
@@ -1719,7 +1719,7 @@ function ___print_alias ()
          if [[ -v $varname ]]; then
             description=${!varname}
          else
-            description="?"
+            description="? (Probably defined before .bash_aliases)"
          fi
       fi
 
@@ -1822,8 +1822,8 @@ bind -x '"\eOR": keypress_f3'
 
 # ----------------------------------------------------------------------
 # Change color of command console output.
-# $ command | pretty
-# pretty ()
+# $ command | pretty_random
+# pretty_random ()ç
 # {
 #     while read -r line; do
 #         printf "\033[38;5;%dm%s\033[0m\n" $(($RANDOM%255)) "$line";
