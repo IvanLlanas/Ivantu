@@ -228,6 +228,9 @@ function setup_desktop_appearance ()
       gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.75   | sed 's/^/  gs: /'
       # gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true  | sed 's/^/  gs: /'
 
+      ___print_info "Setting new icons corner..."
+      gsettings set org.gnome.shell.extensions.ding start-corner 'top-left' | sed 's/^/  gs: /'
+
       ___print_info "Showing trash icon on desktop..."
       gsettings set org.gnome.shell.extensions.ding show-trash true | sed 's/^/  gs: /'
 
@@ -467,9 +470,8 @@ function setup_gnome_extensions ()
 
       fi
       configfile="$configfile.dconf"
-
-      if [ ! -f "$configfile" ]; then
-         ___prnt_error_bg "<1>azclock<0> configuration file <1>$configfile<0> not found."
+      if [ ! -f "$_extensions_dir/azclock/$configfile" ]; then
+         ___print_error_bg "<1>azclock<0> configuration file <1>$configfile<0> not found."
       else
          log 2 ""
          install_gnome_shell_extension 'azclock@azclock.gitlab.com' 'azclock' '/org/gnome/shell/extensions/azclock/' "$configfile"

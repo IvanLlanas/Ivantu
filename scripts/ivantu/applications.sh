@@ -126,45 +126,55 @@ function setup_conky ()
 {
    print_title "$var_current_category" "Setup <1>Conky<0> widget"
 
-   check_and_install_optional_package "conky-all" "Conky" 0
-   if [ $var_installed -gt 0 ]; then
+   # Apt version of conky (1.22) is unstable and incompatible with the new widgets.
+   # Conky 1.26 should be installed by the user.
+   # check_and_install_optional_package "conky-all" "Conky" 0
+   # if [ $var_installed -gt 0 ]; then
 
-      local text="Install a single [<1>1<0>] monitor Conky widget or a [<1>3<0>] monitors Conky widget [<1>1<0>/<1>3<0>]?"
-      if [ $var_cfg_always_yes -gt 0 ]; then
-         ___print_info "$text <1>1<0>"
-         var_answer=1
-      else
-         read_answer "$text"
-      fi
+   if command -v conky >/dev/null 2>&1; then
 
-      if [[ $var_answer =~ $_numbers ]] && [ ! -z $var_answer ]; then
-         case $var_answer in
-            1)
-               select_available_filename 1 "$_conky_dir" ""
-               if [ ! -z "$var_selected_filename" ]; then
-                  _create_conky_autorun "$var_selected_filename"
-               fi
-               ;;
+      confirm 0 "Launch <1>conky<0> widget on startup"
+      if [ $var_confirmed -gt 0 ]; then
 
-            3) var_selected_filename=$(realpath -s "$_conky_dir/3-monitors")
-               _create_conky_autorun "$var_selected_filename"
-               ;;
-
-            *) ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
-               CR
-               return
-               ;;
-         esac
-
-         confirm 1 "Launch the <1>Conky widget<0> now"
-         if [ $var_confirmed -gt 0 ]; then
-            ___print_info "Launching the <1>Conky widget<0>..."
-            bash "$var_selected_filename/start.sh" | sed 's/^/  bash: /'
+         local text="Install a single [<1>1<0>] monitor Conky widget or a [<1>3<0>] monitors Conky widget [<1>1<0>/<1>3<0>]?"
+         if [ $var_cfg_always_yes -gt 0 ]; then
+            ___print_info "$text <1>1<0>"
+            var_answer=1
+         else
+            read_answer "$text"
          fi
 
-      else
-         ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
+         if [[ $var_answer =~ $_numbers ]] && [ ! -z $var_answer ]; then
+            case $var_answer in
+                  1)
+                  select_available_filename 1 "$_conky_dir" ""
+                  if [ ! -z "$var_selected_filename" ]; then
+                        _create_conky_autorun "$var_selected_filename"
+                  fi
+                  ;;
+
+                  3) var_selected_filename=$(realpath -s "$_conky_dir/3-monitors")
+                  _create_conky_autorun "$var_selected_filename"
+                  ;;
+
+                  *) ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
+                  CR
+                  return
+                  ;;
+            esac
+
+            confirm 1 "Launch the <1>Conky widget<0> now"
+            if [ $var_confirmed -gt 0 ]; then
+                  ___print_info "Launching the <1>Conky widget<0>..."
+                  bash "$var_selected_filename/start.sh" | sed 's/^/  bash: /'
+            fi
+
+         else
+            ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
+         fi
       fi
+   else
+      log 0 "<1>Conky<0> not installed."
    fi
    CR
 }
