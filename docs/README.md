@@ -36,6 +36,8 @@ MojArch's [wiggly](https://github.com/Arch-Lover/wiggly) [extension](https://ext
 
 Kazimieras Vaina's [lock-keys](https://github.com/kazysmaster/gnome-shell-extension-lockkeys) [extension](https://extensions.gnome.org/extension/36/lock-keys/)
 
+ZeysMockingjay's [Picture-desktop-widget-remake](https://github.com/ZeysMockingjay/Picture-desktop-widget-remake) [extension](https://extensions.gnome.org/extension/10608/picture-desktop-widget-remake/).
+
 Shakiba bline application ([link 1](https://github.com/k-five/bline)) ([link2](https://github.com/shakibamoshiri/bline)).
 
 Christoforos Aslanov 's [nautilus-copy-path](https://github.com/chr314/nautilus-copy-path) extension.

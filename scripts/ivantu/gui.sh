@@ -543,6 +543,23 @@ function setup_gnome_extensions ()
          installed_new=1
       fi
 
+# picture-desktop-remake@ZeysMockingjay.Github.com
+# https://extensions.gnome.org/extension/10608/picture-desktop-widget-remake/
+# https://github.com/ZeysMockingjay/Picture-desktop-widget-remake
+# export: dconf dump /org/gnome/shell/extensions/Picture-desktop-widget/ > picture-desktop-widget-remake-settings.dconf
+# fix gnome 50-: https://github.com/ZeysMockingjay/Picture-desktop-widget-remake/issues/10
+      local configkey=""
+      if [ "$HOSTNAME" = "cc" ]; then
+         configkey=/org/gnome/shell/extensions/Picture-desktop-widget/
+      fi
+      install_gnome_shell_extension 'picture-desktop-remake@ZeysMockingjay.Github.com' 'picture-desktop-widget-remake' "$configkey"
+      if [ $var_installed -eq 1 ]; then
+         log 0 "<1>picture-desktop-widget-remake<0> already installed."
+      fi
+      if [ $var_installed -ge 2 ]; then
+         installed_new=1
+      fi
+
 # ------------------------------------------
 
       if [ $installed_new -ge 1 ]; then
