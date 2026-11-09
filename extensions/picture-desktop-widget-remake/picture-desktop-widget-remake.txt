@@ -1,0 +1,4 @@
+https://extensions.gnome.org/extension/10608/picture-desktop-widget-remake/
+https://github.com/ZeysMockingjay/Picture-desktop-widget-remake
+
+dconf dump /org/gnome/shell/extensions/Picture-desktop-widget/ > picture-desktop-widget-remake-settings.dconf

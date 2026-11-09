@@ -1,0 +1,12 @@
+[/]
+active-profile-id='profile-0dg820ct'
+current-image-path=''
+image-path='/home/ivan/Dropbox/Images/Fotos/Cronologic'
+time-last-update=1794222801
+widget-aspect-ratio=1.7
+widget-corner-radius=8
+widget-position-x=64
+widget-position-y=32
+widget-profiles='[{"id":"profile-njmsekrn","name":"Cronològic","imagePath":"/home/ivan/Dropbox/Images/Fotos/Cronologic","widgetSize":512,"widgetPositionX":64,"widgetPositionY":32,"widgetAspectRatio":1.3,"widgetTimeout":60,"fadeDuration":2000,"widgetCornerRadius":10,"visible":true,"timeLastUpdate":0,"currentImagePath":"","cachedFiles":[],"cachedFolderPath":"","requiresRescan":true},{"id":"profile-0dg820ct","name":"Wallpapers","imagePath":"/home/ivan/Dropbox/Apps/Utils/Linux/UI/Media/wallpapers","widgetSize":512,"widgetPositionX":64,"widgetPositionY":595,"widgetAspectRatio":1.3,"widgetTimeout":60,"fadeDuration":2000,"widgetCornerRadius":10,"visible":true,"timeLastUpdate":0,"currentImagePath":"","cachedFiles":[],"cachedFolderPath":"","requiresRescan":true}]'
+widget-size=512
+widget-timeout=60
