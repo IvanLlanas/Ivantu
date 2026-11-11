@@ -27,6 +27,7 @@
 _root_dir=$(realpath -s "$(dirname "$0")")
 cd "$_root_dir"
 
+# If IVANTU_SCRIPTS_DIR is not defined, define it.
 if [[ -z "${IVANTU_SCRIPTS_DIR}" ]]; then
    IVANTU_SCRIPTS_DIR="$(pwd)"
 fi
@@ -45,7 +46,7 @@ source "$IVANTU_SCRIPTS_DIR/ivantu/updates.sh"
 _CR=$'\n'
 cons_lit_product_name="Ivantu"
 cons_lit_product_version="1.0"
-cons_lit_product_date="2026-10-28"
+cons_lit_product_date="2026-11-11"
 
 # Preserve spaces in string to keep indentations.
 IFS='%'

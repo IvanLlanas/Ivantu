@@ -8,7 +8,7 @@
 
 _ilas_name='Ivan Llanas Aliases System'
 _ilas_version='2.13'
-_ilas_build=173
+_ilas_build=174
 
 # Environment vars -----------------------------------------------------
 # export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
@@ -814,6 +814,10 @@ if command -v bc &>/dev/null ; then
    alias cal=___calc
       cal_description="$calc_description"
       cal_category="$calc_category"
+# calc 'sqrt(144)'
+# calc '2^10'
+# calc 'scale=4; 10/3'
+
 function ___calc ()
 {
    if [ $# -lt 1 ]; then
@@ -821,8 +825,8 @@ function ___calc ()
       ___cmd_usage "calc arithmetic-expression"
       echo
    else
-      # echo "$(( $* ))"
-      echo "$*" | bc -l
+      # echo "$(( $* ))" # integer only
+      echo "k=1024;m=k*1024;g=m*1024;t=g*1024;$*" | bc -l
    fi
 }
 fi
