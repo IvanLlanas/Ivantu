@@ -37,7 +37,6 @@ source "$IVANTU_SCRIPTS_DIR/ivantu/functions.sh"
 source "$IVANTU_SCRIPTS_DIR/ivantu/system.sh"
 source "$IVANTU_SCRIPTS_DIR/ivantu/gui.sh"
 source "$IVANTU_SCRIPTS_DIR/ivantu/applications.sh"
-source "$IVANTU_SCRIPTS_DIR/ivantu/modules.sh"
 source "$IVANTU_SCRIPTS_DIR/ivantu/icons.sh"
 source "$IVANTU_SCRIPTS_DIR/ivantu/updates.sh"
 
@@ -73,10 +72,9 @@ _o_skip=$_ansi_lred
 _ivantu_dir=$(realpath -s "..")
 _media_dir="$_ivantu_dir/media"
 _conf_dir="$_ivantu_dir/conf"
-_modules_dir="$_ivantu_dir/modules"
+_applications_dir="$_ivantu_dir/applications"
 _extensions_dir="$_ivantu_dir/extensions"
 
-_conky_dir="$_conf_dir/conky"
 _grub_dir="$_media_dir/grub"
 _bootui_dir="$_media_dir/boot-ui"
 _logos_dir="$_media_dir/logos"
@@ -203,10 +201,18 @@ function show_warning_message ()
 # ------------------------------------------------------------------------------
 function warning_required_package ()
 {
-   local package=$1
-   local critical=$2
-   local additional_message=$3
-   local installed=$(is_package_installed $package)
+   local binary=$1
+   local package=$2
+   local critical=$3
+   local additional_message=$4
+   local installed=0
+
+   if command -v "$binary" >/dev/null 2>&1 ; then
+      installed=1
+   else
+      installed=$(is_package_installed $package)
+   fi
+
    if [ $installed = 0 ]; then
       local big_message="WARNING: <1>$package<0> is not installed."$additional_message
       if [ $critical -gt 0 ]; then
@@ -222,11 +228,13 @@ function warning_required_package ()
 # ------------------------------------------------------------------------------
 function check_required_packages ()
 {
-   warning_required_package fastfetch 0
-   warning_required_package eza 0
-   warning_required_package conky-all 0
-   warning_required_package gnome-shell-extension-manager 0
-   warning_required_package 7zip 1 "This package IS required for some of the installations. You must install it first."
+   warning_required_package fastfetch fastfetch 0
+   warning_required_package eza eza 0
+   warning_required_package conky conky-all 0
+   warning_required_package extension-manager gnome-shell-extension-manager 0
+   warning_required_package make make 0
+   warning_required_package gcc gcc 0
+   warning_required_package 7z 7zip 1 "7zip IS required. You must install it first."
    CR
 }
 
@@ -298,7 +306,8 @@ function do_system_configuration ()
    setup_keyboard_options
    setup_power_settings
    setup_startup_configuration_files
-   setup_module_bline
+   # This is an application but it's system configuration
+   setup_bline
 }
 
 # ------------------------------------------------------------------------------
@@ -310,7 +319,7 @@ function do_gui_system_configuration ()
    setup_grub_menu
    setup_boot_logos
    setup_login_screen_wallpaper
-   setup_module_gse_gdm_extension
+   setup_gse_gdm_extension
 }
 
 # ------------------------------------------------------------------------------

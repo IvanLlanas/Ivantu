@@ -12,7 +12,7 @@
 # function read_answer (question_text)
 # function confirm (default, msg)
 # function is_package_installed (package_name)
-# function check_and_install_optional_package (package_name, name, default=1)
+# function check_and_install_optional_package (binary, package_name, default=1)
 # function choose_theme (force)
 # function select_available_filename (check_dirs, dir, sufix)
 # function detect_monitors_data ()
@@ -219,7 +219,10 @@ function is_package_installed ()
 }
 
 # ------------------------------------------------------------------------------
-# function check_and_install_optional_package (package_name, name, default=1)
+# function check_and_install_optional_package (binary, package_name, default=1)
+#   binary  - required binary from package (if empty then package is checked)
+#   package - package to check and install if binary is not available
+#   default - default answer to install question (0=no / 1=yes)
 # Returns in variable var_installed:
 #   1 if package_name is already installed,
 #   2 if it is installed now,
@@ -227,13 +230,19 @@ function is_package_installed ()
 # ------------------------------------------------------------------------------
 function check_and_install_optional_package ()
 {
-   local package="$1"
-   local name="$2"
+   local binary="$1"
+   local package="$2"
    local default="$3"
-   local installed=$(is_package_installed $package)
+   local installed=0
 
    if [[ $default == "" ]]; then
       default=1
+   fi
+
+   if command -v "$binary" >/dev/null 2>&1 ; then
+      installed=1
+   else
+      installed=$(is_package_installed $package)
    fi
 
    if [ $installed = 0 ]; then

@@ -6,6 +6,8 @@
 # function setup_ptyxis ()
 # function setup_nautilus ()
 # function setup_conky ()
+# function setup_bline ()
+# function setup_gse_gdm_extension ()
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
@@ -14,8 +16,11 @@
 # ------------------------------------------------------------------------------
 function setup_eza ()
 {
+   local eza_dir="$_applications_dir/eza"
+
    print_title "$var_current_category" "Install <1>eza<0> theme"
-   check_and_install_optional_package "eza" "eza"
+   check_and_install_optional_package "eza" "eza" 1
+
    if [ $var_installed -gt 0 ]; then
       if [ $var_installed -gt 1 ]; then
          var_confirmed=1
@@ -27,9 +32,9 @@ function setup_eza ()
          local dir="$HOME/.config/eza"
          ___print_info "Copying <1>$package theme<0>..."
          mkdir -p $dir
-         copy_file 0 $_conf_dir/eza/theme.yml $dir
+         copy_file 0 $eza_dir/theme.yml $dir
       else
-         ___print_info $skipping_
+         ___print_info "$skipping_"
       fi
    fi
 
@@ -46,9 +51,9 @@ function setup_eza ()
 
          if [ $var_confirmed -gt 0 ]; then
             ___print_info "Installing <1>Nerd fonts<0>..."
-            7z x "$_conf_dir/eza/nerd-fonts.7z" -y "-o$dir" | sed 's/^/  7z: /'
+            7z x "$eza_dir/nerd-fonts.7z" -y "-o$dir" | sed 's/^/  7z: /'
          else
-            ___print_info $skipping_
+            ___print_info "$skipping_"
          fi
       fi
    fi
@@ -63,26 +68,27 @@ function setup_ptyxis ()
 {
    print_title "$var_current_category" "Install <1>Ptyxis<0> theme"
 
-   check_and_install_optional_package "ptyxis" "Ptyxis" 0
+   check_and_install_optional_package "ptyxis" "ptyxis" 0
    if [ $var_installed -gt 0 ]; then
       if [ $var_installed -gt 1 ]; then
          var_confirmed=1
       else
          confirm 1 "Install customized <1>Ptyxis<0> theme"
       fi
+      local ptyxis_dir="$_applications_dir/ptyxis"
 
       if [ $var_confirmed -gt 0 ]; then
          local dir="$HOME/.local/share/org.gnome.Ptyxis/palettes"
          ___print_info "Copying <1>Ptyxis theme<0>..."
          mkdir -p $dir
-         copy_file 0 $_conf_dir/ptyxis/ptyxis-ivan.palette $dir
+         copy_file 0 $ptyxis_dir/*.palette $dir
 
          #dconf dump /org/gnome/Ptyxis/ > ptyxis-settings.dconf
-         local filename="$_conf_dir/ptyxis/ptyxis-settings.dconf"
+         local filename="$ptyxis_dir/ptyxis-settings.dconf"
          dconf load /org/gnome/Ptyxis/ < $filename | sed 's/^/  dconf: /'
          #dconf write /org/gnome/Ptyxis/Profiles/eaac8e4e95a45ba0ede574da695104cf/opacity 0.85
       else
-         ___print_info $skipping_
+         ___print_info "$skipping_"
       fi
    fi
    CR
@@ -97,7 +103,7 @@ function setup_terminal_profiles ()
    print_title "$var_current_category" "Setup <1>Gnome terminal<0> profiles"
    confirm 1 "Import themed terminal profiles"
    if [ $var_confirmed -gt 0 ]; then
-      local filename="$_conf_dir/gnome-terminal-profiles.dconf"
+      local filename="$_applications_dir/gnome-terminal/gnome-terminal-profiles.dconf"
       if [ ! -f "$filename" ]; then
          not_found_message "$filename"
       else
@@ -114,7 +120,7 @@ function setup_terminal_profiles ()
          dconf write /org/gnome/terminal/legacy/profiles:/default "\"$profile\"" | sed 's/^/  dconf: /'
       fi
    else
-      ___print_info $skipping_
+      ___print_info "$skipping_"
    fi
    CR
 }
@@ -127,15 +133,14 @@ function setup_conky ()
    print_title "$var_current_category" "Setup <1>Conky<0> widget"
 
    # Apt version of conky (1.22) is unstable and incompatible with the new widgets.
-   # Conky 1.26 should be installed by the user.
-   # check_and_install_optional_package "conky-all" "Conky" 0
-   # if [ $var_installed -gt 0 ]; then
-
-   if command -v conky >/dev/null 2>&1; then
+   # Conky 1.26 should be installed by the user (!!!)
+   check_and_install_optional_package "conky" "conky-all" 0
+   if [ $var_installed -gt 0 ]; then
 
       confirm 0 "Launch <1>conky<0> widget on startup"
       if [ $var_confirmed -gt 0 ]; then
 
+         local conky_dir="$_applications_dir/conky"
          local text="Install a single [<1>1<0>] monitor Conky widget or a [<1>3<0>] monitors Conky widget [<1>1<0>/<1>3<0>]?"
          if [ $var_cfg_always_yes -gt 0 ]; then
             ___print_info "$text <1>1<0>"
@@ -147,17 +152,17 @@ function setup_conky ()
          if [[ $var_answer =~ $_numbers ]] && [ ! -z $var_answer ]; then
             case $var_answer in
                   1)
-                  select_available_filename 1 "$_conky_dir" ""
+                  select_available_filename 1 "$conky_dir" ""
                   if [ ! -z "$var_selected_filename" ]; then
                         _create_conky_autorun "$var_selected_filename"
                   fi
                   ;;
 
-                  3) var_selected_filename=$(realpath -s "$_conky_dir/3-monitors")
+                  3) var_selected_filename=$(realpath -s "$conky_dir/3-monitors")
                   _create_conky_autorun "$var_selected_filename"
                   ;;
 
-                  *) ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
+                  *) ___print_error "Invalid option \"<1>$var_answer<0>\". $skipping_"
                   CR
                   return
                   ;;
@@ -170,7 +175,7 @@ function setup_conky ()
             fi
 
          else
-            ___print_error "Invalid option \"<1>$var_answer<0>\". "$skipping_
+            ___print_error "Invalid option \"<1>$var_answer<0>\". $skipping_"
          fi
       fi
    else
@@ -252,7 +257,7 @@ function setup_nautilus ()
          need_reset=1
          log 2 "Installing packages <1>python3-nautilus, python3-gi, make..."
          sudo apt install -y python3-nautilus python3-gi make | sed 's/^/  apt\*: /'
-         local dir="$_modules_dir/nautilus-copy-path"
+         local dir="$_applications_dir/nautilus-copy-path"
          cd "$dir"
          log 2 "Installing <1>nautilus-copy-path<0> extension..."
          make install | sed 's/^/  make\*: /'
@@ -264,5 +269,78 @@ function setup_nautilus ()
       fi
    fi
 
+   CR
+}
+
+# ------------------------------------------------------------------------------
+# function setup_bline ()
+# !!!
+# ------------------------------------------------------------------------------
+function setup_bline ()
+{
+   local module="bline"
+   local bline_dir="$_applications_dir/$module"
+   print_title "$var_current_category" "<1>$module<0>"
+
+   if command -v bline 2>&1; then
+      ___print_info "Module <1>$module<0> already installed. $skipping_"
+   else
+
+      if command -v make >/dev/null 2>&1 && command -v gcc >/dev/null 2>&1; then
+
+         confirm 0 "Build and install module <1>$module<0>"
+         if [ $var_confirmed -gt 0 ]; then
+
+            cd "$bline_dir"
+            cd src
+            ___print_info "Building module <1>$module<0>..."
+            make build
+            if [[ $? -eq 0 ]]; then
+               log 2 "Copying <1>bline<0> to <1>/usr/bin<0>..."
+               copy_file 1 bline /usr/bin
+            else
+               ___print_error_bg "Error building module <1>$module<0>."
+            fi
+         fi
+      else
+         ___print_info "<1>gcc<0> or <1>make<0> not available. $skipping_"
+      fi
+   fi
+   cd "$_root_dir"
+   CR
+}
+
+# ------------------------------------------------------------------------------
+# function setup_gse_gdm_extension ()
+# It's a gnome extension but it's treated like an application.
+# ------------------------------------------------------------------------------
+function setup_gse_gdm_extension ()
+{
+   local module="gse-gdm-extension"
+   local module_dir="$_applications_dir/$module"
+   local installed_module_dir="/usr/local/share/gnome-shell/extensions/gdm-extension@pratap.fastmail.fm"
+   print_title "$var_current_category" "<1>$module<0>"
+
+   if [ -d "$module_dir" ]; then
+
+      if [ -d "$installed_module_dir" ]; then
+         ___print_info "Module <1>$module<0> already installed. $skipping_"
+      else
+
+         confirm 0 "Install module <1>$module<0>"
+         if [ $var_confirmed -gt 0 ]; then
+
+            cd "$module_dir"
+            sudo ./install.sh
+
+         else
+            ___print_info "$skipping_"
+         fi
+
+      fi
+
+   else
+      ___print_error_bg "Module <1>$module<0> not found."
+   fi
    CR
 }
