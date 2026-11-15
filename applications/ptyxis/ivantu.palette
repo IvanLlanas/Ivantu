@@ -1,5 +1,5 @@
 [Palette]
-Name=Ivan Llanas
+Name=Ivantu
 Primary=true
 UseSystemAccent=true
 
@@ -26,7 +26,7 @@ Color15=#eeeeec
 
 [Dark]
 Foreground=#d0d0ff
-Background=#001020
+Background=#111820
 Cursor=#d3d7cf
 Color0=#2e3436
 Color1=#cc0000
