@@ -81,7 +81,8 @@ function setup_ptyxis ()
          local dir="$HOME/.local/share/org.gnome.Ptyxis/palettes"
          ___print_info "Copying <1>Ptyxis theme<0>..."
          mkdir -p $dir
-         copy_file 0 $ptyxis_dir/*.palette $dir
+         copy_file 0 $ptyxis_dir/ivan-llanas.palette $dir
+         copy_file 0 $ptyxis_dir/ivantu.palette $dir
 
          #dconf dump /org/gnome/Ptyxis/ > ptyxis-settings.dconf
          local filename="$ptyxis_dir/ptyxis-settings.dconf"
