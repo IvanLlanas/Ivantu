@@ -30,7 +30,7 @@ function setup_eza ()
 
       if [ $var_confirmed -gt 0 ]; then
          local dir="$HOME/.config/eza"
-         ___print_info "Copying <1>$package theme<0>..."
+         ___print_info "Copying <1>eza theme<0>..."
          mkdir -p $dir
          copy_file 0 $eza_dir/theme.yml $dir
       else
