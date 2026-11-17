@@ -1,3 +1,4 @@
+#!/bin/bash
 source "$IVANTU_SCRIPTS_DIR/conio.sh"
 
 _inas="192.168.1.101"

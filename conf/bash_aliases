@@ -8,7 +8,7 @@
 
 _ilas_name='Ivan Llanas Aliases System'
 _ilas_version='2.13'
-_ilas_build=174
+_ilas_build=176
 
 # Environment vars -----------------------------------------------------
 # export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
@@ -682,23 +682,47 @@ function _mk ()
    cd "$1"
 }
 
-
 # Is 7z installed?
-
 if command -v 7z &>/dev/null ; then
    alias fn="realpath"
       fn_description="Print the full path of a given file/directory."
       fn_category="$_CATEGORY_FILE"
-   alias 7a="7z a -t7z -mx=9"
+   alias 7a="7z a -t7z -mx=9 -mfb=273 -ms=on"
       _7a_description="Compress using 7z with maximum compression settings."
       _7a_category="$_CATEGORY_COMPRESS"
+   alias 7av2="7z a -t7z -mx=9 -mfb=273 -ms=on -v2000000000b"
+      _7av2_description="Compress using 7z in 2GB volumes with maximum compression settings."
+      _7av2_category="$_CATEGORY_COMPRESS"
+   alias 7av4="7z a -t7z -mx=9 -mfb=273 -ms=on -v4000000000b"
+      _7av4_description="Compress using 7z in 4GB volumes with maximum compression settings."
+      _7av4_category="$_CATEGORY_COMPRESS"
    alias 7x="7z x"
-      _7x_description="Extract 7z archive using 7z."
+      _7x_description="Extract 7z archive contents."
       _7x_category="$_CATEGORY_COMPRESS"
 
    ___print_info "<1>7z<0> aliases added."
 else
    ___print_disabled "<1>7z<0> not found."
+fi
+
+# Is zip installed?
+if command -v zip &>/dev/null ; then
+   alias za="zip -9 -r"
+      za_description="Compress using zip with maximum compression settings."
+      za_category="$_CATEGORY_COMPRESS"
+   alias zav2="zip -9 -r -s 2g"
+      zav2_description="Compress using zip in 2GB volumes with maximum compression settings."
+      zav2_category="$_CATEGORY_COMPRESS"
+   alias zav4="zip -9 -r -s 4g"
+      zav4_description="Compress using zip in 4GB volumes with maximum compression settings."
+      zav4_category="$_CATEGORY_COMPRESS"
+   alias zx="unzip"
+      zx_description="Extract zip archive contents."
+      zx_category="$_CATEGORY_COMPRESS"
+
+   ___print_info "<1>zip<0> aliases added."
+else
+   ___print_disabled "<1>zip<0> not found."
 fi
 
 # Is rar installed?
@@ -973,16 +997,23 @@ alias bat=___bat
    bat_category="$_CATEGORY_SYSTEM"
 function ___bat ()
 {
-    local battery
+   local battery=$(upower -e | grep -m1 battery)
+   if [[ -n $battery ]]; then
+      local battery_info=$(upower -i "$battery")
 
-    battery=$(upower -e | grep -m1 battery)
-
-    if [[ -n $battery ]]; then
-        upower -i "$battery"
-    else
-        echo "No battery found."
-        return 1
-    fi
+      echo "$battery_info"
+      echo "$battery_info" | awk '
+      /energy-full:/        { full=$2 " " $3 }
+      /energy-full-design:/ { design=$2 " " $3 }
+      /capacity:/           { capacity=$2 }
+      END {
+         printf "%s - %s - %s / %s\n", strftime("%Y/%m/%d %H:%M:%S"), capacity, full, design
+      }' >> .battery
+      return 0
+   else
+      echo "No battery found."
+      return 1
+   fi
 }
 
 fr_description="Show memory and disk usage."
@@ -1081,6 +1112,13 @@ function ___cc_aliases ()
          ___print_info "<1>grestore<0> alias added."
       fi
 
+      fname="$IVANTU_SCRIPTS_DIR/cmd-timeshift-next.sh"
+      if test -f "$fname"; then
+         alias timeshift-next="$fname"
+            timeshift_next_description="Check Timeshift tasks."
+            timeshift_next_category="$_CATEGORY_APP"
+         ___print_info "<1>timeshift-next<0> alias added."
+      fi
    fi
 }
 ___cc_aliases

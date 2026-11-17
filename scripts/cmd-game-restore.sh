@@ -1,3 +1,4 @@
+#!/bin/bash
 source $IVANTU_SCRIPTS_DIR/conio.sh
 
 #  local bkpath="$HOME/Dropbox/Apps/Games/00-savegames/Active/Core Keeper/savegames"
