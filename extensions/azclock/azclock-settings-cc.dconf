@@ -2,7 +2,7 @@
 create-initial-widget=false
 prefs-visible-page=''
 update-notifier-project-version=21
-widgets=[{'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}, {'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'e30ab0f1-30af-4546-adb2-0ed56fb4b738': <{'enabled': <true>}>}, {'fa222da9-6996-4241-bf3f-086c638dbe30': <{'enabled': <true>}>}]
+widgets=[{'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <false>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <false>}>}, {'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'e30ab0f1-30af-4546-adb2-0ed56fb4b738': <{'enabled': <true>}>}, {'fa222da9-6996-4241-bf3f-086c638dbe30': <{'enabled': <true>}>}]
 
 [widget-data/1862b229-86ab-4a07-b86f-0f74e3e7dbc2]
 background-color='rgba(0,0,0,0.51)'
@@ -47,12 +47,12 @@ name='Time Label'
 
 [widget-data/2912ff53-7b3e-41fa-ac11-a3bc3eda4827]
 anchor-point='Top_Left'
-background-color='rgba(0, 0, 0, .6)'
+background-color='rgba(0,0,0,0.303333)'
 border-radius=16
 border-width=0
 convert-old-location-done=true
 elements=[{'fe9f6ae4-5e23-40a5-aeed-8dc1c0df720a': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.81,"relativeY":0.6}'
+location-data='{"monitorIndex":1,"relativeX":0.81,"relativeY":0.6}'
 name='Weather Widget (monitor SONY)'
 padding=(25, 25, 25, 25)
 show-background=true
@@ -248,7 +248,7 @@ border-color='rgb(143,240,164)'
 border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":1,"relativeX":0.89,"relativeY":0.004}'
+location-data='{"monitorIndex":0,"relativeX":0.89,"relativeY":0.004}'
 name='Clock (monitor LG-1)'
 padding=(0, 0, 0, 0)
 spacing=0
@@ -316,7 +316,7 @@ border-color='rgb(143,240,164)'
 border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":0,"relativeX":0.01,"relativeY":0.884}'
+location-data='{"monitorIndex":2,"relativeX":0.01,"relativeY":0.884}'
 name='Clock (monitor LG-2)'
 padding=(0, 0, 0, 0)
 spacing=0
