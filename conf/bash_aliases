@@ -8,7 +8,7 @@
 
 _ilas_name='Ivan Llanas Aliases System'
 _ilas_version='2.13'
-_ilas_build=176
+_ilas_build=177
 
 # Environment vars -----------------------------------------------------
 # export LC_ALL="C" # Breaks unicode characters with real ls but it's ok
@@ -592,6 +592,7 @@ ___print_info_bg "[ <1>$_ilas_name<0> <2>$_ilas_version<0> (<2>$_ilas_build<0>) 
 # fi
 
 # Common aliases
+
 alias eal="q ~/.bash_aliases"
    eal_description="Edit aliases."
    eal_category="$_CATEGORY_SHELL"
@@ -622,6 +623,7 @@ alias c="clear"
 alias clearhistory="cat /dev/null > ~/.bash_history && history -c"
    clearhistory_description="Delete the shell history from memory and disk."
    clearhistory_category="$_CATEGORY_SHELL"
+
 
 if command -v eza >/dev/null 2>&1; then
    export LS_COLORS=""
@@ -681,6 +683,21 @@ function _mk ()
    mkdir "$1"
    cd "$1"
 }
+
+# cat ---------------------------------------------------------
+if command -v batcat &>/dev/null ; then
+   alias bat=batcat
+      bat_description="cat replaced by bat."
+      bat_category="$_CATEGORY_SHELL"
+else
+   ___print_disabled "<1>batcat<0> not found."
+fi
+alias car=cat
+   car_description="cat (correction)."
+   car_category="$_CATEGORY_SHELL"
+alias cay=cat
+   cay_description=$car_description
+   cay_category="$_CATEGORY_SHELL"
 
 # Is 7z installed?
 if command -v 7z &>/dev/null ; then
@@ -841,7 +858,6 @@ if command -v bc &>/dev/null ; then
 # calc 'sqrt(144)'
 # calc '2^10'
 # calc 'scale=4; 10/3'
-
 function ___calc ()
 {
    if [ $# -lt 1 ]; then
@@ -857,12 +873,12 @@ fi
 
 if command -v cmatrix &>/dev/null ; then
    alias matrix="gnome-terminal --window-with-profile=Matrix --full-screen -- cmatrix -b"
-      matrix_description="Start full Matrix screensaver."
-      matrix_category="$_CATEGORY_SHELL"
+         matrix_description="Start full Matrix screensaver."
+         matrix_category="$_CATEGORY_SHELL"
    # kmatrix - Mind the single quote!
    alias kmatrix='kill $(pidof cmatrix)'
-      kmatrix_description="Kill Matrix screensaver (if Q does not quit)."
-      kmatrix_category="$_CATEGORY_SHELL"
+         kmatrix_description="Kill Matrix screensaver (if Q does not quit)."
+         kmatrix_category="$_CATEGORY_SHELL"
    ___print_info "<1>cmatrix<0> aliases added."
 else
    ___print_disabled "<1>cmatrix<0> not found."
@@ -991,11 +1007,11 @@ else
 fi
 
 # ---------------------------------------------------------------
-alias bat=___bat
+alias battery=___battery
 #"upower -i $(upower -e | grep battery)"
-   bat_description="Show battery status."
-   bat_category="$_CATEGORY_SYSTEM"
-function ___bat ()
+   battery_description="Show battery status."
+   battery_category="$_CATEGORY_SYSTEM"
+function ___battery ()
 {
    local battery=$(upower -e | grep -m1 battery)
    if [[ -n $battery ]]; then
@@ -1140,15 +1156,6 @@ function ___iplookup ()
       start "https://whatismyipaddress.com/ip/$1"
    fi
 }
-
-
-# Mistakes ------------------------------------------------------
-alias car=cat
-   car_description="cat (correction)."
-   car_category="$_CATEGORY_SHELL"
-alias cay=cat
-   cay_description=$car_description
-   cay_category="$_CATEGORY_SHELL"
 
 # ---------------------------------------------------------------
 # Big aliases ---------------------------------------------------
