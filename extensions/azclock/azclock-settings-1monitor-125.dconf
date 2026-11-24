@@ -210,9 +210,10 @@ convert-old-location-done=true
 elements=[{'92747373-1aef-4252-a1cf-8c6a85a4f04d': <{'enabled': <true>}>}]
 location-data='{"monitorIndex":0,"relativeX":0.795,"relativeY":0.125}'
 name='Disk Usage (monitor 0)'
+spacing=8
 
 [widget-data/c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38/element-data/92747373-1aef-4252-a1cf-8c6a85a4f04d]
-command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
+command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\nfree -m | awk '/Mem:/ {\n    used=$3/1024;\n    total=$2/1024;\n    pct=$3*100/$2;\n    bar_len=18;\n    filled=int(pct*bar_len/100);\n    printf \"󰍛  RAM\\n%.0fG / %.0fG (%.0f%%)\\n\", used, total, pct;\n    for(i=0; i<filled; i++) printf \"█\";\n    for(i=filled; i<bar_len; i++) printf \"─\";\n    print \"\";\n}'\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\nps -C gnome-shell -o rss= | awk '{\n    used=$1/1024;\n    max=5120;\n    bar_len=18;\n    filled=int(used*bar_len/max);\n    if(filled>bar_len) filled=bar_len;\n    printf \"󰍛  GNOME Shell\\n%.0fMB\\n\", used;\n    for(i=0; i<filled; i++) printf \"█\";\n    for(i=filled; i<bar_len; i++) printf \"─\";\n    print \"\";\n}'"
 element-type='Command_Label'
 font-family-override=(true, 'Ubuntu Mono')
 font-size=20
@@ -278,3 +279,34 @@ foreground-color='rgb(224,224,255)'
 name='Day and Date Label'
 shadow=(true, 'black', 2, 2, 0, 4)
 show-border=false
+
+[widget-data/fa222da9-6996-4241-bf3f-086c638dbe30]
+border-color='rgb(143,240,164)'
+border-width=3
+convert-old-location-done=true
+elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
+location-data='{"monitorIndex":2,"relativeX":0.03,"relativeY":0.884}'
+name='Clock (down)'
+padding=(0, 0, 0, 0)
+spacing=0
+vertical=false
+
+[widget-data/fa222da9-6996-4241-bf3f-086c638dbe30/element-data/41ebca72-bddf-4a26-a126-fba014a7d7ec]
+border-color='rgb(255,255,255)'
+border-width=1
+date-format=' <span color="#D7E7E7" font_size="80pt">%H</span><span font_size="24pt"> </span><span font_size="48pt" color="#8495AF">%M</span> '
+font-family-override=(true, 'LCARS')
+font-size=8
+foreground-color='rgb(224,224,255)'
+name='Time Label'
+padding=(0, 41, 0, 0)
+
+[widget-data/fa222da9-6996-4241-bf3f-086c638dbe30/element-data/b9861427-957b-487b-9c79-576eb827edfe]
+border-color='rgb(255,255,255)'
+border-width=1
+date-format=' <span color="#D7E7E7" font_size="30pt">%A\n%d <span color="#8495AF">%m</span> <span color="#3A5770">%y</span></span>'
+font-family-override=(true, 'LCARS')
+font-size=10
+font-weight=100
+foreground-color='rgb(224,224,255)'
+name='Day and Date Label'

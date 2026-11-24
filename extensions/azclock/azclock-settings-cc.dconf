@@ -2,7 +2,7 @@
 create-initial-widget=false
 prefs-visible-page=''
 update-notifier-project-version=21
-widgets=[{'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <false>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <false>}>}, {'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'e30ab0f1-30af-4546-adb2-0ed56fb4b738': <{'enabled': <true>}>}, {'fa222da9-6996-4241-bf3f-086c638dbe30': <{'enabled': <true>}>}]
+widgets=[{'eaa92feb-4acf-4b63-a07e-15edfbf4b40c': <{'enabled': <true>}>}, {'c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38': <{'enabled': <true>}>}, {'2912ff53-7b3e-41fa-ac11-a3bc3eda4827': <{'enabled': <true>}>}, {'e30ab0f1-30af-4546-adb2-0ed56fb4b738': <{'enabled': <true>}>}, {'fa222da9-6996-4241-bf3f-086c638dbe30': <{'enabled': <true>}>}]
 
 [widget-data/1862b229-86ab-4a07-b86f-0f74e3e7dbc2]
 background-color='rgba(0,0,0,0.51)'
@@ -208,12 +208,12 @@ name='Day and Date Label'
 anchor-point='Top_Left'
 convert-old-location-done=true
 elements=[{'92747373-1aef-4252-a1cf-8c6a85a4f04d': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.84,"relativeY":0.125}'
+location-data='{"monitorIndex":1,"relativeX":0.84,"relativeY":0.095}'
 name='Disk Usage (monitor SONY)'
 spacing=8
 
 [widget-data/c0b849d7-5ca1-42a0-b9be-f0ce0a33ed38/element-data/92747373-1aef-4252-a1cf-8c6a85a4f04d]
-command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-4tb | awk 'NR==2 {print \"  Vol-4TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-10tb | awk 'NR==2 {print \"  Vol-10TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\n"
+command="awk '{s=int($1); printf \"%dd %dh %dm\\n\", s/86400, s%86400/3600, s%3600/60}' /proc/uptime\nfree -m | awk '/Mem:/ {\n    used=$3/1024;\n    total=$2/1024;\n    pct=$3*100/$2;\n    bar_len=18;\n    filled=int(pct*bar_len/100);\n    printf \"󰍛  RAM\\n%.1f / %.1fG (%.0f%%)\\n\", used, total, pct;\n    for(i=0; i<filled; i++) printf \"█\";\n    for(i=filled; i<bar_len; i++) printf \"─\";\n    print \"\";\n}'\ndf -h / | awk 'NR==2 {print \"  System\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-4tb | awk 'NR==2 {print \"  Vol-4TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\ndf -h /mnt/vol-10tb | awk 'NR==2 {print \"  Vol-10TB\\n\" $4 \" / \" $2 \" (\" $5 \")\"; used=$5; gsub(/%/,\"\",used);  bar_len=18; filled=int(used*bar_len/100); for(i=0; i<filled; i++) printf \"█\"; for(i=filled; i<bar_len; i++) printf \"─\"; print \"\"}'\nps -C gnome-shell -o rss= | awk '{\n    used=$1/1024;\n    max=5120;\n    bar_len=18;\n    filled=int(used*bar_len/max);\n    if(filled>bar_len) filled=bar_len;\n    printf \"󰍛  GNOME Shell\\n%.0f MB\\n\", used;\n    for(i=0; i<filled; i++) printf \"█\";\n    for(i=filled; i<bar_len; i++) printf \"─\";\n    print \"\";\n}'\n"
 element-type='Command_Label'
 font-family-override=(true, 'Ubuntu Mono')
 font-size=20
@@ -249,6 +249,7 @@ border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
 location-data='{"monitorIndex":0,"relativeX":0.89,"relativeY":0.004}'
+lock-widget=false
 name='Clock (monitor LG-1)'
 padding=(0, 0, 0, 0)
 spacing=0
@@ -279,7 +280,7 @@ border-color='rgb(143,240,164)'
 border-width=3
 convert-old-location-done=true
 elements=[{'41ebca72-bddf-4a26-a126-fba014a7d7ec': <{'enabled': <true>}>}, {'b9861427-957b-487b-9c79-576eb827edfe': <{'enabled': <true>}>}]
-location-data='{"monitorIndex":2,"relativeX":0.86,"relativeY":0.004}'
+location-data='{"monitorIndex":1,"relativeX":0.86,"relativeY":0.004}'
 name='Clock (monitor SONY)'
 padding=(0, 0, 0, 0)
 show-background=false
